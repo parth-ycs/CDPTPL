@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme {
+  --color-brand-blue: #12539b;
+  --color-brand-deep: #071a31;
+  --color-brand-medium: #0a2a52;
+
+  --color-brand-red: #ed1c24;
+  --color-brand-red-dark: #c91118;
+  --color-brand-red-light: #ff5c61;
+  --color-ink: #172333;
+  --color-muted: #687586;
+  --color-line: #e5e9ef;
+  --color-pale: #f6f8fa;
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: #fff;
+    color: var(--color-ink);
+  }
+}
+
+@font-face {
+  font-family: "Noa Voren";
+  src: url("/fonts/NoaVorenDEMO-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bai Jamjuree";
+  src: url("/fonts/BaiJamjuree-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bai Jamjuree";
+  src: url("/fonts/BaiJamjuree-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}

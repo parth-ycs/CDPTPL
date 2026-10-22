@@ -86,8 +86,7 @@ export default function Hero() {
     </h1>
 
     <p className="max-w-[470px] text-base leading-[1.65] text-white/80 [font-family:'Bai_Jamjuree']">
-      Integrated process technologies, engineered systems and advanced
-      separation solutions for evolving industrial needs.
+     Integrated process engineering, advanced technologies, and sustainable industrial solutions-engineered in India for global industries.
     </p>
 
     <div className="mt-[34px] flex flex-col items-start gap-3.5 sm:flex-row">

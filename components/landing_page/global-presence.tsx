@@ -15,7 +15,7 @@ type Props = {
 
 const BLUE = 0x1557a0;
 const LIGHT_BLUE = 0x77b5e8;
-const MUTED_BLUE = 0xd9e9f8;
+const MUTED_BLUE = 0xf0f6ff;
 const WHITE = 0xffffff;
 
 export default function GlobalPresenceSection({
@@ -68,7 +68,7 @@ export default function GlobalPresenceSection({
       );
       backgroundSeries.mapPolygons.template.setAll({
         interactive: false,
-        fill: am5.color(0xF0F3FC), // very faint blue ocean
+        fill: am5.color(MUTED_BLUE), // very faint blue ocean
         fillOpacity: 1,
         strokeOpacity: 0,
       });
@@ -234,7 +234,7 @@ export default function GlobalPresenceSection({
             <br />
             <span className="text-brand-blue [font-family:'Noa_Voren'] font-normal">Presence</span>
           </h2>
-          <p className="mt-4 text-xl font-medium tracking-[-0.02em] text-slate-700 sm:text-2xl">
+          <p className="mt-4 text-xl font-medium tracking-[-0.02em] text-slate-700 sm:text-2xl [font-family:'Bai_Jamjuree']">
             Global expertise. Local execution.
           </p>
           <p className="mt-3 max-w-[390px] text-sm leading-6 text-slate-600 sm:text-base">
@@ -242,7 +242,7 @@ export default function GlobalPresenceSection({
             manufacturing.
           </p>
 
-          <div className="mt-7 max-w-[360px]" aria-label="Select a country">
+          <div className="mt-7 max-w-[360px]" aria-label="Select a country [font-family:'Bai_Jamjuree']">
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
               Our locations
             </p>
@@ -300,7 +300,7 @@ export default function GlobalPresenceSection({
 
           <a
             href={exploreHref}
-            className="mt-7 inline-flex items-center gap-3 rounded-full bg-[#064DA7] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(21,87,160,0.18)] transition hover:-translate-y-0.5 hover:bg-[#0B438B] focus:outline-none focus:ring-2 focus:ring-[#1557A0] focus:ring-offset-2"
+            className="mt-7 inline-flex items-center gap-3 rounded-full bg-[#064DA7] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(21,87,160,0.18)] transition hover:-translate-y-0.5 hover:bg-[#0B438B] focus:outline-none focus:ring-2 focus:ring-[#1557A0] focus:ring-offset-2 [font-family:'Bai_Jamjuree']"
           >
             Explore locations
             <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none">

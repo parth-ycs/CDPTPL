@@ -4,6 +4,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { ProductsSectionData } from "../types";
+import BrandCarouselButtons from "@/components/ui/BrandCarouselButtons";
 
 export default function ProductsSection({
   data,

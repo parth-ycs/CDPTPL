@@ -93,7 +93,7 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 bg-white/80 text-ink backdrop-blur-md"
+      className="fixed inset-x-0 top-0 z-50 bg-white/80 text-ink backdrop-blur-md [font-family:'Bai_Jamjuree']"
     >
       <nav
         aria-label="Primary navigation"
@@ -197,7 +197,7 @@ export default function Navbar() {
                               tabIndex={open ? 0 : -1}
                               aria-current={undefined}
                               className={[
-                                "group flex min-h-[52px] items-center justify-between gap-4",
+                                "group flex min-h-[52px] items-center justify-between gap-4 ",
                                 "px-7 py-3 lg:px-8",
                                 "transition-colors duration-200",
                                 selected
@@ -206,7 +206,7 @@ export default function Navbar() {
                                 focusRing,
                               ].join(" ")}
                             >
-                              <span className="text-sm font-medium tracking-wide">
+                              <span className="text-sm font-bold tracking-wide text-brand-blue transition-colors duration-200 group-hover:text-brand-red">
                                 {sbu.name}
                               </span>
 
@@ -217,7 +217,7 @@ export default function Navbar() {
                                   "shrink-0 transition-transform duration-200",
                                   selected
                                     ? "translate-x-1 text-brand-red"
-                                    : "text-muted group-hover:translate-x-1",
+                                    : "text-brand-deep group-hover:translate-x-1 group-hover:text-brand-red",
                                 ].join(" ")}
                               />
                             </Link>
@@ -248,7 +248,7 @@ export default function Navbar() {
                               className={[
                                 "group flex items-center justify-between gap-3",
                                 "py-3 text-sm tracking-wide text-ink",
-                                "transition-colors duration-200 hover:text-brand-red",
+                                "transition-colors duration-200 hover:text-brand-red font-semibold",
                                 focusRing,
                               ].join(" ")}
                             >

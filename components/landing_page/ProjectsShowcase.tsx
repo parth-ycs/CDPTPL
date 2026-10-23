@@ -31,7 +31,7 @@ export default function ProjectsShowcase() {
 
   return (
     <section className="overflow-hidden bg-white py-14 md:py-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16">
         {/* Heading and navigation */}
         <div className="mb-8 flex items-center justify-between gap-6">
           <div>
@@ -39,8 +39,10 @@ export default function ProjectsShowcase() {
               Our work
             </p>
 
-            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-              Projects &amp; Case Studies
+            <h2 className="text-3xl tracking-tight text-slate-900 md:text-5xl [font-family:'Noa_Voren'] font-normal">
+              Projects &amp; 
+              <br/>
+              Case <span className="text-brand-blue font-normal">Studies</span>
             </h2>
 
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">

@@ -18,10 +18,11 @@ export default function Page() {
       <AboutUsSection />
       <CoreCapabilitiesSection />
       <FeaturedTechnologies />
-      <Industries />
+      
       <ProjectsShowcase />
       <GlobalPresence />
       <ResearchDevelopment />
+      <Industries />
       <News />
       <Enquiry />
       <Footer />

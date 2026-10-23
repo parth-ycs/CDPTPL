@@ -1,7 +1,11 @@
+
+"use client";
+
 import Image from "next/image";
 import {
+  ArrowRight,
   ShieldCheck,
-  Settings,
+  Settings2,
   Sprout,
   UsersRound,
   Factory,
@@ -9,35 +13,7 @@ import {
   Award,
 } from "lucide-react";
 
-const stats = [
-  {
-    value: "600+",
-    label: "Employees",
-    Icon: UsersRound,
-  },
-  {
-    value: "217K",
-    suffix: "sq. ft.",
-    label: "Fabrication facility",
-    detail: "at Mundra, Pune",
-    Icon: Factory,
-  },
-  {
-    value: "590+",
-    label: "Projects",
-    detail: "worldwide",
-    Icon: Globe2,
-  },
-  {
-    value: "37+",
-    label: "Years of global",
-    detail: "existence",
-    footnote: "In India since 2010",
-    Icon: Award,
-  },
-];
-
-const strengths = [
+const values = [
   {
     title: "Safety First",
     description: "In everything we do",
@@ -46,192 +22,171 @@ const strengths = [
   {
     title: "Engineering Excellence",
     description: "End-to-end capabilities",
-    Icon: Settings,
+    Icon: Settings2,
   },
   {
     title: "Sustainable Growth",
-    description: "For a cleaner, greener future",
+    description: "For a cleaner and greener future",
     Icon: Sprout,
+  },
+];
+
+const metrics = [
+  { value: "600+", label: "Employees", Icon: UsersRound },
+  {
+    value: "217K",
+    suffix: "sq. ft.",
+    label: "Fabrication facility",
+    detail: "at Mundra, Pune",
+    Icon: Factory,
+  },
+  { value: "590+", label: "Projects worldwide", Icon: Globe2 },
+  {
+    value: "37+",
+    label: "Years of global existence",
+    detail: "In India since 2010",
+    Icon: Award,
   },
 ];
 
 export default function AboutUsSection() {
   return (
     <section
-      aria-labelledby="about-us-heading"
-      className="relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24"
+      id="about-us"
+      className="relative bg-white py-10 sm:py-14 lg:py-16 mt-[-50]"
     >
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
-          {/* Left: introduction and values */}
-          <div className="relative z-10">
-            <h2
-              id="about-us-heading"
-              className="text-5xl font-bold leading-[1.05] tracking-tight text-[#071a31] sm:text-5xl xl:text-5xl [font-family:'Noa_Voren']"
-            >
-              Who We <span className="text-brand-blue">Are</span>
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">        <div className="grid min-w-0 grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-0">          {/* LEFT: Content */}
+          <div className="relative z-10 min-w-0 lg:pr-8">
+            <div className="mb-5 flex items-center gap-4">
+              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-600">
+                About Us
+              </span>
+              <span className="h-[2px] w-12 bg-red-600" />
+            </div>
+
+            <h2 className="text-4xl font-bold leading-[1.04] tracking-tight text-[#102c59] sm:text-5xl lg:text-5xl xl:text-5xl [font-family:'Noa_Voren']">
+              Who We <span className="text-red-600">Are</span>
             </h2>
 
-            <p className="mt-6 max-w-[650px] text-base leading-8 text-slate-600 sm:text-lg [font-family:'Bai_Jamjuree']">
-              Chemdist is a trusted EPC and technology partner delivering
-              integrated process solutions for the oil and gas, chemical,
-              pharmaceutical, emerging green energy, and other significant
-              process industries.
+            <p className="mt-5 max-w-[650px] text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+              At Chemdist, we combine deep engineering expertise,
+              advanced technology and proven execution capabilities
+              to deliver integrated process solutions for a safer,
+              cleaner and more sustainable world.
             </p>
 
-            <div className="mt-9 grid gap-6 sm:grid-cols-3 sm:gap-0 [font-family:'Bai_Jamjuree']">
-              {strengths.map(({ title, description, Icon }, index) => (
+            {/* Core values */}
+            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-0">
+              {values.map(({ title, description, Icon }, index) => (
                 <div
                   key={title}
-                  className={[
-                    "flex gap-3 sm:px-5",
-                    index === 0 ? "sm:pl-0" : "",
-                    index < strengths.length - 1
-                      ? "sm:border-r sm:border-slate-200"
-                      : "",
-                  ].join(" ")}
+                  className={`flex min-w-0 items-start gap-3 sm:px-3 xl:px-4 ${
+                    index === 0
+                      ? "sm:pl-0"
+                      : "sm:border-l sm:border-slate-300"
+                  }`}
                 >
                   <Icon
                     aria-hidden="true"
-                    className="mt-1 h-9 w-9 shrink-0 text-[#071a31] sm:h-10 sm:w-10"
+                    className="mt-0.5 h-8 w-8 shrink-0 text-[#102c59] sm:h-8 sm:w-8 xl:h-9 xl:w-9"
                     strokeWidth={1.7}
                   />
-                  <div>
-                    <h3 className="text-sm font-semibold leading-5 text-[#071a31] sm:text-base">
+
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-semibold leading-5 text-[#102c59] sm:text-sm xl:text-base">
                       {title}
                     </h3>
-                    <p className="mt-1 text-sm leading-5 text-slate-500">
+                    <p className="mt-1 text-xs leading-5 text-slate-500 sm:text-xs xl:text-sm">
                       {description}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* Right: plant image in a hexagonal frame with offset red outlines */}
-<div className="relative mx-auto w-full max-w-[720px] aspect-[1000/520]">
-  {/* Layer 1: soft hexagon + pale frame (behind the image). Same viewBox as the outline. */}
-  <svg
-    aria-hidden="true"
-    viewBox="0 0 1000 520"
-    className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-  >
-    {/* faint large hexagon on the left */}
-    <polygon
-      points="20,215 80,105 250,105 310,215 250,325 80,325"
-      fill="#eef2f7"
-      opacity="0.9"
-    />
-    {/* pale blue frame: same polygon as the image clip, thick stroke */}
-    <polygon
-      points="230,40 770,40 940,310 865,480 135,480 60,310"
-      fill="#dce8f5"
-      stroke="#dce8f5"
-      strokeWidth="28"
-      strokeLinejoin="round"
-    />
-  </svg>
-
-  {/* Layer 2: image, clipped to the exact same polygon (x/10 %, y/5.2 %) */}
-  <div
-    className="absolute inset-0 overflow-hidden"
-    style={{
-      clipPath:
-        "polygon(23% 7.7%, 77% 7.7%, 94% 59.6%, 86.5% 92.3%, 13.5% 92.3%, 6% 59.6%)",
-    }}
->
-    <Image src="/images/about-us-industry.png" alt="Chemdist industrial facility"
-        fill priority className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" />
-
-    {/* <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(ellipse_at_65%_30%,rgba(255,255,255,0.95),transparent_45%),linear-gradient(135deg,#edf2f7_0%,#cbd5e1_50%,#94a3b8_100%)] px-8 text-center">
-      <Factory aria-hidden="true" className="h-14 w-14 text-[#071a31]/60" strokeWidth={1.2} />
-      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#071a31]/70">
-        Industrial plant image
-      </span>
-      <span className="max-w-xs text-sm leading-6 text-slate-600">
-        Replace this placeholder with your facility or process plant photograph.
-      </span>
-    </div> */}
-  </div>
-
-  {/* Layer 3: red outlines, offset ~30px outward and parallel to the slanted edges */}
-  <svg
-    aria-hidden="true"
-    viewBox="0 0 1000 520"
-    className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
-    fill="none"
-  >
-    {/* top-left: runs up the upper-left diagonal, rounds the corner, continues along the top */}
-    <path
-      d="M 128 146 L 200 32 Q 214 10 240 10 L 292 10"
-      stroke="#e11d2e"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      vectorEffect="non-scaling-stroke"
-    />
-    {/* right: chevron hugging the right point */}
-    <path
-      d="M 914 213 L 960 289 Q 972 308 962 328 L 905 458"
-      stroke="#e11d2e"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      vectorEffect="non-scaling-stroke"
-    />
-  </svg>
-</div>
-</div>
-
-        {/* KPI strip */}
-        <div className="mt-12 grid overflow-hidden rounded-2xl border border-slate-100 bg-slate-50/90 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 [font-family:'Bai_Jamjuree']">
-          {stats.map(({ value, suffix, label, detail, footnote, Icon }, index) => (
-            <div
-              key={label}
-              className={[
-                "flex min-h-[142px] items-center gap-4 px-5 py-6 sm:px-7 lg:px-6 xl:px-8",
-                index % 2 === 0 ? "" : "",
-                index < stats.length - 1
-                  ? "border-b border-slate-200 lg:border-b-0 lg:border-r"
-                  : "",
-                index === 1 ? "sm:border-r-0 lg:border-r" : "",
-                index === 2 ? "sm:border-b-0 lg:border-r" : "",
-              ].join(" ")}
+            {/* Our Journey */}
+            <a
+              href="/about"
+              className="group mt-7 inline-flex items-center gap-3 text-sm font-semibold text-[#102c59] transition-colors hover:text-red-600"
             >
-              <Icon
-                aria-hidden="true"
-                className="h-10 w-10 shrink-0 text-[#071a31] sm:h-11 sm:w-11"
-                strokeWidth={1.7}
-              />
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-baseline gap-x-2">
-                  <span className="text-3xl font-bold tracking-tight text-[#071a31] sm:text-4xl">
-                    {value}
-                  </span>
-                  {suffix && (
-                    <span className="text-sm font-semibold text-slate-600">
-                      {suffix}
-                    </span>
-                  )}
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-red-600 text-white transition-transform group-hover:translate-x-1">
+                <ArrowRight size={20} />
+              </span>
+              Our Journey
+              <span className="h-px w-12 bg-red-500 transition-all group-hover:w-20" />
+            </a>
+          </div>
+        </div>
+
+        {/* KPI BAR: below both content and image */}
+        <div className="max-w-[1440px] relative z-10 mt-10 ">
+          <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-slate-300/40 bg-[#414e56] text-white sm:grid-cols-4">
+            {metrics.map(
+              ({ value, suffix, label, detail, Icon }, index) => (
+                <div
+                  key={label}
+                  className={`flex min-w-0 items-center gap-2 px-3 py-4 sm:gap-3 sm:px-4 sm:py-5 lg:gap-4 lg:px-5 xl:px-7 ${
+                    index % 2 === 1
+                      ? "border-l border-white/30"
+                      : ""
+                  } ${
+                    index > 1
+                      ? "border-t border-white/30 sm:border-t-0"
+                      : ""
+                  } ${
+                    index > 0
+                      ? "sm:border-l sm:border-white/30"
+                      : ""
+                  }`}
+                >
+                  <Icon
+                    aria-hidden="true"
+                    className="h-6 w-6 shrink-0 sm:h-8 sm:w-8 lg:h-9 lg:w-9"
+                    strokeWidth={1.6}
+                  />
+
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-baseline gap-x-1">
+                      <span className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+                        {value}
+                      </span>
+
+                      {suffix && (
+                        <span className="text-[10px] font-medium sm:text-xs lg:text-sm">
+                          {suffix}
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="mt-1 text-[10px] font-medium leading-4 sm:text-xs lg:text-sm">
+                      {label}
+                    </p>
+
+                    {detail && (
+                      <p className="text-[9px] leading-3 text-white/80 sm:text-[10px] lg:text-xs">
+                        {detail}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <p className="mt-1 text-sm leading-5 text-slate-600 sm:text-base">
-                  {label}
-                  {detail && (
-                    <>
-                      <br />
-                      {detail}
-                    </>
-                  )}
-                </p>
-                {footnote && (
-                  <p className="mt-1 text-xs leading-5 text-slate-500 sm:text-sm">
-                    {footnote}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
+              )
+            )}
+          </div>
         </div>
       </div>
+      {/* RIGHT: Image */}
+<div className="relative min-w-0 lg:static hidden lg:block">
+  <div className="relative h-[250px] w-full sm:h-[350px] lg:pointer-events-none lg:absolute lg:bottom-43 lg:left-0 lg:right-[calc((1440px-100vw)/2+48px)] lg:top-0 lg:h-auto">
+    <Image
+      src="/images/about-us/image.png"
+      alt="Chemdist industrial process plant"
+      fill
+      priority
+      sizes="(max-width: 1023px) 100vw, 55vw"
+      className="object-contain object-right-bottom scale-95 origin-bottom-right"
+    />
+  </div>
+</div>
     </section>
   );
 }

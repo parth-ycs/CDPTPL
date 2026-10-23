@@ -35,7 +35,7 @@ export const featuredTechnologies: FeaturedTechnology[] = [
     imageLayout: {
       width: 600,
       height: 350,
-      right: -15,
+      right: 15,
       top: 20,
       translateX: 0,
       translateY: 0,
@@ -58,7 +58,7 @@ export const featuredTechnologies: FeaturedTechnology[] = [
     imageLayout: {
       width: 540,
       height: 430,
-      right: 35,
+      right: 10,
       top: -65,
       translateX: 0,
       translateY: 0,
@@ -79,10 +79,10 @@ export const featuredTechnologies: FeaturedTechnology[] = [
     image: "/images/products/membrane-system.png",
     href: "/solutions/membranes",
     imageLayout: {
-      width: 550,
-      height: 400,
+      width: 650,
+      height: 450,
       right: 5,
-      top: 30,
+      top: -20,
       translateX: 0,
       translateY: 0,
       zIndex: 3,

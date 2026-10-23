@@ -1,141 +1,201 @@
 
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
-  FlaskConical,
-  Settings,
-  Leaf,
-  type LucideIcon,
+  ArrowDownRight,
+  ArrowLeft,
+  ArrowRight,
 } from "lucide-react";
 
-import { researchDevelopment } from "@/data/researchDevelopment";
+import { rdSectionData } from "@/data/r&d";
 
-const capabilityIcons: Record<string, LucideIcon> = {
-  flask: FlaskConical,
-  settings: Settings,
-  leaf: Leaf,
-};
+export default function RDSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-export default function ResearchDevelopment() {
-  const data = researchDevelopment;
+  const slides = rdSectionData.slides;
+  const activeSlide = slides[activeIndex];
+
+  const previousSlide = () => {
+    setActiveIndex((current) =>
+      current === 0 ? slides.length - 1 : current - 1
+    );
+  };
+
+  const nextSlide = () => {
+    setActiveIndex((current) =>
+      current === slides.length - 1 ? 0 : current + 1
+    );
+  };
 
   return (
     <section
       id="research-development"
-      className="bg-white px-5 py-12 md:px-8 md:py-16 lg:px-10 lg:py-20"
+      aria-labelledby="rd-heading"
+      className="relative overflow-hidden bg-white py-20 sm:py-24 lg:py-28"
     >
-      <div className="mx-auto max-w-[1500px] border border-slate-200 p-5 sm:p-7 md:p-8 lg:p-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-6 xl:gap-8">
+      <div className="mx-auto max-w-[1600px] px-6 sm:px-10 lg:px-14">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-5 xl:gap-5">
+          {/* LEFT: R&D CONTENT */}
+          <div className="flex min-w-0 flex-col items-start">
 
-          {/* LEFT COLUMN */}
-          <div className="flex min-w-0 flex-col">
-            {/* Section heading */}
-            <div className="mb-8 pt-2 md:mb-10">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="h-1 w-9 shrink-0 bg-red-600" />
 
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#102c55] sm:text-xs">
-                  {data.eyebrow}
+            {/* Heading */}
+            <h2
+              id="rd-heading"
+              className="max-w-[620px] text-[clamp(2.5rem,4.2vw,4.5rem)] leading-[1.02] tracking-[-0.055em] [font-family:'Noa_Voren'] font-normal text md:text-5xl lg:text-6xl"
+            >
+              Research & <span className="text-brand-blue">Development</span>
+            </h2>
+
+            {/* Description */}
+            <p className="mt-7 max-w-[550px] text-[15px] leading-[1.9] text-slate-600 sm:text-base">
+              {rdSectionData.description}
+            </p>
+
+            {/* Highlights */}
+            <ul className="mt-7 flex flex-col gap-3.5">
+              {rdSectionData.highlights.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center gap-4 text-sm font-medium text-brand-blue sm:text-base"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="h-3 w-3 shrink-0 rounded-full bg-brand-red"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA Buttons */}
+            <div className="mt-9 flex w-full flex-wrap gap-3 sm:w-auto sm:gap-4">
+              <Link
+                href={rdSectionData.primaryCta.href}
+                className="group inline-flex min-h-[54px] items-center justify-between gap-5 border border-brand-blue px-5 py-3 text-sm font-semibold text-brand-blue transition-colors duration-300 hover:bg-brand-blue hover:text-white sm:min-w-[220px] sm:px-6"
+              >
+                {rdSectionData.primaryCta.label}
+
+                <ArrowRight
+                  size={20}
+                  strokeWidth={1.7}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </Link>
+
+              <Link
+                href={rdSectionData.secondaryCta.href}
+                className="group inline-flex min-h-[54px] items-center justify-between gap-5 border border-slate-300 px-5 py-3 text-sm font-medium text-brand-blue transition-colors duration-300 hover:border-brand-blue hover:bg-slate-50 sm:min-w-[220px] sm:px-6"
+              >
+                {rdSectionData.secondaryCta.label}
+
+                <ArrowRight
+                  size={20}
+                  strokeWidth={1.7}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </Link>
+            </div>
+          </div>
+
+          {/* RIGHT: IMAGE SLIDER */}
+          <div className="relative min-w-0 max-h-[600px] w-full overflow-hidden rounded-xl bg-slate-100 sm:max-h-[600px] lg:max-h-[600px]">
+
+            {/* Image Frame */}
+            <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-md bg-slate-100">
+              {/* Current Slide */}
+              <Image
+                key={activeSlide.image}
+                src={activeSlide.image}
+                alt={activeSlide.alt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+
+              {/* Image Contrast Overlay */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/20" />
+
+              {/* Slide Counter */}
+              <div className="absolute right-5 top-5 z-10 sm:right-7 sm:top-7">
+                <span className="text-sm font-semibold tracking-wide text-white sm:text-base">
+                  {String(activeIndex + 1).padStart(2, "0")}
+                  <span className="mx-1.5 text-white/60">/</span>
+                  {String(slides.length).padStart(2, "0")}
+                </span>
+              </div>
+
+              {/* Previous Button */}
+              <button
+                type="button"
+                onClick={previousSlide}
+                aria-label="Previous R&D image"
+                className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-blue shadow-sm transition-all duration-300 hover:scale-105 hover:bg-brand-blue hover:text-white sm:left-6 sm:h-12 sm:w-12"
+              >
+                <ArrowLeft size={21} strokeWidth={1.8} />
+              </button>
+
+              {/* Next Button */}
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next R&D image"
+                className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-brand-blue shadow-sm transition-all duration-300 hover:scale-105 hover:bg-brand-blue hover:text-white sm:right-6 sm:h-12 sm:w-12"
+              >
+                <ArrowRight size={21} strokeWidth={1.8} />
+              </button>
+
+              {/* Bottom Caption */}
+              <div
+                className="absolute bottom-0 left-0 z-[5] w-full px-6 pb-7 pt-16 sm:px-8"
+                aria-live="polite"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80 ">
+                  Research & Development
+                </p>
+
+                <p className="mt-2 text-xl font-semibold text-white sm:text-2xl">
+                  {activeSlide.title}
                 </p>
               </div>
 
-              <h2 className="text-4xl font-semibold leading-[1.02] tracking-tight text-[#10264a] sm:text-5xl xl:text-6xl">
-                {data.title}
-                <br />
-                <span className="text-[#1764b5]">
-                  {data.titleAccent}
-                </span>
-              </h2>
-            </div>
-
-            {/* Smaller, lower-left image */}
-            <div className="relative mt-auto aspect-[1.12/1] min-h-[260px] overflow-hidden rounded-md sm:aspect-[1.2/1] lg:aspect-[1.05/1]">
-              <Image
-                src={data.secondaryImage.src}
-                alt={data.secondaryImage.alt}
-                fill
-                sizes="(max-width: 1023px) 100vw, 40vw"
-                className="object-cover transition-transform duration-700 hover:scale-[1.03]"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-[#06284e]/95 via-[#06284e]/15 to-transparent" />
-
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-6 xl:p-8">
-                <h3 className="max-w-md text-xl font-semibold leading-snug text-white sm:text-2xl">
-                  {data.secondaryImage.title}
-                </h3>
-
-                <span className="mt-4 block h-0.5 w-9 bg-white" />
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN */}
-          <div className="flex min-w-0 flex-col">
-            {/* Taller, upper-right image */}
-            <div className="relative aspect-[1.75/1] min-h-[260px] overflow-hidden rounded-md sm:aspect-[1.9/1] lg:aspect-[1.75/1]">
-              <Image
-                src={data.primaryImage.src}
-                alt={data.primaryImage.alt}
-                fill
-                sizes="(max-width: 1023px) 100vw, 55vw"
-                priority
-                className="object-cover transition-transform duration-700 hover:scale-[1.03]"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-[#06284e]/95 via-[#06284e]/10 to-transparent" />
-
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-6 xl:p-8">
-                <h3 className="max-w-lg text-xl font-semibold leading-snug text-white sm:text-2xl">
-                  {data.primaryImage.title}
-                </h3>
-
-                <span className="mt-4 block h-0.5 w-9 bg-white" />
+              {/* Slide Indicators */}
+              <div className="absolute bottom-5 right-5 z-10 flex items-center gap-2 sm:bottom-7 sm:right-8">
+                {slides.map((slide, index) => (
+                  <button
+                    key={slide.image}
+                    type="button"
+                    onClick={() => setActiveIndex(index)}
+                    aria-label={`Show slide ${index + 1}: ${slide.title}`}
+                    aria-current={
+                      activeIndex === index ? "true" : undefined
+                    }
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      activeIndex === index
+                        ? "w-10 bg-white"
+                        : "w-6 bg-white/50 hover:bg-white/80"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Introduction */}
-            <p className="mt-5 text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
-              {data.description}
-            </p>
+            {/* Decorative Index */}
+            <div className="mt-4 flex items-center justify-between">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                Innovation in Practice
+              </span>
 
-            {/* R&D capabilities */}
-            <div className="mt-6 space-y-5 sm:mt-7 sm:space-y-6">
-              {data.capabilities.map((capability) => {
-                const Icon = capabilityIcons[capability.icon];
-
-                return (
-                  <div
-                    key={capability.id}
-                    className="group flex items-center gap-4 sm:gap-5"
-                  >
-                    {/* Icon */}
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-sky-50 text-[#1556a2] transition-colors duration-300 group-hover:bg-[#1556a2] group-hover:text-white sm:size-14">
-                      <Icon
-                        aria-hidden="true"
-                        size={24}
-                        strokeWidth={1.8}
-                      />
-                    </div>
-
-                    {/* Divider */}
-                    <div className="h-10 w-px shrink-0 bg-blue-200" />
-
-                    {/* Text */}
-                    <div className="min-w-0">
-                      <h4 className="text-base font-semibold leading-snug text-[#10264a] sm:text-lg">
-                        {capability.title}
-                      </h4>
-
-                      <p className="mt-0.5 text-sm leading-5 text-slate-600">
-                        {capability.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+              <span className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-blue">
+                Discover More
+                <ArrowDownRight size={14} />
+              </span>
             </div>
           </div>
-
         </div>
       </div>
     </section>

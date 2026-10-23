@@ -25,15 +25,14 @@ export default function FeaturedTechnologies() {
 
   return (
     <section className="overflow-hidden bg-white py-16 md:py-20">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16">
         {/* Section heading */}
         <div className="mb-10 flex items-center justify-between gap-8">
           <div className="max-w-3xl">
             
-            <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-4xl [font-family:'Noa_Voren']">
-              Featured Technologies &amp; 
-              <br/>
-              <span className="text-brand-blue font-normal">Solutions</span>
+            <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-5xl [font-family:'Noa_Voren']">
+              Featured 
+              <span className="text-brand-blue font-normal"> Solutions</span>
             </h2>
 
             <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600 md:text-base [font-family:'Bai_Jamjuree']">

@@ -20,18 +20,66 @@ export const inter = localFont({
 
 export const baiJamjuree = localFont({
   src: [
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-ExtraLight.ttf", weight: "200", style: "normal" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-Light.ttf", weight: "300", style: "normal" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-ExtraLightItalic.ttf", weight: "200", style: "italic" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-LightItalic.ttf", weight: "300", style: "italic" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-Italic.ttf", weight: "400", style: "italic" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-MediumItalic.ttf", weight: "500", style: "italic" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-SemiBoldItalic.ttf", weight: "600", style: "italic" },
-    { path: "../public/fonts/BaiJamJuree/BaiJamJuree-BoldItalic.ttf", weight: "700", style: "italic" },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-ExtraLight.ttf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-ExtraLightItalic.ttf",
+      weight: "200",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-LightItalic.ttf",
+      weight: "300",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-MediumItalic.ttf",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-SemiBoldItalic.ttf",
+      weight: "600",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/BaiJamJuree/BaiJamjuree-BoldItalic.ttf",
+      weight: "700",
+      style: "italic",
+    },
   ],
   variable: "--font-bai",
   display: "swap",

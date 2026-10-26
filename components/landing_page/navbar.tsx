@@ -93,7 +93,7 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 bg-white/80 text-ink backdrop-blur-md [font-family:'Bai_Jamjuree']"
+      className="fixed inset-x-0 top-0 z-50 bg-white/80 text-ink backdrop-blur-md"
     >
       <nav
         aria-label="Primary navigation"

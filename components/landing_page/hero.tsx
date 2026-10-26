@@ -73,19 +73,19 @@ export default function Hero() {
   <Navbar />
 
   <Container className="relative z-10 pt-[70px] lg:pt-[88px]">
-    <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80 [font-family:'Bai_Jamjuree']">
+    <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">
       <span className="h-0.5 w-[34px] bg-brand-red" />
       Science · Engineering · Technology
     </p>
 
-    <h1 className="mt-[25px] mb-6 max-w-[800px] [font-family:'Noa_Voren'] text-[clamp(22px,3.4vw,44px)] leading-[1.1] font-normal">
+    <h1 className="section-heading mt-[25px] mb-6 max-w-[800px]">
       Transforming Molecules,
       <br />
       Transforming
       <em className="not-italic text-brand-red-light"> Industries</em>
     </h1>
 
-    <p className="max-w-[470px] text-base leading-[1.65] text-white/80 [font-family:'Bai_Jamjuree']">
+    <p className="max-w-[470px] text-base leading-[1.65] text-white/80">
      Integrated process engineering, advanced technologies, and sustainable industrial solutions-engineered in India for global industries.
     </p>
 

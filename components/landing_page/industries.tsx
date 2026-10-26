@@ -51,9 +51,8 @@ export default function Industries() {
         <Container className="relative z-10 py-[100px] lg:py-[130px]">
           <div className="text-white">
             {/* Section heading */}
-            <h2 className="mt-[25px] mb-8 [font-family:'Noa_Voren'] text-[clamp(28px,3.6vw,48px)] leading-[1.1] font-normal">
-              Industries
-              <span className="text-brand-red-light"> Served</span>
+            <h2 id="rd-heading" className="section-heading max-w-[620px]">
+              Industries <span className="text-brand-red-light">Served</span>
             </h2>
 
             {/* Full-width industry grid */}

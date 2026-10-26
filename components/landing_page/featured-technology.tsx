@@ -29,13 +29,12 @@ export default function FeaturedTechnologies() {
         {/* Section heading */}
         <div className="mb-10 flex items-center justify-between gap-8">
           <div className="max-w-3xl">
-            
-            <h2 className="text-5xl font-semibold tracking-tight text-slate-900 md:text-5xl [font-family:'Noa_Voren']">
-              Featured 
-              <span className="text-brand-blue font-normal"> Solutions</span>
+            <h2 id="rd-heading" className="section-heading max-w-[620px]">
+              Featured<span className="text-brand-blue"> Solutions</span>
             </h2>
+            
 
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600 md:text-base [font-family:'Bai_Jamjuree']">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
               Selected technology highlights and product/solution
               categories with strong cross-linking to SBU pages.
             </p>
@@ -61,7 +60,7 @@ export default function FeaturedTechnologies() {
             key={product.id}
             className="relative z-[1] w-full rounded-2xl border border-slate-200
               bg-white/95 p-6 shadow-sm backdrop-blur-sm
-              md:min-h-[330px] md:w-[58%] md:p-9 [font-family:'Bai_Jamjuree']"
+              md:min-h-[330px] md:w-[58%] md:p-9"
           >
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-red-600">
               {product.category}

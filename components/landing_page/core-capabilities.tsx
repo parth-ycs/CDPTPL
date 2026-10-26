@@ -50,13 +50,13 @@ export default function CoreCapabilitiesSection() {
           <div aria-hidden="true" className="pointer-events-none mx-auto max-w-[1440px] sm:px-8 lg:px-12 xl:px-16 absolute -bottom-40 -left-20 -z-10 h-80 w-80 rounded-full border border-white/10"/>
             <div className="mb-5 flex flex-col justify-between gap-3 text-white sm:mb-6 sm:flex-row sm:items-end ">
               <div>
-                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70 sm:text-xs [font-family:'Bai_Jamjuree']">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/70 sm:text-xs font-heading">
                   What we do
                 </p>
-                <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl [font-family:'Noa_Voren']">
-                  Core <span className="text-[#b00505]">Capabilities</span>
+                <h2 id="rd-heading" className="section-heading max-w-[620px]">
+                  Core<span className="text-[#b00505]"> Capabilities</span>
                 </h2>
-                <p className="mt-2 max-w-2xl text-xs leading-5 text-white/80 sm:text-sm sm:leading-6 [font-family:'Bai_Jamjuree']">
+                <p className="mt-2 max-w-2xl text-xs leading-5 text-white/80 sm:text-sm sm:leading-6">
                   Integrated expertise from engineering and technology to
                   manufacturing, EPC delivery, and process innovation.
                 </p>
@@ -64,7 +64,7 @@ export default function CoreCapabilitiesSection() {
             </div>
 
             {/* Fixed-height grid: each row has its own independent height. */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[240px_240px] lg:gap-4 [font-family:'Bai_Jamjuree']">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[240px_240px] lg:gap-4">
               {coreCapabilities.map((capability, index) => {
                 const Icon = iconMap[capability.icon];
                 const active = index === activeIndex;

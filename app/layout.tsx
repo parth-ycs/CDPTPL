@@ -1,6 +1,8 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { inter, baiJamjuree, noaVoren } from "./fonts";
+
 
 export const metadata: Metadata = {
   title: 'CHEMDIST GROUP | Science · Engineering · Technology',
@@ -39,7 +41,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${inter.variable} ${baiJamjuree.variable} ${noaVoren.variable}`}
+    >
       <body className="antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

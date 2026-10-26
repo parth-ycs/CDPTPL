@@ -13,13 +13,9 @@ export default function Enquiry() {
     <section id="enquiry" className="bg-brand-deep py-[120px] text-white">
       <Container className="grid gap-[45px] lg:grid-cols-[.8fr_1.2fr] lg:gap-[120px]">
         <div>
-          <p className="mb-[18px] text-[11px] font-bold uppercase tracking-[0.16em] text-white/70">
-            06 / project enquiry
-          </p>
-          <h2 className="mb-[30px] text-[clamp(46px,5.4vw,76px)] leading-[0.98] font-bold tracking-[-0.06em]">
-            Have a process
-            <br />
-            <em className="not-italic text-brand-red-light">challenge?</em>
+
+          <h2 id="rd-heading" className="mb-[30px] text-[clamp(46px,5.4vw,76px)] section-heading max-w-[620px] leading-[1] ">
+            Have a process <br /><span className="text-brand-red-light"> challenge?</span>
           </h2>
           <p className="max-w-[380px] leading-[1.7] text-white/70">
             Connect with our team to discuss your application, project

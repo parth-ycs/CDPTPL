@@ -16,20 +16,13 @@ export default function OverviewSection({
     >
       {/* Content */}
       <div className="max-w-2xl">
-        <h2
-          className="
-            [font-family:'Noa_Voren']
-            text-[clamp(26px,2.5vw,36px)]
-            leading-[1.15] font-normal
-          "
-        >
+        <h2 className="font-heading font-bold tracking-normal text-[clamp(1.5rem,3vw,2.5rem)] leading-tight sm:text-[clamp(2rem,3vw,3.5rem)] lg:text-[clamp(2.5rem,3vw,4rem)]">
           {data.heading}
         </h2>
 
         <p
           className="
             mt-4 max-w-xl
-            [font-family:'Bai_Jamjuree']
             text-sm leading-6 text-white/80
             sm:text-base sm:leading-7
           "
@@ -45,7 +38,7 @@ export default function OverviewSection({
             <div key={kpi.label} className="min-w-0">
               <p
                 className="
-                  [font-family:'Noa_Voren']
+                  font-heading
                   text-2xl leading-tight font-normal
                   sm:text-3xl lg:text-4xl
                 "
@@ -55,7 +48,7 @@ export default function OverviewSection({
 
               <p
                 className="
-                  mt-2 [font-family:'Bai_Jamjuree']
+                  mt-2
                   text-xs leading-4 text-white/70
                   sm:text-sm sm:leading-5
                 "

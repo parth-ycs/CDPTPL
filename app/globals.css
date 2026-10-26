@@ -33,26 +33,14 @@
   }
 }
 
-@font-face {
-  font-family: "Noa Voren";
-  src: url("/fonts/NoaVorenDEMO-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-bai);
+  --font-display: var(--font-noa);
 }
 
-@font-face {
-  font-family: "Bai Jamjuree";
-  src: url("/fonts/BaiJamjuree-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bai Jamjuree";
-  src: url("/fonts/BaiJamjuree-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+@layer components {
+  .section-heading {
+    @apply font-heading font-bold tracking-normal text-[clamp(2.5rem,4.2vw,4.5rem)] leading-[1.05];
+  }
 }

@@ -43,10 +43,7 @@ export default function RDSection() {
 
 
             {/* Heading */}
-            <h2
-              id="rd-heading"
-              className="max-w-[620px] text-[clamp(2.5rem,4.2vw,4.5rem)] leading-[1.02] tracking-[-0.055em] [font-family:'Noa_Voren'] font-normal text md:text-5xl lg:text-6xl"
-            >
+            <h2 id="rd-heading" className="section-heading max-w-[620px]">
               Research & <span className="text-brand-blue">Development</span>
             </h2>
 

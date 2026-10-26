@@ -139,10 +139,10 @@ export default function GlobalPresence() {
 
         {/* RIGHT: unchanged */}
         <div>
-          <h2 className="mb-7 text-[clamp(42px,5vw,68px)] [font-family:'Noa_Voren'] font-normal leading-[0.98] font-bold tracking-[-0.06em] text-ink">
+          <h2 className="mb-7 text-[clamp(42px,5vw,68px)] font-heading font-normal leading-[0.98] font-bold tracking-[-0.06em] text-ink">
             Global 
             <br />
-            <span className="text-brand-blue [font-family:'Noa_Voren'] font-normal">Presence</span>
+            <span className="text-brand-blue font-normal">Presence</span>
           </h2>
           <p className="max-w-[400px] leading-[1.75] text-muted">
             Connecting process expertise, engineered solutions and industrial

@@ -39,10 +39,9 @@ export default function ProjectsShowcase() {
               Our work
             </p>
 
-            <h2 className="text-3xl tracking-tight text-slate-900 md:text-5xl [font-family:'Noa_Voren'] font-normal">
-              Projects &amp; 
-              <br/>
-              Case <span className="text-brand-blue font-normal">Studies</span>
+            <h2 id="rd-heading" className="section-heading max-w-[620px]">
+              Projects &amp; <br/>
+              Case <span className="text-brand-blue">Studies</span>
             </h2>
 
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">

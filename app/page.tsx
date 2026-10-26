@@ -10,7 +10,7 @@ import CoreCapabilitiesSection from "@/components/landing_page/core-capabilities
 import FeaturedTechnologies from "@/components/landing_page/featured-technology";
 import ProjectsShowcase from "@/components/landing_page/ProjectsShowcase";
 import ResearchDevelopment from "@/components/landing_page/research-development";
-
+import GlobalPresenceSection from "@/components/landing_page/global_presence/global-presence";
 export default function Page() {
   return (
     <main>
@@ -20,7 +20,7 @@ export default function Page() {
       <FeaturedTechnologies />
       
       <ProjectsShowcase />
-      <GlobalPresence />
+      <GlobalPresenceSection />
       <ResearchDevelopment />
       <Industries />
       <News />

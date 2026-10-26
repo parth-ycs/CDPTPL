@@ -31,7 +31,7 @@ export default function ServiceHero({
 
       <Container className="pt-8 pb-12 lg:pb-16">
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="text-sm text-brand-deep/70 [font-family:'Bai_Jamjuree']">
+        <nav aria-label="Breadcrumb" className="text-sm text-brand-deep/70 ">
           <ol className="flex items-center gap-2">
             <li>
               <Link href="/" className="hover:text-brand-deep">
@@ -53,21 +53,21 @@ export default function ServiceHero({
 
         {/* Centered text block */}
         <div className="mx-auto mt-12 flex max-w-[920px] flex-col items-center text-center lg:mt-16">
-          <span className="text-sm font-medium uppercase tracking-wider text-emerald-700 [font-family:'Bai_Jamjuree']">
+          <span className="text-sm font-medium uppercase tracking-wider text-emerald-700">
             {tagline}
           </span>
 
-          <h1 className="mt-6 [font-family:'Noa_Voren'] text-[clamp(36px,6vw,80px)] leading-[1.05] font-semibold tracking-tight">
+          <h1 className="mt-6 font-heading text-[clamp(36px,6vw,80px)] leading-[1.05] font-semibold tracking-tight">
             {name}
           </h1>
 
-          <p className="mt-8 max-w-[620px] text-base leading-[1.65] text-brand-deep/75 sm:text-lg [font-family:'Bai_Jamjuree']">
+          <p className="mt-8 max-w-[620px] text-base leading-[1.65] text-brand-deep/75 sm:text-lg">
             {description}
           </p>
 
           <Link
             href={ctaHref}
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-5 py-3 text-base font-semibold text-white transition-colors hover:bg-emerald-800 [font-family:'Bai_Jamjuree']"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-5 py-3 text-base font-semibold text-white transition-colors hover:bg-emerald-800"
           >
             <span aria-hidden>→</span>
             {ctaLabel}

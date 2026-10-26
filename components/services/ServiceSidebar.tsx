@@ -59,7 +59,7 @@ export default function ServiceSidebar({ items }: { items: SidebarItem[] }) {
             aria-current={active ? "true" : undefined}
             className={[
               "group shrink-0 whitespace-nowrap px-4 py-3.5",
-              "text-base [font-family:'Bai_Jamjuree']",
+              "text-base",
               "transition-colors duration-200",
               "lg:mb-0 lg:py-3 lg:pl-5 lg:pr-4 lg:text-[17px]",
               active

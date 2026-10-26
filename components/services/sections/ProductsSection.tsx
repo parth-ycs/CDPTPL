@@ -27,12 +27,12 @@ export default function ProductsSection({
     <section className="w-full">
       {/* Section heading */}
       <div className="mb-7 sm:mb-9">
-        <h2 className="[font-family:'Noa_Voren'] text-[clamp(26px,2.6vw,36px)] leading-tight text-ink">
+        <h2 className="font-heading font-bold tracking-normal  text-[clamp(1.5rem,3vw,2.5rem)] leading-tight text-ink ">
           {data.heading}
         </h2>
 
         {data.intro && (
-          <p className="mt-3 max-w-2xl [font-family:'Bai_Jamjuree'] text-sm leading-6 text-muted sm:text-base sm:leading-7">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted sm:text-base sm:leading-7">
             {data.intro}
           </p>
         )}
@@ -60,21 +60,21 @@ export default function ProductsSection({
             className="animate-in fade-in mt-5 duration-300"
           >
             {active.category && (
-              <p className="mb-2 [font-family:'Bai_Jamjuree'] text-xs font-semibold uppercase tracking-[0.12em] text-brand-red">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-brand-red">
                 {active.category}
               </p>
             )}
 
-            <h3 className="[font-family:'Bai_Jamjuree'] text-2xl leading-tight font-bold text-ink sm:text-3xl">
+            <h3 className="font-heading text-2xl leading-tight font-bold text-brand-blue sm:text-3xl ">
               {active.name}
             </h3>
 
-            <p className="mt-3 max-w-2xl [font-family:'Bai_Jamjuree'] text-sm leading-6 text-muted sm:text-base sm:leading-7">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted sm:text-base sm:leading-7">
               {active.description}
             </p>
 
             {active.specs && active.specs.length > 0 && (
-              <ul className="mt-4 space-y-2 [font-family:'Bai_Jamjuree'] text-sm text-ink sm:text-base">
+              <ul className="mt-4 space-y-2 text-sm text-ink sm:text-base">
                 {active.specs.map((spec) => (
                   <li key={spec} className="flex items-start gap-3">
                     <span
@@ -92,12 +92,12 @@ export default function ProductsSection({
         {/* Product selector */}
         <aside className="min-w-0">
           <div className="mb-4 flex items-center justify-between">
-            <p className="[font-family:'Bai_Jamjuree'] text-xs font-semibold uppercase tracking-[0.12em] text-muted">
+            <p className=" text-xs font-semibold uppercase tracking-[0.12em] text-muted">
               Explore products
             </p>
 
             <div className="flex items-center gap-2">
-              <span className="mr-1 [font-family:'Bai_Jamjuree'] text-xs tabular-nums text-muted">
+              <span className="mr-1 font-heading text-xs tabular-nums text-muted">
                 {String(index + 1).padStart(2, "0")} /{" "}
                 {String(items.length).padStart(2, "0")}
               </span>
@@ -153,7 +153,7 @@ export default function ProductsSection({
                   <div className="min-w-0 flex-1">
                     <p
                       className={[
-                        "[font-family:'Bai_Jamjuree'] text-sm leading-5 transition-colors",
+                        "font-heading text-sm leading-5 transition-colors",
                         selected
                           ? "font-medium text-brand-blue"
                           : "font-medium text-ink group-hover:text-brand-blue",
@@ -163,7 +163,7 @@ export default function ProductsSection({
                     </p>
 
                     {item.category && (
-                      <p className="mt-1 line-clamp-2 [font-family:'Bai_Jamjuree'] text-xs leading-4 text-muted">
+                      <p className="mt-1 line-clamp-2 text-xs leading-4 text-muted">
                         {item.category}
                       </p>
                     )}

@@ -1,7 +1,7 @@
 import OverviewSection from "./sections/OverviewSection";
 import ProductsSection from "./sections/ProductsSection";
 import ServicesSection from "./sections/ServicesSection";
-import IndustriesSection from "./sections/industries";
+import IndustriesSection from "@/components/landing_page/industries";
 import type { ServiceSection } from "./types";
 
 export default function ServiceSectionRenderer({

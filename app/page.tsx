@@ -1,6 +1,5 @@
 import Hero from "@/components/landing_page/hero";
 import ProcessSection from "@/components/landing_page/process-section";
-import GlobalPresence from "@/components/landing_page/global-presence";
 import Industries from "@/components/landing_page/industries";
 import News from "@/components/landing_page/news";
 import Enquiry from "@/components/landing_page/enquiry";
@@ -18,7 +17,6 @@ export default function Page() {
       <AboutUsSection />
       <CoreCapabilitiesSection />
       <FeaturedTechnologies />
-      
       <ProjectsShowcase />
       <GlobalPresenceSection />
       <ResearchDevelopment />

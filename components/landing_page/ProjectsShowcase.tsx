@@ -4,9 +4,8 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
+import { projects, getProjectHref } from "@/data/projects";
 import BrandCarouselButtons from "@/components/ui/BrandCarouselButtons";
-import { projects } from "@/data/projects";
 
 export default function ProjectsShowcase() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -127,90 +126,79 @@ export default function ProjectsShowcase() {
 
                 {/* Expanded case study: content starts at the top */}
                 
-                {expanded && (
-                <div
-                        className="absolute inset-0 z-20 overflow-hidden
-                        bg-slate-950/50 p-4 backdrop-blur-[2px] md:p-5"
-                    >
-                    {/* Category */}
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
-                    {project.category}
-                    </p>
-
-                    {/* Project title */}
-                    <h3 className="mb-5 break-words text-xl font-semibold leading-snug sm:text-2xl">
-                    {project.title}
-                    </h3>
-
-                    <div className="space-y-4 text-sm leading-5 text-white/90">
-                    {/* Plant */}
-                    {project.plant && (
-                        <div>
-                        <p className="mb-1 font-semibold text-sky-300">Plant</p>
-                        <p>{project.plant}</p>
-                        </div>
-                    )}
-
-                    {/* Description */}
-                    <div>
-                        <p className="mb-1 font-semibold text-sky-300">
-                        Project Description
+                  {expanded && (
+                    <div className="absolute inset-0 z-20 flex flex-col overflow-hidden bg-slate-950/75 backdrop-blur-[2px]">
+                      {/* Scrollable project information */}
+                      <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-5 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.4)_transparent]">
+                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
+                          {project.category}
                         </p>
-                        <p>{project.description}</p>
-                    </div>
 
-                    
-                    {/* Contract value */}
-                    {project.contractValue && (
-                        <div>
-                        <p className="mb-1 font-semibold text-sky-300">
-                            Overall Contract Value
-                        </p>
-                        <p className="font-semibold">{project.contractValue}</p>
-                        </div>
-                    )}
+                        <h3 className="mb-5 break-words text-xl font-semibold leading-snug sm:text-2xl">
+                          {project.title}
+                        </h3>
 
-
-                    {/* Award and completion dates */}
-                    {(project.yearOfAward || project.yearOfCompletion) && (
-                        <div className="grid grid-cols-2 gap-3 border-t border-white/15 pt-4">
-                        {project.yearOfAward && (
+                        <div className="space-y-4 text-sm leading-5 text-white/90">
+                          {project.plant && (
                             <div>
-                            <p className="mb-1 font-semibold text-sky-300">
-                                Year of Award
-                            </p>
-                            <p>{project.yearOfAward}</p>
+                              <p className="mb-1 font-semibold text-sky-300">Plant</p>
+                              <p>{project.plant}</p>
                             </div>
-                        )}
+                          )}
 
-                        {project.yearOfCompletion && (
+                          <div>
+                            <p className="mb-1 font-semibold text-sky-300">
+                              Project Description
+                            </p>
+                            <p>{project.description}</p>
+                          </div>
+
+                          {project.contractValue && (
                             <div>
-                            <p className="mb-1 font-semibold text-sky-300">
-                                Year of Completion
-                            </p>
-                            <p>{project.yearOfCompletion}</p>
+                              <p className="mb-1 font-semibold text-sky-300">
+                                Overall Contract Value
+                              </p>
+                              <p className="font-semibold">{project.contractValue}</p>
                             </div>
-                        )}
-                        </div>
-                    )}
+                          )}
 
-                    {/* Case study link */}
-                    {project.href && (
+                          {(project.yearOfAward || project.yearOfCompletion) && (
+                            <div className="grid grid-cols-2 gap-3 border-t border-white/15 pt-4">
+                              {project.yearOfAward && (
+                                <div>
+                                  <p className="mb-1 font-semibold text-sky-300">
+                                    Year of Award
+                                  </p>
+                                  <p>{project.yearOfAward}</p>
+                                </div>
+                              )}
+
+                              {project.yearOfCompletion && (
+                                <div>
+                                  <p className="mb-1 font-semibold text-sky-300">
+                                    Year of Completion
+                                  </p>
+                                  <p>{project.yearOfCompletion}</p>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Always-visible case study link */}
+                      <div className="shrink-0 border-t border-white/20 bg-slate-950/95 px-4 py-3 md:px-5">
                         <Link
-                        href={project.href}
-                        tabIndex={expanded ? 0 : -1}
-                        className="inline-flex items-center gap-2 pt-1 font-semibold
-                            text-white transition-colors hover:text-red-300
-                            focus-visible:outline-2 focus-visible:outline-offset-4
-                            focus-visible:outline-sky-300"
+                          href={getProjectHref(project)}
+                          tabIndex={0}
+                          className="inline-flex items-center gap-2 font-semibold text-white transition-colors hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-300"
                         >
-                        View case study
-                        <span aria-hidden="true">↗</span>
+                          View case study
+                          <span aria-hidden="true">↗</span>
                         </Link>
-                    )}
+                      </div>
                     </div>
-                </div>
-                )}
+                  )}
                 </article>
                 );
                 })}

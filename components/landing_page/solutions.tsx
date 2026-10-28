@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import Container from "./container";
+import Container from "../container";
 import sbus from "@/data/sbus";
 
 export default function Solutions() {

@@ -4,17 +4,42 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 
-import Logo from "../ui/logo";
-import sbus, { type SBU } from "@/data/sbus";
+import Logo from "./ui/logo";
+import sbus, { serviceHref, type SBU } from "@/data/sbus/sbus";
 
 const list: SBU[] = sbus;
+
+type NavChild = {
+  slug?: string;
+  href?: string;
+  name?: string;
+  hero?: { name?: string };
+};
+
+type SBUWithLegacyItems = SBU & {
+  children?: NavChild[];
+  items?: NavChild[];
+};
+
+function getChildren(sbu: SBU): NavChild[] {
+  const compatibleSBU = sbu as SBUWithLegacyItems;
+  return compatibleSBU.children ?? compatibleSBU.items ?? [];
+}
+
+function getChildHref(item: NavChild): string {
+  return item.slug ? serviceHref(item.slug) : item.href ?? "/";
+}
+
+function getChildName(item: NavChild): string {
+  return item.hero?.name ?? item.name ?? "Unnamed offering";
+}
 
 // "/#..." so these work from /services/... pages as well as the landing page.
 const navigationItems = [
   { label: "Technologies", href: "/#technologies" },
   { label: "Industries", href: "/#industries" },
-  { label: "Projects", href: "/#projects" },
-  { label: "R&D", href: "/#rd" },
+  { label: "Projects", href: "/projects" },
+  { label: "R&D", href: "/research-development" },
   { label: "Our Group", href: "/#group" },
   { label: "Global Presence", href: "/#global" },
   { label: "Careers", href: "/#careers" },
@@ -38,7 +63,7 @@ export default function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeSBU = active !== null ? list[active] : null;
-  const activeItems = activeSBU?.items ?? [];
+  const activeItems = activeSBU ? getChildren(activeSBU) : [];
 
   function closeMenus() {
     setOpen(false);
@@ -110,7 +135,7 @@ export default function Navbar() {
 
         {/* ---------- Desktop navigation ---------- */}
         <div className="hidden items-center gap-6 lg:flex">
-          {/* Verticals: trigger + compact mega menu share one hover zone */}
+          {/* Solutions: trigger + compact mega menu share one hover zone */}
           <div
             className="relative h-[88px]"
             onMouseEnter={openMenu}
@@ -126,13 +151,13 @@ export default function Navbar() {
               type="button"
               aria-expanded={open}
               aria-haspopup="true"
-              aria-controls="verticals-menu"
+              aria-controls="solutions-menu"
               onClick={() => (open ? closeMenus() : openMenu())}
               className={`flex h-full cursor-pointer items-center gap-1.5 text-xs font-semibold tracking-wide transition-colors ${underline} ${
                 open ? "text-brand-red after:scale-x-100" : "text-ink"
               } hover:text-brand-red ${focusRing}`}
             >
-              Verticals
+              Solutions
               <ChevronDown
                 size={14}
                 aria-hidden="true"
@@ -144,7 +169,7 @@ export default function Navbar() {
 
             {open && (
               <div
-                id="verticals-menu"
+                id="solutions-menu"
                 aria-hidden={!open}
                 className={[
                   "fixed inset-x-0 top-[88px] z-50",
@@ -179,7 +204,7 @@ export default function Navbar() {
                   <div className="border-l border-black/10">
                     <div className="px-7 pb-4 pt-8 lg:px-8">
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                        Our verticals
+                        Our solutions
                       </p>
                     </div>
 
@@ -240,9 +265,9 @@ export default function Navbar() {
 
                       <ul className="space-y-1">
                         {activeItems.map((item) => (
-                          <li key={item.href}>
+                          <li key={item.slug ?? item.href ?? getChildName(item)}>
                             <Link
-                              href={item.href}
+                              href={getChildHref(item)}
                               onClick={closeMenus}
                               tabIndex={open ? 0 : -1}
                               className={[
@@ -252,7 +277,7 @@ export default function Navbar() {
                                 focusRing,
                               ].join(" ")}
                             >
-                              <span>{item.name}</span>
+                              <span>{getChildName(item)}</span>
                               <ArrowRight
                                 size={15}
                                 aria-hidden="true"
@@ -333,7 +358,7 @@ export default function Navbar() {
               onClick={() => setMobileSolutions((p) => !p)}
               className={`flex w-full cursor-pointer items-center justify-between border-b border-line py-4 text-left text-sm ${focusRing}`}
             >
-              <span>Verticals</span>
+              <span>Solutions</span>
               <ChevronDown
                 size={17}
                 aria-hidden="true"
@@ -367,14 +392,14 @@ export default function Navbar() {
 
                     {mobileSbu === i && (
                       <ul className="pb-2 pl-8 pr-4">
-                        {sbu.items.map((item) => (
-                          <li key={item.href}>
+                        {getChildren(sbu).map((item) => (
+                          <li key={item.slug ?? item.href ?? getChildName(item)}>
                             <Link
-                              href={item.href}
+                              href={getChildHref(item)}
                               onClick={closeMenus}
                               className="block py-2 text-[13px] text-muted hover:text-brand-red"
                             >
-                              {item.name}
+                              {getChildName(item)}
                             </Link>
                           </li>
                         ))}

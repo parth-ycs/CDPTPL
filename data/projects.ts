@@ -14,11 +14,20 @@ export type Project = {
   yearOfAward?: string;
   yearOfCompletion: string;
   image: string;
-  href?: string;
+};
+
+export const projectsPageData = {
+  hero: {
+    heading: "Our Projects",
+    eyebrow: "ENGINEERING EXCELLENCE",
+    description:
+      "Explore our portfolio of industrial projects, process plants, and engineering solutions delivered across global markets.",
+    image: "/images/projects/farabi-plant.png",
+    imageAlt: "Industrial process plant project",
+  },
 };
 
 export const projects: Project[] = [
-  // 1. Preserved first project
   {
     id: "farabi-yanbu",
     title: "Farabi Yanbu Petrochemicals Company, KSA",
@@ -40,10 +49,7 @@ export const projects: Project[] = [
     yearOfAward: "2019",
     yearOfCompletion: "2022",
     image: "/images/projects/farabi-plant.png",
-    href: "/projects/farabi-yanbu",
   },
-
-  // 2. Addar Group
   {
     id: "addar-reaction-facility",
     title: "Global Company For Chemical Industries (Addar Group), KSA",
@@ -60,13 +66,12 @@ export const projects: Project[] = [
       "Fabrication",
       "Site Construction",
     ],
+    executionScope:
+      "Engineering, Procurement, Fabrication and Site Construction",
     yearOfAward: "2018",
     yearOfCompletion: "2019",
     image: "/images/projects/addar-reaction-facility.png",
-    href: "/projects/addar-reaction-facility",
   },
-
-  // 3. TACO Chemicals
   {
     id: "taco-ethyl-acetate",
     title: "TACO Chemicals, Turkey",
@@ -86,13 +91,12 @@ export const projects: Project[] = [
       "Project Management",
       "Site Supervision",
     ],
+    executionScope:
+      "Engineering, Procurement, Fabrication, Supply and Commissioning",
     yearOfAward: "2017",
     yearOfCompletion: "2018",
     image: "/images/projects/taco-ethyl-acetate.jpg",
-    href: "/projects/taco-ethyl-acetate",
   },
-
-  // 4. Green Energy Chemicals
   {
     id: "green-energy-chemicals",
     title: "Green Energy Chemicals, Turkey",
@@ -110,13 +114,12 @@ export const projects: Project[] = [
       "Construction",
       "Commissioning",
     ],
+    executionScope:
+      "Engineering, Procurement, Fabrication, Construction and Commissioning",
     yearOfAward: "2022",
     yearOfCompletion: "2023",
     image: "/images/projects/green-energy-distillery.jpg",
-    href: "/projects/green-energy-distillery",
   },
-
-  // 5. NALCO Saudi
   {
     id: "nalco-saudi-reactor",
     title: "NALCO Saudi Company Limited, Dammam, KSA",
@@ -134,13 +137,12 @@ export const projects: Project[] = [
       "Construction",
       "Commissioning",
     ],
+    executionScope:
+      "Engineering, Procurement, Fabrication, Construction and Commissioning",
     yearOfAward: "2024",
     yearOfCompletion: "Under Execution",
     image: "/images/projects/nalco-reactor.jpg",
-    href: "/projects/nalco-reactor",
   },
-
-  // 6. Dangote Refinery — Fired Heaters
   {
     id: "dangote-fired-heaters",
     title: "Fired Heaters Package for Dangote Refinery",
@@ -162,10 +164,7 @@ export const projects: Project[] = [
     contractValue: "USD 124 million",
     yearOfCompletion: "2021",
     image: "/images/projects/dangote-fired-heaters.jpg",
-    href: "/projects/dangote-fired-heaters",
   },
-
-  // 7. PEMEX
   {
     id: "pemex-fired-heaters",
     title: "Fired Heaters for PEMEX",
@@ -187,10 +186,7 @@ export const projects: Project[] = [
     contractValue: "USD 59 million",
     yearOfCompletion: "2022",
     image: "/images/projects/pemex-fired-heaters.jpg",
-    href: "/projects/pemex-fired-heaters",
   },
-
-  // 8. Dangote Refinery — Flare Package
   {
     id: "dangote-flare-package",
     title: "Flare Package for Dangote Refinery",
@@ -214,6 +210,18 @@ export const projects: Project[] = [
     contractValue: "USD 7 million",
     yearOfCompletion: "2023",
     image: "/images/projects/dangote-flare-package.jpg",
-    href: "/projects/dangote-flare-package",
   },
 ];
+
+export const projectCategories = [
+  "All Projects",
+  ...Array.from(new Set(projects.map((project) => project.category))),
+];
+
+export function getProjectById(id: string) {
+  return projects.find((project) => project.id === id);
+}
+
+export function getProjectHref(project: Project) {
+  return `/projects/${project.id}`;
+}

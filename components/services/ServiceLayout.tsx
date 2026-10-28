@@ -1,16 +1,30 @@
-import Container from "@/components/landing_page/container";
+
+import Container from "@/components/container";
 import ServiceSidebar from "./ServiceSidebar";
 import ServiceSectionRenderer from "./ServiceSectionRenderer";
 import type { ServiceSection } from "./types";
 
-export default function ServiceLayout({ sections }: { sections: ServiceSection[] }) {
-  // Drop sections that have nothing to show, so the sidebar and the page
-  // are always generated from the exact same list.
-  const visible = sections.filter(
-    (s) => !("items" in s) || s.items.length > 0
-  );
+function hasContent(section: ServiceSection): boolean {
+  if ("items" in section && section.items.length === 0) {
+    return false;
+  }
 
-  const sidebarItems = visible.map(({ id, label }) => ({ id, label }));
+  return true;
+}
+
+export default function ServiceLayout({
+  sections,
+}: {
+  sections: ServiceSection[];
+}) {
+  const visible = sections.filter(hasContent);
+
+  const sidebarItems = visible.map(({ id, label }) => ({
+    id,
+    label,
+  }));
+
+  if (visible.length === 0) return null;
 
   return (
     <Container className="py-10 lg:py-16">

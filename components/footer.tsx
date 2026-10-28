@@ -1,6 +1,6 @@
 "use client"
 import Container from "./container";
-import Logo from "../ui/logo";
+import Logo from "./ui/logo";
 import sbus from "@/data/sbus";
 
 const exploreLinks = [

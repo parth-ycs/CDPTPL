@@ -1,6 +1,13 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Navbar from "@/components/landing_page/navbar";
-import Container from "@/components/landing_page/container";
+import { usePathname } from "next/navigation";
+import { ChevronDown } from "lucide-react";
+
+import Navbar from "@/components/navbar";
+import Container from "@/components/container";
+import sbus, { serviceHref } from "@/data/sbus/sbus";
 import type { ServiceHeroContent } from "./types";
 
 type ServiceHeroProps = ServiceHeroContent & {
@@ -21,6 +28,38 @@ export default function ServiceHero({
   ctaLabel = "Contact us",
   ctaHref = "#contact",
 }: ServiceHeroProps) {
+  const pathname = usePathname();
+  const [childMenuOpen, setChildMenuOpen] = useState(false);
+  const switcherRef = useRef<HTMLDivElement>(null);
+
+  const currentSlug = pathname.split("/").filter(Boolean).at(-1) ?? "";
+  const currentSBU = sbus.find((sbu) =>
+    sbu.children.some((child) => child.slug === currentSlug)
+  );
+  const childPages = currentSBU?.children ?? [];
+
+  useEffect(() => {
+    function handlePointerDown(event: PointerEvent) {
+      if (
+        switcherRef.current &&
+        !switcherRef.current.contains(event.target as Node)
+      ) {
+        setChildMenuOpen(false);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setChildMenuOpen(false);
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <section className="bg-white text-brand-deep">
       {/* Navbar sits in a dark bar so it stays readable on the white page.
@@ -30,26 +69,87 @@ export default function ServiceHero({
       </header>
 
       <Container className="pt-8 pb-12 lg:pb-16">
-        {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="text-sm text-brand-deep/70 ">
-          <ol className="flex items-center gap-2">
-            <li>
-              <Link href="/" className="hover:text-brand-deep">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden>›</li>
-            <li>
-              <Link href="/services" className="hover:text-brand-deep">
-                Services
-              </Link>
-            </li>
-            <li aria-hidden>›</li>
-            <li aria-current="page" className="font-semibold text-brand-deep">
-              {name}
-            </li>
-          </ol>
-        </nav>
+        {/* Breadcrumb and child-page switcher */}
+        <div className="flex flex-col gap-4 border-b border-line pb-4 sm:flex-row sm:items-center sm:justify-between">
+          <nav aria-label="Breadcrumb" className="min-w-0 text-sm text-brand-deep/70">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-brand-deep">
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true">›</li>
+              <li>
+                <Link href="/services" className="hover:text-brand-deep">
+                  Services
+                </Link>
+              </li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page" className="font-semibold text-brand-deep">
+                {name}
+              </li>
+            </ol>
+          </nav>
+
+          {currentSBU && childPages.length > 1 && (
+            <div ref={switcherRef} className="relative w-full sm:w-auto sm:min-w-[300px] sm:max-w-[440px]">
+              <button
+                type="button"
+                aria-expanded={childMenuOpen}
+                aria-haspopup="listbox"
+                onClick={() => setChildMenuOpen((open) => !open)}
+                className="flex w-full items-center justify-between gap-4 px-1 py-3 text-left text-sm text-brand-deep transition-colors hover:text-brand-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+              >
+                <span className="min-w-0 truncate">
+                  <span className="font-medium">{currentSBU.name}</span>
+                  <span className="px-1.5 text-muted">:</span>
+                  <span>{name}</span>
+                </span>
+                <ChevronDown
+                  size={16}
+                  aria-hidden="true"
+                  className={`shrink-0 text-brand-red transition-transform duration-200 ${
+                    childMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {childMenuOpen && (
+                <ul
+                  role="listbox"
+                  aria-label={`${currentSBU.name} pages`}
+                  className="absolute right-0 top-full z-40 mt-1 max-h-72 w-full overflow-y-auto border border-line bg-white shadow-[0_16px_36px_rgba(0,0,0,0.12)]"
+                >
+                  {childPages.map((child) => {
+                    const isCurrent = child.slug === currentSlug;
+
+                    return (
+                      <li key={child.slug} role="option" aria-selected={isCurrent}>
+                        <Link
+                          href={serviceHref(child.slug)}
+                          onClick={() => setChildMenuOpen(false)}
+                          aria-current={isCurrent ? "page" : undefined}
+                          className={`flex items-center justify-between border-b border-line px-4 py-3.5 text-sm transition-colors last:border-b-0 hover:bg-pale hover:text-brand-red ${
+                            isCurrent
+                              ? "font-semibold text-brand-red"
+                              : "text-brand-deep"
+                          }`}
+                        >
+                          <span>{child.hero.name}</span>
+                          {isCurrent && (
+                            <span className="ml-3 shrink-0 text-xs font-medium text-muted">
+                              Current page
+                            </span>
+                          )}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Centered text block */}
         <div className="mx-auto mt-12 flex max-w-[920px] flex-col items-center text-center lg:mt-16">
@@ -69,7 +169,7 @@ export default function ServiceHero({
             href={ctaHref}
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-emerald-700 px-5 py-3 text-base font-semibold text-white transition-colors hover:bg-emerald-800"
           >
-            <span aria-hidden>→</span>
+            <span aria-hidden="true">→</span>
             {ctaLabel}
           </Link>
         </div>

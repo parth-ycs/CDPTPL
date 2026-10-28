@@ -1,16 +1,5 @@
-// Types for the config-driven service pages.
-// To add a new section type (e.g. "capabilities"):
-//   1. add its data type here and include it in the ServiceSection union
-//   2. create sections/CapabilitiesSection.tsx
-//   3. add one `case` in ServiceSectionRenderer.tsx
-// The sidebar and layout need no changes.
-//
-// NOTE: serviceHref() does NOT live here. It belongs in data/services.ts.
-
 type SectionBase = {
-  /** Used as the DOM id and the sidebar anchor, e.g. "overview" */
   id: string;
-  /** Sidebar link text */
   label: string;
 };
 
@@ -18,10 +7,7 @@ export type OverviewSectionData = SectionBase & {
   type: "overview";
   heading: string;
   description: string;
-  kpis: {
-    value: string;
-    label: string;
-  }[];
+  kpis?: { value: string; label: string }[];
 };
 
 export type ProductItem = {
@@ -39,15 +25,6 @@ export type ProductsSectionData = SectionBase & {
   intro?: string;
   items: ProductItem[];
 };
-export type IndustriesSectionData = SectionBase & {
-  type: "industries";
-  heading: string;
-  intro?: string;
-  items: {
-    title: string;
-    description: string;
-  }[];
-};
 
 export type ServiceItem = {
   title: string;
@@ -61,22 +38,146 @@ export type ServicesSectionData = SectionBase & {
   items: ServiceItem[];
 };
 
+export type IndustriesSectionData = SectionBase & {
+  type: "industries";
+  heading: string;
+  intro?: string;
+  items: { title: string; description: string }[];
+};
+
+export type CapabilitiesSectionData = SectionBase & {
+  type: "capabilities";
+  heading: string;
+  intro?: string;
+  items: {
+    title: string;
+    description: string;
+    image?: string;
+  }[];
+};
+
+export type TechnicalSpecificationItem = {
+  name: string;
+  value: string;
+};
+
+export type TechnicalSpecificationsSectionData = SectionBase & {
+  type: "technical-specifications";
+  heading: string;
+  intro?: string;
+  items: TechnicalSpecificationItem[];
+  note?: string;
+};
+
+export type ProcessFlowStep = {
+  title: string;
+  description: string;
+  output?: string;
+};
+
+export type ProcessFlowSectionData = SectionBase & {
+  type: "process-flow";
+  heading: string;
+  intro?: string;
+  steps: ProcessFlowStep[];
+  note?: string;
+};
+
+export type LifecycleSupportItem = {
+  title: string;
+  description: string;
+};
+
+export type LifecycleSupportSectionData = SectionBase & {
+  type: "lifecycle-support";
+  heading: string;
+  intro?: string;
+  items: LifecycleSupportItem[];
+};
+
+export type StandardCertificationItem = {
+  title: string;
+  description: string;
+  reference?: string;
+};
+
+export type StandardsCertificationsSectionData = SectionBase & {
+  type: "standards-certifications";
+  heading: string;
+  intro?: string;
+  items: StandardCertificationItem[];
+  note?: string;
+};
+
+export type PerformanceMetric = {
+  title: string;
+  description: string;
+  value?: string;
+  category?: string;
+};
+
+export type PerformanceSustainabilitySectionData = SectionBase & {
+  type: "performance-sustainability";
+  heading: string;
+  intro?: string;
+  metrics: PerformanceMetric[];
+  note?: string;
+};
+
+export type DownloadResourceItem = {
+  title: string;
+  href: string;
+  description?: string;
+  fileType?: string;
+  external?: boolean;
+};
+
+export type DownloadsResourcesSectionData = SectionBase & {
+  type: "downloads-resources";
+  heading: string;
+  intro?: string;
+  items: DownloadResourceItem[];
+  note?: string;
+};
+
+export type FAQItem = {
+  question: string;
+  answer: string;
+};
+
+export type FAQsSectionData = SectionBase & {
+  type: "faqs";
+  heading: string;
+  intro?: string;
+  items: FAQItem[];
+};
+
 export type ServiceSection =
   | OverviewSectionData
   | ProductsSectionData
   | ServicesSectionData
-  | IndustriesSectionData;
-
+  | IndustriesSectionData
+  | CapabilitiesSectionData
+  | TechnicalSpecificationsSectionData
+  | ProcessFlowSectionData
+  | LifecycleSupportSectionData
+  | StandardsCertificationsSectionData
+  | PerformanceSustainabilitySectionData
+  | DownloadsResourcesSectionData
+  | FAQsSectionData;
 
 export type ServiceHeroContent = {
   name: string;
   tagline: string;
   description: string;
+  image?: string;
+  imageAlt?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 };
 
 export type ServiceConfig = {
   slug: string;
   hero: ServiceHeroContent;
-  /** Order here = order in the sidebar and on the page */
   sections: ServiceSection[];
 };

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Globe2 } from "lucide-react";
-import Container from "@/components/landing_page/container";
+import Container from "@/components/container";
 import TextLink from "@/components/ui/text-link";
 import GlobeBg from "@/components/ui/globebg";
 

@@ -1,6 +1,6 @@
 "use client"
 import { ArrowDown } from "lucide-react";
-import Navbar from "../navbar";
+import Navbar from "@/components/navbar";
 import Container from "../../container";
 import ButtonLink from "@/components/ui/button-link";
 import { useEffect, useRef } from "react";

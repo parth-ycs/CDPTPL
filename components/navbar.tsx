@@ -15,6 +15,9 @@ type NavChild = {
   name?: string;
   hero?: { name?: string };
 };
+type NavbarProps = {
+  variant?: "light" | "dark";
+};
 
 type SBUWithLegacyItems = SBU & {
   children?: NavChild[];
@@ -52,7 +55,9 @@ const underline =
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue";
 
-export default function Navbar() {
+export default function Navbar({
+  variant = "light",
+}: NavbarProps){
   const [open, setOpen] = useState(false); // desktop mega menu
   const [active, setActive] = useState<number | null>(null); // hovered SBU
   const [mobile, setMobile] = useState(false);
@@ -64,6 +69,17 @@ export default function Navbar() {
 
   const activeSBU = active !== null ? list[active] : null;
   const activeItems = activeSBU ? getChildren(activeSBU) : [];
+ const navbarClasses =
+  variant === "dark"
+    ? "bg-gradient-to-b from-[#051a35]/95 via-[#051a35]/30 to-[#051a35]/0 text-white"
+    : "bg-white/80 text-[#102c59]";
+
+  const navItemText = variant === "dark" ? "text-white" : "text-ink";
+  const navBorder = variant === "dark" ? "border-white/35" : "border-ink/35";
+  const mobileMenuClasses =
+    variant === "dark"
+      ? "border-white/15 bg-[#051a35] text-white"
+      : "border-line bg-white text-[#102c59]";
 
   function closeMenus() {
     setOpen(false);
@@ -116,13 +132,13 @@ export default function Navbar() {
   }, [mobile]);
 
   return (
-    <header
+   <header
       ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 bg-white/80 text-ink backdrop-blur-md"
+      className={`fixed inset-x-0 top-0 z-50  ${navbarClasses}`}
     >
       <nav
         aria-label="Primary navigation"
-        className="mx-auto flex h-[88px] w-full max-w-[1240px] items-center justify-between px-6"
+        className="mx-auto flex h-[88px] w-full max-w-[1330px] items-center justify-between px-6"
       >
         <Link
           href="/"
@@ -134,7 +150,7 @@ export default function Navbar() {
         </Link>
 
         {/* ---------- Desktop navigation ---------- */}
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center gap-12 lg:flex">
           {/* Solutions: trigger + compact mega menu share one hover zone */}
           <div
             className="relative h-[88px]"
@@ -154,7 +170,7 @@ export default function Navbar() {
               aria-controls="solutions-menu"
               onClick={() => (open ? closeMenus() : openMenu())}
               className={`flex h-full cursor-pointer items-center gap-1.5 text-xs font-semibold tracking-wide transition-colors ${underline} ${
-                open ? "text-brand-red after:scale-x-100" : "text-ink"
+                open ? "text-brand-red after:scale-x-100" : navItemText
               } hover:text-brand-red ${focusRing}`}
             >
               Solutions
@@ -185,20 +201,22 @@ export default function Navbar() {
                 <div className="mx-auto grid min-h-[340px] w-full max-w-[1440px] grid-cols-1 md:grid-cols-[1fr_1fr_1fr]">
 
                   {/* Column 1: Chemdist visual */}
-                  <div className="flex items-center justify-center p-8 md:p-10 lg:p-12">
-                    <Link
-                      href="/#technologies"
-                      onClick={closeMenus}
-                      tabIndex={open ? 0 : -1}
-                      className={`block w-full max-w-[390px] transition-transform duration-300 hover:scale-[1.02] ${focusRing}`}
-                    >
-                      <img
-                        src="/images/SBUs.png"
-                        alt="Chemdist Group — six business units"
-                        className="h-auto w-full object-contain"
-                      />
-                    </Link>
-                  </div>
+                <div className="flex items-center justify-center p-8 md:p-10 lg:p-12">
+                  <Link
+                    href="/#technologies"
+                    onClick={closeMenus}
+                    tabIndex={open ? 0 : -1}
+                    className={`block w-full max-w-[390px] transition-transform duration-300 hover:scale-[1.02] ${focusRing} ${
+                      variant === "dark" ? "brightness-0 invert" : ""
+                    }`}
+                  >
+                    <img
+                      src="/images/SBUs.png"
+                      alt="Chemdist Group — six business units"
+                      className="h-auto w-full object-contain"
+                    />
+                  </Link>
+                </div>
 
                   {/* Column 2: SBU list */}
                   <div className="border-l border-black/10">
@@ -307,7 +325,7 @@ export default function Navbar() {
                 setOpen(false);
                 setActive(null);
               }}
-              className={`flex h-[88px] items-center text-xs font-semibold tracking-wide text-ink transition-colors hover:text-brand-red ${underline} ${focusRing}`}
+              className={`flex h-[88px] items-center text-xs font-semibold tracking-wide ${navItemText} transition-colors hover:text-brand-red ${underline} ${focusRing}`}
             >
               {item.label}
             </Link>
@@ -317,7 +335,7 @@ export default function Navbar() {
           <a
             href="#enquiry"
             onClick={closeMenus}
-            className={`ml-2 inline-flex items-center gap-2 border border-ink/35 px-4 py-3 text-xs font-semibold tracking-wide text-ink transition-colors hover:border-brand-red hover:bg-brand-red hover:text-white ${focusRing}`}
+            className={`ml-2 inline-flex items-center gap-2 border ${navBorder} px-4 py-3 text-xs font-semibold tracking-wide ${navItemText} transition-colors hover:border-brand-red hover:bg-brand-red hover:text-white ${focusRing}`}
           >
             Contact
             <ArrowRight size={15} aria-hidden="true" />
@@ -335,7 +353,7 @@ export default function Navbar() {
             setOpen(false);
             setActive(null);
           }}
-          className={`inline-flex cursor-pointer p-1.5 text-ink lg:hidden ${focusRing}`}
+          className={`inline-flex cursor-pointer p-1.5 ${navItemText} lg:hidden ${focusRing}`}
         >
           {mobile ? (
             <X size={23} aria-hidden="true" />
@@ -349,14 +367,16 @@ export default function Navbar() {
       {mobile && (
         <div
           id="mobile-navigation"
-          className="max-h-[calc(100dvh-88px)] overflow-y-auto border-t border-line bg-white lg:hidden"
+          className={`max-h-[calc(100dvh-88px)] overflow-y-auto border-t lg:hidden ${mobileMenuClasses}`}
         >
           <div className="mx-auto grid w-full max-w-[1240px] px-6 pb-6 pt-2">
             <button
               type="button"
               aria-expanded={mobileSolutions}
               onClick={() => setMobileSolutions((p) => !p)}
-              className={`flex w-full cursor-pointer items-center justify-between border-b border-line py-4 text-left text-sm ${focusRing}`}
+              className={`flex w-full cursor-pointer items-center justify-between border-b ${
+                variant === "dark" ? "border-white/15" : "border-line"
+              } py-4 text-left text-sm ${focusRing}`}
             >
               <span>Solutions</span>
               <ChevronDown
@@ -369,7 +389,11 @@ export default function Navbar() {
             </button>
 
             {mobileSolutions && (
-              <div className="border-b border-line bg-pale">
+              <div className={`border-b ${
+                  variant === "dark"
+                    ? "border-white/15 bg-white/5"
+                    : "border-line bg-pale"
+                }`}>
                 {list.map((sbu, i) => (
                   <div key={sbu.name}>
                     <button
@@ -377,7 +401,11 @@ export default function Navbar() {
                       aria-expanded={mobileSbu === i}
                       onClick={() => setMobileSbu((p) => (p === i ? null : i))}
                       className={`flex w-full cursor-pointer items-center justify-between px-4 py-3.5 text-left text-sm ${
-                        mobileSbu === i ? "text-brand-red" : "text-ink"
+                        mobileSbu === i
+                          ? "text-brand-red"
+                          : variant === "dark"
+                            ? "text-white"
+                            : "text-ink"
                       } ${focusRing}`}
                     >
                       <span>{sbu.name}</span>
@@ -397,7 +425,9 @@ export default function Navbar() {
                             <Link
                               href={getChildHref(item)}
                               onClick={closeMenus}
-                              className="block py-2 text-[13px] text-muted hover:text-brand-red"
+                              className={`block py-2 text-[13px] ${
+                                variant === "dark" ? "text-white/75" : "text-muted"
+                              } hover:text-brand-red`}
                             >
                               {getChildName(item)}
                             </Link>
@@ -415,7 +445,9 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={closeMenus}
-                className={`flex items-center justify-between border-b border-line py-4 text-sm ${focusRing}`}
+                className={`flex items-center justify-between border-b ${
+                  variant === "dark" ? "border-white/15" : "border-line"
+                } py-4 text-sm ${focusRing} ${navItemText}`}
               >
                 <span>{item.label}</span>
                 <ChevronRight size={17} aria-hidden="true" />
@@ -425,7 +457,7 @@ export default function Navbar() {
             <a
               href="#enquiry"
               onClick={closeMenus}
-              className={`mt-5 inline-flex items-center justify-center gap-2 border border-ink/35 px-4 py-3 text-xs font-semibold tracking-wide text-ink transition-colors hover:border-brand-red hover:bg-brand-red hover:text-white ${focusRing}`}
+              className={`mt-5 inline-flex items-center justify-center gap-2 border ${navBorder} px-4 py-3 text-xs font-semibold tracking-wide ${navItemText} transition-colors hover:border-brand-red hover:bg-brand-red hover:text-white ${focusRing}`}
             >
               Contact
               <ArrowRight size={15} aria-hidden="true" />

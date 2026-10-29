@@ -28,9 +28,19 @@ export default function ProjectsShowcase() {
     });
   }
 
+  // Inline animation styles: no global CSS required.
+  const headingStyle = {
+    animation: "projectHeadingEnter 650ms cubic-bezier(0.22, 1, 0.36, 1) both",
+  };
+
+  const detailStyle = (delay: number) => ({
+    animation: `projectDetailEnter 500ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms both`,
+  });
+
   return (
     <section className="overflow-hidden bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16">
+
         {/* Heading and navigation */}
         <div className="mb-8 flex items-center justify-between gap-6">
           <div>
@@ -39,7 +49,7 @@ export default function ProjectsShowcase() {
             </p>
 
             <h2 id="rd-heading" className="section-heading max-w-[620px]">
-              Projects &amp; <br/>
+              Projects &amp; <br />
               Case <span className="text-brand-blue">Studies</span>
             </h2>
 
@@ -59,7 +69,7 @@ export default function ProjectsShowcase() {
         </div>
 
         {/* Project carousel */}
-        <div className="flex items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-6 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-6 pt-3">
           {projects.map((project, index) => {
             const expanded = hoveredIndex === index;
 
@@ -99,16 +109,28 @@ export default function ProjectsShowcase() {
                   alt=""
                   fill
                   sizes="(max-width: 640px) 320px, (max-width: 1024px) 460px, 560px"
-                  className="object-cover"
+                  className={`object-cover transition-transform duration-700 ease-out ${
+                    expanded ? "scale-105" : "scale-100"
+                  }`}
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
+                <div
+                  className={`absolute inset-0 transition-colors duration-500 ${
+                    expanded
+                      ? "bg-black/35"
+                      : "bg-gradient-to-t from-black/95 via-black/45 to-black/10"
+                  }`}
+                />
 
-                {/* Collapsed preview: always anchored at bottom */}
+                {/* Collapsed preview */}
                 <div
                   className={`absolute inset-x-0 bottom-0 z-10 p-5
-                    transition-opacity duration-200 md:p-6
-                    ${expanded ? "pointer-events-none opacity-0" : "opacity-100"}`}
+                    transition-[opacity,transform] duration-350 ease-out md:p-6
+                    ${
+                      expanded
+                        ? "pointer-events-none translate-y-4 opacity-0"
+                        : "translate-y-0 opacity-100"
+                    }`}
                   aria-hidden={expanded}
                 >
                   <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
@@ -124,86 +146,127 @@ export default function ProjectsShowcase() {
                   </p>
                 </div>
 
-                {/* Expanded case study: content starts at the top */}
-                
-                  {expanded && (
-                    <div className="absolute inset-0 z-20 flex flex-col overflow-hidden bg-slate-950/75 backdrop-blur-[2px]">
-                      {/* Scrollable project information */}
-                      <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-5 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.4)_transparent]">
-                        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
-                          {project.category}
+                {/* Expanded case study */}
+                <div
+                  aria-hidden={!expanded}
+                  className={`absolute inset-0 z-20 flex flex-col overflow-hidden
+                    bg-slate-950/75 backdrop-blur-[2px]
+                    transition-[opacity,transform] duration-300 ease-out
+                    ${
+                      expanded
+                        ? "translate-y-0 opacity-100"
+                        : "pointer-events-none translate-y-3 opacity-0"
+                    }`}
+                  style={{
+                    visibility: expanded ? "visible" : "hidden",
+                    transitionDelay: expanded ? "80ms" : "0ms",
+                  }}
+                >
+                  {/* Scrollable information */}
+                  <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-5 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.4)_transparent]">
+
+                    {/* Heading enters first */}
+                    <div key={`${project.id}-${expanded}`} style={headingStyle}>
+                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
+                        {project.category}
+                      </p>
+
+                      <h3 className="mb-3 break-words text-xl font-semibold leading-snug sm:text-2xl">
+                        {project.title}
+                      </h3>
+
+                      <p className="mb-5 text-xs text-white/70">
+                        {project.location}
+                      </p>
+                    </div>
+
+                    <div className="space-y-5 text-sm leading-5 text-white/90">
+
+                      {/* Plant */}
+                      {project.plant && (
+                        <div
+                          key={`${project.id}-plant-${expanded}`}
+                          style={detailStyle(180)}
+                        >
+                          <p className="mb-1 font-semibold text-sky-300">
+                            Plant
+                          </p>
+                          <p>{project.plant}</p>
+                        </div>
+                      )}
+
+                      {/* Description */}
+                      <div
+                        key={`${project.id}-description-${expanded}`}
+                        style={detailStyle(300)}
+                      >
+                        <p className="mb-1 font-semibold text-sky-300">
+                          Project Description
                         </p>
+                        <p>{project.description}</p>
+                      </div>
 
-                        <h3 className="mb-5 break-words text-xl font-semibold leading-snug sm:text-2xl">
-                          {project.title}
-                        </h3>
+                      {/* Contract value */}
+                      {project.contractValue && (
+                        <div
+                          key={`${project.id}-contract-${expanded}`}
+                          style={detailStyle(420)}
+                        >
+                          <p className="mb-1 font-semibold text-sky-300">
+                            Overall Contract Value
+                          </p>
+                          <p className="font-semibold">
+                            {project.contractValue}
+                          </p>
+                        </div>
+                      )}
 
-                        <div className="space-y-4 text-sm leading-5 text-white/90">
-                          {project.plant && (
-                            <div>
-                              <p className="mb-1 font-semibold text-sky-300">Plant</p>
-                              <p>{project.plant}</p>
-                            </div>
-                          )}
-
-                          <div>
-                            <p className="mb-1 font-semibold text-sky-300">
-                              Project Description
-                            </p>
-                            <p>{project.description}</p>
-                          </div>
-
-                          {project.contractValue && (
+                      {/* Project timeline */}
+                      {(project.yearOfAward || project.yearOfCompletion) && (
+                        <div
+                          key={`${project.id}-years-${expanded}`}
+                          className="grid grid-cols-2 gap-3 border-t border-white/15 pt-4"
+                          style={detailStyle(520)}
+                        >
+                          {project.yearOfAward && (
                             <div>
                               <p className="mb-1 font-semibold text-sky-300">
-                                Overall Contract Value
+                                Year of Award
                               </p>
-                              <p className="font-semibold">{project.contractValue}</p>
+                              <p>{project.yearOfAward}</p>
                             </div>
                           )}
 
-                          {(project.yearOfAward || project.yearOfCompletion) && (
-                            <div className="grid grid-cols-2 gap-3 border-t border-white/15 pt-4">
-                              {project.yearOfAward && (
-                                <div>
-                                  <p className="mb-1 font-semibold text-sky-300">
-                                    Year of Award
-                                  </p>
-                                  <p>{project.yearOfAward}</p>
-                                </div>
-                              )}
-
-                              {project.yearOfCompletion && (
-                                <div>
-                                  <p className="mb-1 font-semibold text-sky-300">
-                                    Year of Completion
-                                  </p>
-                                  <p>{project.yearOfCompletion}</p>
-                                </div>
-                              )}
+                          {project.yearOfCompletion && (
+                            <div>
+                              <p className="mb-1 font-semibold text-sky-300">
+                                Year of Completion
+                              </p>
+                              <p>{project.yearOfCompletion}</p>
                             </div>
                           )}
                         </div>
-                      </div>
-
-                      {/* Always-visible case study link */}
-                      <div className="shrink-0 border-t border-white/20 bg-slate-950/95 px-4 py-3 md:px-5">
-                        <Link
-                          href={getProjectHref(project)}
-                          tabIndex={0}
-                          className="inline-flex items-center gap-2 font-semibold text-white transition-colors hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-300"
-                        >
-                          View case study
-                          <span aria-hidden="true">↗</span>
-                        </Link>
-                      </div>
+                      )}
                     </div>
-                  )}
-                </article>
-                );
-                })}
-                </div>
+                  </div>
 
+                  {/* Fixed footer */}
+                  <div className="shrink-0 border-t border-white/20 bg-slate-950/95 px-4 py-3 md:px-5">
+                    <Link
+                      href={getProjectHref(project)}
+                      tabIndex={expanded ? 0 : -1}
+                      className="inline-flex items-center gap-2 font-semibold text-white transition-colors duration-200 hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-300"
+                      style={detailStyle(620)}
+                    >
+                      View case study
+                      <span aria-hidden="true">↗</span>
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
 
         {/* Mobile navigation */}
         <div className="flex justify-end sm:hidden">
@@ -213,19 +276,39 @@ export default function ProjectsShowcase() {
             aria-label="Project navigation"
           />
         </div>
-
-        {/* Counter */}
-        <div className="mt-1 flex items-center justify-between border-t border-slate-200 pt-5">
-          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-            Selected projects
-          </span>
-
-          <span className="text-xs tabular-nums text-slate-500">
-            {String(currentIndex + 1).padStart(2, "0")} /{" "}
-            {String(projects.length).padStart(2, "0")}
-          </span>
-        </div>
       </div>
+
+      {/* Keyframes scoped to this component */}
+      <style jsx>{`
+        @keyframes projectHeadingEnter {
+          from {
+            opacity: 0;
+            transform: translateY(26px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes projectDetailEnter {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .project-heading-enter,
+          .project-detail-enter {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

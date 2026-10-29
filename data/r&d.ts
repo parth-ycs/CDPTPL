@@ -41,10 +41,6 @@ export const rdSectionData = {
     href: "/research-development",
   },
 
-  secondaryCta: {
-    label: "Our Capabilities",
-    href: "/capabilities",
-  },
 
   hero: {
     eyebrow: "Research & Development",

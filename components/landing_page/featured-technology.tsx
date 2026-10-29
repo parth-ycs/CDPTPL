@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import BrandCarouselButtons from "@/components/ui/BrandCarouselButtons";
 import { featuredTechnologies } from "@/data/featuredTechnologies";
+import Container from "@/components/container";
 
 export default function FeaturedTechnologies() {
   const [index, setIndex] = useState(0);
@@ -24,8 +25,8 @@ export default function FeaturedTechnologies() {
   }
 
   return (
-    <section className="overflow-hidden bg-white py-16 md:py-20">
-      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16">
+    <section className="overflow-hidden bg-white ">
+      <Container>
         {/* Section heading */}
         <div className="mb-10 flex items-center justify-between gap-8">
           <div className="max-w-3xl">
@@ -122,8 +123,7 @@ export default function FeaturedTechnologies() {
             }}
           />
         </div>
-
-      </div>
+      </Container>
     </section>
   );
 }

@@ -44,3 +44,31 @@
     @apply font-heading font-bold tracking-normal text-[clamp(2.5rem,4.2vw,4.5rem)] leading-[1.05];
   }
 }
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Scrollbar background */
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+/* Scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
+  border: 2px solid #f5f5f5;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #12539b #f5f5f5;
+}

@@ -1,5 +1,5 @@
 import type { Project } from "@/data/projects";
-
+import Navbar from "../navbar";
 import ProjectHero from "./detail/ProjectHero";
 import ProjectOverview from "./detail/ProjectOverview";
 import ProjectScope from "./detail/ProjectScope";
@@ -17,14 +17,12 @@ export default function ProjectDetailPage({
 }: ProjectDetailPageProps) {
   return (
     <main className="overflow-hidden bg-white text-[#102c59]">
+      <Navbar variant="dark" />
+
       <ProjectHero project={project} />
-
       <ProjectOverview project={project} />
-
       <ProjectScope project={project} />
-
       <RelatedProjects projects={relatedProjects} />
-
       <ProjectCTA />
     </main>
   );

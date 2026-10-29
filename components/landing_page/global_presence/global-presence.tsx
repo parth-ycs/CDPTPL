@@ -5,6 +5,7 @@ import GlobalPresenceLeft from "./global-presence-left";
 import GlobalPresenceGlobe from "./global-presence-globe";
 import { globalPresenceLocations } from "@/data/global-presence";
 import type { GlobalLocation, GlobalPoint } from "@/data/global-presence";
+import Container from "@/components/container";
 
 type Props = {
   exploreHref?: string;
@@ -61,12 +62,13 @@ export default function GlobalPresenceSection({
   return (
     <section className="relative isolate overflow-hidden bg-white text-slate-900">
       {/* Keep the existing grid and globe placement unchanged. */}
-      <div className="mx-auto grid min-h-[620px] max-w-[1440px] grid-cols-1 items-center px-6 py-12 sm:px-10 lg:min-h-[680px] lg:grid-cols-[1.05fr_1.15fr] lg:gap-4 lg:px-12 lg:py-10">
-        <GlobalPresenceLeft
-          activeLocation={activeLocation}
-          viewMode={viewMode}
-          selectedPointId={selectedPointId}
-          selectedPoint={selectedPoint}
+      <Container>
+        <div className="mx-auto grid min-h-[620px] grid-cols-1 items-center py-12 lg:min-h-[680px] lg:grid-cols-[1.05fr_1.15fr] lg:gap-4 lg:py-10">
+          <GlobalPresenceLeft
+            activeLocation={activeLocation}
+            viewMode={viewMode}
+            selectedPointId={selectedPointId}
+            selectedPoint={selectedPoint}
           exploreHref={exploreHref}
           onSelectCountry={selectCountry}
           onSelectPoint={selectPoint}
@@ -81,6 +83,7 @@ export default function GlobalPresenceSection({
           onSelectPoint={selectPoint}
         />
       </div>
+    </Container>
     </section>
   );
 }

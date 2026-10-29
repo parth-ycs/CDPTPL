@@ -10,26 +10,6 @@ type ProjectHeroProps = {
 
 export default function ProjectHero({ project }: ProjectHeroProps) {
   return (
-    <>
-      <div className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center gap-2 px-5 py-4 text-xs text-slate-500 sm:px-8 lg:px-12">
-          <Link href="/" className="transition-colors hover:text-red-600">
-            Home
-          </Link>
-          <span aria-hidden="true">/</span>
-          <Link
-            href="/projects"
-            className="transition-colors hover:text-red-600"
-          >
-            Projects
-          </Link>
-          <span aria-hidden="true">/</span>
-          <span className="max-w-[240px] truncate font-medium text-[#102c59]">
-            {project.title}
-          </span>
-        </div>
-      </div>
-
       <section className="relative isolate min-h-[540px] overflow-hidden bg-[#081a35] lg:min-h-[640px]">
         <Image
           src={project.image}
@@ -83,6 +63,5 @@ export default function ProjectHero({ project }: ProjectHeroProps) {
 
         <div className="absolute bottom-0 left-0 h-1 w-32 bg-red-600 sm:w-48" />
       </section>
-    </>
   );
 }

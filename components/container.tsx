@@ -1,4 +1,4 @@
-"use client"
+
 import type { ComponentProps } from "react";
 
 export default function Container({
@@ -7,7 +7,13 @@ export default function Container({
 }: ComponentProps<"div">) {
   return (
     <div
-      className={`mx-auto w-[calc(100%-36px)] sm:w-[min(700px,calc(100%-40px))] lg:w-[min(1240px,calc(100%-80px))] ${className}`}
+      className={[
+        "mx-auto w-full",
+        "max-w-[1440px]",
+        "px-5 sm:px-8 lg:px-12 xl:px-16",
+        "py-10 sm:py-12 lg:py-14 xl:py-16",
+        className,
+      ].join(" ")}
       {...props}
     />
   );

@@ -1,4 +1,4 @@
-import type { TechnicalSpecificationsSectionData } from "@/components/services/types";
+import type { TechnicalSpecificationsSectionData } from "@/components/solutions/types";
 
 export default function TechnicalSpecificationsSection({ data }: { data: TechnicalSpecificationsSectionData }) {
   return (

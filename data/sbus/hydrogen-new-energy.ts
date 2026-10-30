@@ -1,7 +1,7 @@
 import type {
   ServiceHeroContent,
   ServiceSection,
-} from "@/components/services/types";
+} from "@/components/solutions/types";
 
 export interface SBUChild {
   slug: string;

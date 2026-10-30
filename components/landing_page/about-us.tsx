@@ -11,7 +11,7 @@ export default function AboutUsSection() {
   return (
     <section
       id="about-us"
-      className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24"
+      className="relative overflow-hidden bg-white sm:pb-15 lg:pb-18 xl:pb-25"
     >
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">

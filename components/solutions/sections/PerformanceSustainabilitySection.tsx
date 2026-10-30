@@ -1,4 +1,4 @@
-import type { PerformanceSustainabilitySectionData } from "@/components/services/types";
+import type { PerformanceSustainabilitySectionData } from "@/components/solutions/types";
 
 export default function PerformanceSustainabilitySection({ data }: { data: PerformanceSustainabilitySectionData }) {
   return (

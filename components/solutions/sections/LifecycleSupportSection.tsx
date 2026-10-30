@@ -1,4 +1,4 @@
-import type { LifecycleSupportSectionData } from "@/components/services/types";
+import type { LifecycleSupportSectionData } from "@/components/solutions/types";
 
 export default function LifecycleSupportSection({ data }: { data: LifecycleSupportSectionData }) {
   return (

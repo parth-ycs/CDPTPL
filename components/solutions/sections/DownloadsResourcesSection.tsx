@@ -1,4 +1,4 @@
-import type { DownloadsResourcesSectionData } from "@/components/services/types";
+import type { DownloadsResourcesSectionData } from "@/components/solutions/types";
 
 export default function DownloadsResourcesSection({ data }: { data: DownloadsResourcesSectionData }) {
   return (

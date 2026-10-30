@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { FAQsSectionData } from "@/components/services/types";
+import type { FAQsSectionData } from "@/components/solutions/types";
 
 export default function FAQsSection({ data }: { data: FAQsSectionData }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

@@ -1,4 +1,4 @@
-import type { StandardsCertificationsSectionData } from "@/components/services/types";
+import type { StandardsCertificationsSectionData } from "@/components/solutions/types";
 
 export default function StandardsCertificationsSection({ data }: { data: StandardsCertificationsSectionData }) {
   return (

@@ -18,7 +18,6 @@ export default function ProjectDetailPage({
   return (
     <main className="overflow-hidden bg-white text-[#102c59]">
       <Navbar variant="dark" />
-
       <ProjectHero project={project} />
       <ProjectOverview project={project} />
       <ProjectScope project={project} />

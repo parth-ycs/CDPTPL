@@ -1,9 +1,21 @@
 
 import type { ReactNode } from "react";
 
-export type PageBreadcrumb = {
+export type HeroBreadcrumb = {
   label: string;
   href?: string;
+};
+
+export type HeroNavigationItem = {
+  slug: string;
+  label: string;
+  href: string;
+};
+
+export type HeroMetadata = {
+  icon?: ReactNode;
+  label: string;
+  value: string;
 };
 
 export type PageHeroContent = {
@@ -11,14 +23,20 @@ export type PageHeroContent = {
   tagline: string;
   description: string;
   image: string;
-  imageAlt: string;
-  breadcrumbs: PageBreadcrumb[];
+  imageAlt?: string;
+
+  breadcrumbs?: HeroBreadcrumb[];
+
   ctaLabel?: string;
   ctaHref?: string;
-};
 
-export type PageSectionItem = {
-  id: string;
-  label: string;
-  content: ReactNode;
+  // Optional dropdown navigation
+  navigation?: {
+    label: string;
+    currentLabel: string;
+    items: HeroNavigationItem[];
+  };
+
+  // Optional project metadata
+  metadata?: HeroMetadata[];
 };

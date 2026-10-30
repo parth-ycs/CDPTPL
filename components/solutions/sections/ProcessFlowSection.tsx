@@ -1,4 +1,4 @@
-import type { ProcessFlowSectionData } from "@/components/services/types";
+import type { ProcessFlowSectionData } from "@/components/solutions/types";
 
 export default function ProcessFlowSection({ data }: { data: ProcessFlowSectionData }) {
   return (

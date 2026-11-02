@@ -377,3 +377,39 @@ export const globalPresenceLocations: GlobalLocation[] = [
     ],
   },
 ];
+
+
+
+export const globalPresencePage = {
+  hero: {
+    eyebrow: "Global presence",
+    heading: "Global expertise. Local execution.",
+    description:
+      "A growing international network for technology, engineering and manufacturing. Find the offices that support you and the projects we have delivered on the ground.",
+    // Put a wide image (about 2400px) at this path in /public, or change the path.
+    image: "/images/global-presence/hero.jpg",
+    imageAlt: "Our teams and project sites around the world",
+    cta: { label: "Contact our team", href: "/contact" }, // change to your contact route
+  },
+  overview: {
+    heading: "One network, close to where the work happens",
+    paragraphs: [
+      "Our offices keep engineering and delivery close to our customers, while projects show the industries we work in and the places we have worked.",
+      "Use the globe below to move between countries, or browse every office and project in the lists that follow.",
+    ],
+  },
+  explorer: {
+    heading: "Explore the globe",
+    description:
+      "Choose a country, or drag the globe. Select an office or project to bring it into view.",
+  },
+  offices: {
+    heading: "Offices",
+    description: "Where our teams are based.",
+  },
+  projects: {
+    heading: "Industries and projects",
+    description: "Recent and ongoing work, by industry.",
+  },
+} as const;
+ 

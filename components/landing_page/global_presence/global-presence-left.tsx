@@ -1,17 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
   Building2,
   Factory,
   Globe2,
-  MapPin,
 } from "lucide-react";
 import { globalPresenceLocations } from "@/data/global-presence";
 import type { GlobalLocation, GlobalPoint } from "@/data/global-presence";
 
 type ViewMode = "global" | "country";
+
+// `href` is optional so this compiles before you add it to the data type.
+type LinkablePoint = GlobalPoint & { href?: string };
 
 type Props = {
   activeLocation: GlobalLocation;
@@ -24,12 +27,6 @@ type Props = {
   onShowGlobal: () => void;
 };
 
-function getCountryFlag(code: string) {
-  return String.fromCodePoint(
-    ...[...code.toUpperCase()].map((char) => 127397 + char.charCodeAt(0)),
-  );
-}
-
 export default function GlobalPresenceLeft({
   activeLocation,
   viewMode,
@@ -40,8 +37,15 @@ export default function GlobalPresenceLeft({
   onSelectPoint,
   onShowGlobal,
 }: Props) {
+  // Uses point.href if set, otherwise falls back to the explore page with query params.
+  const getHref = (point: LinkablePoint) => {
+    if (point.href) return point.href;
+    const sep = exploreHref.includes("?") ? "&" : "?";
+    return `${exploreHref}${sep}country=${activeLocation.id}&point=${point.id}`;
+  };
+
   return (
-    <div className="relative z-10 max-w-[670px] py-2 lg:py-1">
+    <div className="relative z-10 max-w-[470px] py-2 lg:py-1">
       <h2 className="section-heading text-slate-900">
         Global
         <br />
@@ -74,7 +78,8 @@ export default function GlobalPresenceLeft({
             )}
           </div>
 
-          <ul className="space-y-1">
+          {/* Scrolls once more countries are added */}
+          <ul className="max-h-[310px] space-y-1 overflow-y-auto pr-1">
             {globalPresenceLocations.map((location) => {
               const isActive = location.id === activeLocation.id;
               return (
@@ -118,29 +123,7 @@ export default function GlobalPresenceLeft({
         </div>
 
         <div className="min-w-0 overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_8px_28px_rgba(26,76,126,0.09)]">
-          <div className="p-3.5 sm:p-3">
-            <div className="flex items-start gap-2">
-              <span className="inline-flex h-8 w-10 shrink-0 items-center justify-center rounded-lg bg-[#F2F7FC] text-lg">
-                {getCountryFlag(activeLocation.countryCode)}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.1em] text-[#1557A0]">
-                  {activeLocation.region}
-                </p>
-                <h3 className="mt-0.5 break-words text-xs font-semibold leading-4 text-slate-900 sm:text-sm">
-                  {activeLocation.country}
-                </h3>
-                <p className="mt-0.5 text-[10px] leading-4 text-slate-500">
-                  {activeLocation.city}
-                </p>
-              </div>
-            </div>
-            <p className="mt-2.5 text-[11px] leading-4 text-slate-600">
-              {activeLocation.summary}
-            </p>
-          </div>
-
-          <div className="max-h-[310px] overflow-y-auto border-t border-slate-200">
+          <div className="max-h-[310px] overflow-y-auto">
             {viewMode === "global" ? (
               <div className="px-2 py-5 text-center">
                 <Globe2 size={20} className="mx-auto mb-2 text-slate-300" />
@@ -156,32 +139,45 @@ export default function GlobalPresenceLeft({
                     <h4 className="px-1 pb-1 pt-1 text-[9px] font-semibold uppercase tracking-[0.1em] text-[#1557A0]">
                       Offices
                     </h4>
-                    {activeLocation.offices.map((office) => {
+                    {activeLocation.offices.map((office: LinkablePoint) => {
                       const isSelected = selectedPointId === office.id;
                       return (
-                        <button
+                        <div
                           key={office.id}
-                          type="button"
-                          onClick={() => onSelectPoint(activeLocation, office.id)}
-                          aria-pressed={isSelected}
-                          className={`flex w-full items-start gap-1.5 rounded-lg p-1.5 text-left transition ${
+                          className={`flex items-start gap-1 rounded-lg transition ${
                             isSelected
                               ? "bg-[#EAF3FC] ring-1 ring-[#B8D5F3]"
                               : "hover:bg-slate-50"
                           }`}
                         >
-                          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#EAF3FC] text-[#1557A0]">
-                            <Building2 size={13} />
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="block break-words text-[11px] font-semibold leading-4 text-slate-800">
-                              {office.name}
+                          {/* Name area: focuses the point on the globe */}
+                          <button
+                            type="button"
+                            onClick={() => onSelectPoint(activeLocation, office.id)}
+                            aria-pressed={isSelected}
+                            className="flex min-w-0 flex-1 items-start gap-1.5 p-1.5 text-left"
+                          >
+                            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#EAF3FC] text-[#1557A0]">
+                              <Building2 size={13} />
                             </span>
-                            <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">{office.city}</span>
-                            <span className="mt-1 block text-[10px] leading-4 text-slate-500">{office.summary}</span>
-                          </span>
-                          <MapPin size={11} className={`mt-1 shrink-0 ${isSelected ? "text-[#1557A0]" : "text-slate-300"}`} />
-                        </button>
+                            <span className="min-w-0 flex-1">
+                              <span className="block break-words text-[11px] font-semibold leading-4 text-slate-800">
+                                {office.name}
+                              </span>
+                              <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">{office.city}</span>
+                            </span>
+                          </button>
+
+                          {/* Redirect button */}
+                          <Link
+                            href={getHref(office)}
+                            aria-label={`View ${office.name}`}
+                            title="View details"
+                            className="mr-1.5 mt-1.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition hover:border-[#1557A0] hover:bg-[#1557A0] hover:text-white"
+                          >
+                            <ArrowUpRight size={12} />
+                          </Link>
+                        </div>
                       );
                     })}
                   </section>
@@ -192,33 +188,43 @@ export default function GlobalPresenceLeft({
                     <h4 className="px-1 pb-1 pt-1 text-[9px] font-semibold uppercase tracking-[0.1em] text-[#C45A28]">
                       Industries &amp; projects
                     </h4>
-                    {activeLocation.projects.map((project) => {
+                    {activeLocation.projects.map((project: LinkablePoint & { industry?: string }) => {
                       const isSelected = selectedPointId === project.id;
                       return (
-                        <button
+                        <div
                           key={project.id}
-                          type="button"
-                          onClick={() => onSelectPoint(activeLocation, project.id)}
-                          aria-pressed={isSelected}
-                          className={`flex w-full items-start gap-1.5 rounded-lg p-1.5 text-left transition ${
+                          className={`flex items-start gap-1 rounded-lg transition ${
                             isSelected
                               ? "bg-orange-50 ring-1 ring-orange-200"
                               : "hover:bg-slate-50"
                           }`}
                         >
-                          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-orange-50 text-[#C45A28]">
-                            <Factory size={13} />
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="block break-words text-[11px] font-semibold leading-4 text-slate-800">{project.name}</span>
-                            <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">{project.city} · {project.industry}</span>
-                            <span className="mt-1 block text-[10px] leading-4 text-slate-500">{project.summary}</span>
-                            <span className={`mt-1 inline-flex rounded-full px-1.5 py-0.5 text-[9px] font-semibold ${project.status === "completed" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
-                              {project.status === "completed" ? "Completed" : "Ongoing"}
+                          {/* Name area: focuses the point on the globe */}
+                          <button
+                            type="button"
+                            onClick={() => onSelectPoint(activeLocation, project.id)}
+                            aria-pressed={isSelected}
+                            className="flex min-w-0 flex-1 items-start gap-1.5 p-1.5 text-left"
+                          >
+                            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-orange-50 text-[#C45A28]">
+                              <Factory size={13} />
                             </span>
-                          </span>
-                          <MapPin size={11} className={`mt-1 shrink-0 ${isSelected ? "text-[#C45A28]" : "text-slate-300"}`} />
-                        </button>
+                            <span className="min-w-0 flex-1">
+                              <span className="block break-words text-[11px] font-semibold leading-4 text-slate-800">{project.name}</span>
+                              <span className="mt-0.5 block text-[10px] leading-4 text-slate-500">{project.city} · {project.industry}</span>
+                            </span>
+                          </button>
+
+                          {/* Redirect button */}
+                          <Link
+                            href={getHref(project)}
+                            aria-label={`View ${project.name}`}
+                            title="View details"
+                            className="mr-1.5 mt-1.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition hover:border-[#C45A28] hover:bg-[#C45A28] hover:text-white"
+                          >
+                            <ArrowUpRight size={12} />
+                          </Link>
+                        </div>
                       );
                     })}
                   </section>

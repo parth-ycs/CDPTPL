@@ -1,4 +1,3 @@
-
 import type { ReactNode } from "react";
 
 export type HeroBreadcrumb = {
@@ -39,4 +38,15 @@ export type PageHeroContent = {
 
   // Optional project metadata
   metadata?: HeroMetadata[];
+};
+
+/**
+ * One section of a page that uses <PageLayout />.
+ * `id` is the anchor, `label` is the text in the sticky section menu,
+ * and `content` is what gets rendered (null/undefined hides the section).
+ */
+export type PageSectionItem = {
+  id: string;
+  label: string;
+  content: ReactNode;
 };

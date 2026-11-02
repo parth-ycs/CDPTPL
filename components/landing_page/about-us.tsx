@@ -11,10 +11,12 @@ export default function AboutUsSection() {
   return (
     <section
       id="about-us"
-      className="relative overflow-hidden bg-white sm:pb-15 lg:pb-18 xl:pb-25"
+      className="relative w-full overflow-hidden bg-white sm:pb-15 lg:pb-18 xl:pb-25"
     >
+      {/* LEFT CONTENT - CONSTRAINED TO 1440PX */}
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+
           <div className="relative z-10 min-w-0">
             <div className="mb-5 flex items-center gap-4">
               <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-600">
@@ -34,6 +36,7 @@ export default function AboutUsSection() {
               {data.description}
             </p>
 
+            {/* VALUES */}
             <div className="mt-9 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4 xl:gap-6">
               {aboutValues.map(({ title, description, Icon }, index) => (
                 <div
@@ -62,6 +65,7 @@ export default function AboutUsSection() {
               ))}
             </div>
 
+            {/* CTA */}
             <a
               href={data.cta.href}
               className="group mt-9 inline-flex items-center gap-3 text-sm font-semibold text-[#102c59] transition-colors duration-300 hover:text-red-600"
@@ -76,20 +80,24 @@ export default function AboutUsSection() {
             </a>
           </div>
 
-          <div className="relative hidden min-w-0 lg:block">
-            <div className="relative h-[430px] w-full xl:h-[510px]">
-              <Image
-                src={data.image.src}
-                alt={data.image.alt}
-                fill
-                priority
-                sizes="(min-width: 1280px) 48vw, 50vw"
-                className="object-contain object-right"
-              />
-            </div>
-          </div>
+          {/* EMPTY GRID COLUMN FOR IMAGE SPACE */}
+          <div className="hidden lg:block" />
+
         </div>
       </div>
+
+      {/* RIGHT IMAGE - OUTSIDE MAX-WIDTH CONTAINER */}
+      <div className="absolute inset-y-0 right-[-48px] hidden w-[50%] lg:block">
+        <Image
+          src={data.image.src}
+          alt={data.image.alt}
+          fill
+          priority
+          sizes="50vw"
+          className="object-contain object-right"
+        />
+      </div>
+
     </section>
   );
 }

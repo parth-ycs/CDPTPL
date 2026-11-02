@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { ArrowLeft, ArrowRight, Minus, Plus } from "lucide-react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
-import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
+import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldIndiaLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { globalPresenceLocations } from "@/data/global-presence";
 import type { GlobalLocation } from "@/data/global-presence";
@@ -27,6 +27,8 @@ type Props = {
   selectedPointId: string | null;
   onSelectCountry: (location: GlobalLocation) => void;
   onSelectPoint: (location: GlobalLocation, pointId: string) => void;
+  /** "landing" = the oversized globe on the home page, "page" = fits its parent box. */
+  variant?: "landing" | "page";
 };
 
 const BLUE = 0x1557a0;
@@ -63,6 +65,7 @@ export default function GlobalPresenceGlobe({
   selectedPointId,
   onSelectCountry,
   onSelectPoint,
+  variant = "landing",
 }: Props) {
   const chartDivRef = useRef<HTMLDivElement | null>(null);
   const chartApiRef = useRef<{
@@ -73,6 +76,15 @@ export default function GlobalPresenceGlobe({
     selectCountry: (code: string) => void;
     focusPoint: (coordinates: [number, number]) => void;
   } | null>(null);
+
+  // Remember what was selected on the first render, so the globe opens there
+  // (for example when arriving through /global-presence?country=...&point=...).
+  const initialRef = useRef<{ code: string; coordinates?: [number, number] }>({
+    code: activeLocation.countryCode,
+    coordinates: [...activeLocation.offices, ...activeLocation.projects].find(
+      (point) => point.id === selectedPointId,
+    )?.coordinates,
+  });
 
   const visibleMarkers = useMemo(() => {
     if (viewMode === "global") {
@@ -256,7 +268,9 @@ export default function GlobalPresenceGlobe({
     });
 
     polygonSeries.events.on("datavalidated", () => {
-      rotateCountry("IN");
+      const { code, coordinates } = initialRef.current;
+      rotateCountry(code);
+      if (coordinates) focusCoordinates(coordinates);
       chart.appear(700, 80);
     });
 
@@ -302,16 +316,34 @@ export default function GlobalPresenceGlobe({
     onSelectCountry(globalPresenceLocations[nextIndex]);
   };
 
+  const isPage = variant === "page";
+
   return (
-    <div className="relative mt-8 min-h-[420px] lg:mt-0 lg:h-[660px] lg:min-h-0">
-      {/* Keep the original globe dimensions and offsets. */}
+    <div
+      className={
+        isPage
+          ? "relative h-[420px] sm:h-[520px] lg:h-full"
+          : "relative mt-8 min-h-[420px] lg:mt-0 lg:h-[660px] lg:min-h-0"
+      }
+    >
+      {/* Landing keeps the original oversized globe; the page variant fits its parent box. */}
       <div
         ref={chartDivRef}
         aria-label="Interactive globe showing office and project locations"
-        className="absolute -right-[18%] top-0 h-[430px] w-[120%] sm:-right-[16%] sm:h-[540px] lg:-right-[35%] lg:top-[-8%] lg:h-[760px] lg:w-[135%] xl:h-[850px]"
+        className={
+          isPage
+            ? "absolute inset-0"
+            : "absolute -right-[18%] top-0 h-[430px] w-[120%] sm:-right-[16%] sm:h-[540px] lg:-right-[35%] lg:top-[-8%] lg:h-[760px] lg:w-[135%] xl:h-[850px]"
+        }
       />
 
-      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-white/80 bg-white/95 p-1.5 shadow-[0_8px_25px_rgba(26,76,126,0.12)] backdrop-blur sm:bottom-8 sm:left-[45%] sm:translate-x-0 lg:bottom-[12%] lg:left-[18%]">
+      <div
+        className={`absolute z-10 flex items-center gap-1.5 rounded-full border border-white/80 bg-white/95 p-1.5 shadow-[0_8px_25px_rgba(26,76,126,0.12)] backdrop-blur ${
+          isPage
+            ? "bottom-4 left-4"
+            : "bottom-3 left-1/2 -translate-x-1/2 sm:bottom-8 sm:left-[45%] sm:translate-x-0 lg:bottom-[12%] lg:left-[18%]"
+        }`}
+      >
         <span className="px-2 text-[10px] text-slate-500">
           {globalPresenceLocations.findIndex((item) => item.id === activeLocation.id) + 1} / {globalPresenceLocations.length}
         </span>
@@ -323,7 +355,11 @@ export default function GlobalPresenceGlobe({
         </button>
       </div>
 
-      <div className="absolute bottom-3 right-3 z-20 flex flex-col gap-1.5 sm:bottom-8 sm:right-5">
+      <div
+        className={`absolute z-20 flex flex-col gap-1.5 ${
+          isPage ? "bottom-4 right-4" : "bottom-3 right-3 sm:bottom-8 sm:right-5"
+        }`}
+      >
         <button type="button" onClick={() => changeZoom(1)} aria-label="Zoom in" className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:text-[#1557A0]">
           <Plus size={17} />
         </button>

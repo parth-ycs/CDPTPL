@@ -1,10 +1,9 @@
-import Heroexp2 from "@/components/landing_page/exp/hero2";
-
+import IndustrialShowcase from "@/components/landing_page/industrial-showcase";
 
 export default function Page() {
   return (
     <main>
-      <Heroexp2 />
+      <IndustrialShowcase />
     </main>
   );
 }

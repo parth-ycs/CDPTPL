@@ -22,7 +22,7 @@ export const aboutSectionData = {
   description:
     "At Chemdist, we combine deep engineering expertise, advanced technology and proven execution capabilities to deliver integrated process solutions for a safer, cleaner and more sustainable world.",
   image: {
-    src: "/images/about-us/image.png",
+    src: "/images/about-us/landing_page.png",
     alt: "Chemdist industrial process plant",
   },
   cta: {

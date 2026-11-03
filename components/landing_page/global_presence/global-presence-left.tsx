@@ -45,8 +45,7 @@ export default function GlobalPresenceLeft({
   };
 
   return (
-    <div className="relative z-10 max-w-[470px] py-2 lg:py-1">
-      <h2 className="section-heading text-slate-900">
+    <div className="relative z-10 w-full max-w-none py-2 lg:max-w-[470px] lg:py-1">      <h2 className="section-heading text-slate-900">
         Global
         <br />
         <span className="text-brand-blue">Presence</span>
@@ -56,7 +55,7 @@ export default function GlobalPresenceLeft({
         Global expertise. Local execution.
       </p>
 
-      <p className="mt-3 max-w-[390px] text-sm leading-6 text-slate-600 sm:text-base">
+      <p className="mt-3 w-full max-w-none text-sm leading-6 text-slate-600 sm:text-base lg:max-w-[390px]">        
         A growing international network for technology, engineering and manufacturing.
       </p>
 

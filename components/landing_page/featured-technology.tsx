@@ -25,15 +25,14 @@ export default function FeaturedTechnologies() {
   }
 
   return (
-    <section className="overflow-hidden bg-white ">
+    <section className="overflow-hidden bg-white">
       <Container>
-        {/* Section heading */}
+        {/* SECTION HEADING */}
         <div className="mb-10 flex items-center justify-between gap-8">
           <div className="max-w-3xl">
             <h2 id="rd-heading" className="section-heading max-w-[620px]">
               Featured<span className="text-brand-blue"> Solutions</span>
             </h2>
-            
 
             <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
               Selected technology highlights and product/solution
@@ -50,18 +49,17 @@ export default function FeaturedTechnologies() {
           </div>
         </div>
 
-
-        {/* Product showcase */}
+        {/* PRODUCT SHOWCASE */}
         <div
-          className="relative isolate min-h-[440px] md:min-h-[390px]"
+          className="relative isolate min-h-[440px] lg:min-h-[460px]"
           aria-live="polite"
         >
-          {/* Information card */}
+          {/* INFORMATION CARD */}
           <article
             key={product.id}
             className="relative z-[1] w-full rounded-2xl border border-slate-200
               bg-white/95 p-6 shadow-sm backdrop-blur-sm
-              md:min-h-[330px] md:w-[58%] md:p-9"
+              lg:min-h-[330px] lg:w-[58%] lg:p-9"
           >
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-red-600">
               {product.category}
@@ -98,30 +96,38 @@ export default function FeaturedTechnologies() {
               <span aria-hidden="true">↗</span>
             </Link>
           </article>
-          
 
-          {/* Product image: independently positioned per product */}
-          <Image
-            key={product.image}
-            src={product.image}
-            alt={product.name}
-            width={image.width}
-            height={image.height}
-            priority={index === 0}
-            sizes="(max-width: 767px) 100vw, 55vw"
-            className="pointer-events-none absolute max-w-none object-contain
-              max-md:!relative max-md:!inset-auto max-md:!mt-5
-              max-md:!block max-md:!h-auto max-md:!w-full
-              max-md:!max-w-full"
-            style={{
-              width: `${image.width}px`,
-              height: `${image.height}px`,
-              right: `${image.right}px`,
-              top: `${image.top}px`,
-              transform: `translate(${image.translateX}px, ${image.translateY}px)`,
-              zIndex: image.zIndex,
-            }}
-          />
+          {/* PRODUCT IMAGE */}
+<div
+  key={product.image}
+  className="
+    absolute z-[2] overflow-visible
+
+    max-lg:!relative
+    max-lg:!top-auto
+    max-lg:!right-auto
+    max-lg:!mt-6
+    max-lg:!w-full
+    max-lg:!max-w-full
+    max-lg:!transform-none
+  "
+  style={{
+    width: image.width,
+    aspectRatio: image.aspectRatio,
+    right: image.right,
+    top: image.top,
+    transform: `translateY(${image.translateY})`,
+  }}
+>
+  <Image
+    src={product.image}
+    alt={product.name}
+    fill
+    priority={index === 0}
+    sizes="(max-width: 1023px) 100vw, 52vw"
+    className="pointer-events-none object-contain"
+  />
+</div>
         </div>
       </Container>
     </section>

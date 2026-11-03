@@ -4,6 +4,7 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { aboutSectionData, aboutValues } from "@/data/about";
+import Container from "../container";
 
 export default function AboutUsSection() {
   const data = aboutSectionData;
@@ -13,11 +14,12 @@ export default function AboutUsSection() {
       id="about-us"
       className="relative w-full overflow-hidden bg-white sm:pb-15 lg:pb-18 xl:pb-25"
     >
-      {/* LEFT CONTENT - CONSTRAINED TO 1440PX */}
-      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
+      {/* LEFT CONTENT - SAME ALIGNMENT AS OTHER SECTIONS */}
+      <Container className="relative z-10">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
 
-          <div className="relative z-10 min-w-0">
+          <div className="relative min-w-0">
+            {/* LABEL */}
             <div className="mb-5 flex items-center gap-4">
               <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-600">
                 {data.label}
@@ -25,6 +27,7 @@ export default function AboutUsSection() {
               <span className="h-[2px] w-12 bg-red-600" />
             </div>
 
+            {/* HEADING */}
             <h2 className="section-heading max-w-[620px]">
               {data.headingStart}{" "}
               <span className="text-brand-blue">
@@ -32,6 +35,7 @@ export default function AboutUsSection() {
               </span>
             </h2>
 
+            {/* DESCRIPTION */}
             <p className="mt-6 max-w-[590px] text-[15px] leading-7 text-slate-600 sm:text-base sm:leading-8">
               {data.description}
             </p>
@@ -80,14 +84,14 @@ export default function AboutUsSection() {
             </a>
           </div>
 
-          {/* EMPTY GRID COLUMN FOR IMAGE SPACE */}
+          {/* RESERVED SPACE FOR RIGHT IMAGE */}
           <div className="hidden lg:block" />
 
         </div>
-      </div>
+      </Container>
 
-      {/* RIGHT IMAGE - OUTSIDE MAX-WIDTH CONTAINER */}
-      <div className="absolute inset-y-0 right-[-48px] hidden w-[50%] lg:block">
+      {/* RIGHT IMAGE - UNCHANGED POSITIONING */}
+      <div className="absolute inset-y-0 right-[-48px] hidden w-[55%] lg:block">
         <Image
           src={data.image.src}
           alt={data.image.alt}
@@ -97,7 +101,6 @@ export default function AboutUsSection() {
           className="object-contain object-right"
         />
       </div>
-
     </section>
   );
 }

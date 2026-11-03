@@ -7,14 +7,13 @@ export type FeaturedTechnology = {
   features: string[];
   image: string;
   href: string;
+
   imageLayout: {
-    width: number;
-    height: number;
-    right: number;
-    top: number;
-    translateX: number;
-    translateY: number;
-    zIndex: number;
+    width: string;
+    aspectRatio: string;
+    right: string;
+    top: string;
+    translateY: string;
   };
 };
 
@@ -32,16 +31,16 @@ export const featuredTechnologies: FeaturedTechnology[] = [
     ],
     image: "/images/products/heat-exchanger.png",
     href: "/solutions/process-equipment",
+
     imageLayout: {
-      width: 600,
-      height: 350,
-      right: 15,
-      top: 20,
-      translateX: 0,
-      translateY: 0,
-      zIndex: 3,
+      width: "52%",
+      aspectRatio: "3 / 2",
+      right: "0%",
+      top: "50%",
+      translateY: "-50%",
     },
   },
+
   {
     id: "distillation-column",
     name: "Distillation Columns",
@@ -55,16 +54,16 @@ export const featuredTechnologies: FeaturedTechnology[] = [
     ],
     image: "/images/products/distillation-column.png",
     href: "/solutions/process-equipment",
+
     imageLayout: {
-      width: 540,
-      height: 430,
-      right: 10,
-      top: -65,
-      translateX: 0,
-      translateY: 0,
-      zIndex: 3,
+      width: "52%",
+      aspectRatio: "3 / 2",
+      right: "0%",
+      top: "50%",
+      translateY: "-50%",
     },
   },
+
   {
     id: "membrane-system",
     name: "Membrane Separation",
@@ -78,14 +77,13 @@ export const featuredTechnologies: FeaturedTechnology[] = [
     ],
     image: "/images/products/membrane-system.png",
     href: "/solutions/membranes",
+
     imageLayout: {
-      width: 650,
-      height: 450,
-      right: 5,
-      top: -20,
-      translateX: 0,
-      translateY: 0,
-      zIndex: 3,
+      width: "52%",
+      aspectRatio: "3 / 2",
+      right: "0%",
+      top: "50%",
+      translateY: "-50%",
     },
   },
 ];

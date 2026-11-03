@@ -69,21 +69,21 @@ export default function GlobalPresenceSection({
             viewMode={viewMode}
             selectedPointId={selectedPointId}
             selectedPoint={selectedPoint}
-          exploreHref={exploreHref}
-          onSelectCountry={selectCountry}
-          onSelectPoint={selectPoint}
-          onShowGlobal={showGlobalView}
-        />
+            exploreHref={exploreHref}
+            onSelectCountry={selectCountry}
+            onSelectPoint={selectPoint}
+            onShowGlobal={showGlobalView}
+          />
 
-        <GlobalPresenceGlobe
-          activeLocation={activeLocation}
-          viewMode={viewMode}
-          selectedPointId={selectedPointId}
-          onSelectCountry={selectCountry}
-          onSelectPoint={selectPoint}
-        />
-      </div>
-    </Container>
+          <GlobalPresenceGlobe
+            activeLocation={activeLocation}
+            viewMode={viewMode}
+            selectedPointId={selectedPointId}
+            onSelectCountry={selectCountry}
+            onSelectPoint={selectPoint}
+          />
+        </div>
+      </Container>
     </section>
   );
 }

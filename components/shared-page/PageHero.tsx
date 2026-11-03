@@ -96,17 +96,6 @@ export default function PageHero({
               {description}
             </p>
 
-            {/* CTA */}
-            {ctaLabel && ctaHref && (
-              <Link
-                href={ctaHref}
-                className="mt-8 inline-flex items-center gap-3 rounded-md bg-red-600 px-6 py-3 text-sm font-semibold text-white transition-colors duration-500 hover:bg-red-700"
-              >
-                {ctaLabel}
-                <ArrowRight size={18} />
-              </Link>
-            )}
-
             {/* Metadata */}
             {metadata && metadata.length > 0 && (
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/80">

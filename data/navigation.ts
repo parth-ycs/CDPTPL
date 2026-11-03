@@ -113,7 +113,7 @@ export const navigationItems: NavigationItem[] = [
   {
     type: "link",
     label: "Global Presence",
-    href: "/#global",
+    href: "/global-presence",
   },
 
   {

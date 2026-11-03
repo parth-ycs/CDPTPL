@@ -11,6 +11,7 @@ import FoundersLeadershipSection from "@/components/about/sections/FoundersLeade
 import VisionMissionSection from "@/components/about/sections/VisionMissionSection";
 import JourneySection from "@/components/about/sections/JourneySection";
 import FeaturedAwardsSection from "@/components/about/sections/FeaturedAwardsSection";
+import CompanyProfileSection from "@/components/about/sections/CompanyProfileSection";
 
 
 const sections: PageSectionItem[] = [
@@ -38,6 +39,11 @@ const sections: PageSectionItem[] = [
     id: "awards",
     label: "Awards",
     content: <FeaturedAwardsSection />,
+  },
+  {
+    id: "company-profile",
+    label: "Company Profile",
+    content: <CompanyProfileSection />,
   },
 
 ];

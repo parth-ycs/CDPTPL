@@ -268,6 +268,15 @@ awards: {
   },
 },
 
+companyProfile: {
+  label: "Company Profile",
+  title: "Know Chemdist in detail",
+  description:
+    "Download our corporate profile for an overview of our capabilities, verticals, global presence and key projects.",
+  chips: ["Capabilities", "Verticals", "Key Projects", "Global Presence"],
+  fileInfo: "PDF · 4 MB",
+  href: "/downloads/chemdist-company-profile.pdf",
+},
   values: {
     label: "What Guides Us",
     heading: "Principles behind every solution.",

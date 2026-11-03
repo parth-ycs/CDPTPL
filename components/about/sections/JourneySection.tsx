@@ -14,28 +14,29 @@ export default function JourneySection() {
   const slots = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Snap cards into place after a small scroll (offset by the navbar)
-    const root = document.documentElement;
-    root.style.scrollSnapType = "y proximity";
-    root.style.scrollPaddingTop = HEADER;
+  // Snap cards into place after a small scroll (offset by the navbar)
+  const root = document.documentElement;
+  root.style.scrollSnapType = "y proximity";
+  root.style.scrollPaddingTop = HEADER; // rem is fine for CSS, just not for IntersectionObserver
 
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach(
-          (e) =>
-            e.isIntersecting &&
-            setActive(Number((e.target as HTMLElement).dataset.index))
-        ),
-      { rootMargin: `-${HEADER} 0px -50% 0px`, threshold: 0.5 }
-    );
-    slots.current.forEach((el) => el && observer.observe(el));
+  // The card crossing the viewport's centre line becomes active
+  const observer = new IntersectionObserver(
+    (entries) =>
+      entries.forEach(
+        (e) =>
+          e.isIntersecting &&
+          setActive(Number((e.target as HTMLElement).dataset.index))
+      ),
+    { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+  );
+  slots.current.forEach((el) => el && observer.observe(el));
 
-    return () => {
-      observer.disconnect();
-      root.style.scrollSnapType = "";
-      root.style.scrollPaddingTop = "";
-    };
-  }, []);
+  return () => {
+    observer.disconnect();
+    root.style.scrollSnapType = "";
+    root.style.scrollPaddingTop = "";
+  };
+}, []);
 
   const current = milestones[active];
   const last = milestones.length - 1;

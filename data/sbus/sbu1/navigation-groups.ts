@@ -1,5 +1,5 @@
 
-import type { NavigationGroup } from "../sbus";
+import type { NavigationGroup } from "@/data/sbus";
 
 export const processEquipmentGroups: NavigationGroup[] = [
   {

@@ -4,7 +4,6 @@ import ProjectHero from "./detail/ProjectHero";
 import ProjectOverview from "./detail/ProjectOverview";
 import ProjectScope from "./detail/ProjectScope";
 import RelatedProjects from "./detail/RelatedProjects";
-import ProjectCTA from "./detail/ProjectCTA";
 
 type ProjectDetailPageProps = {
   project: Project;

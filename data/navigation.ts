@@ -1,5 +1,5 @@
 
-import sbus, { solutionHref } from "@/data/sbus/sbus";
+import sbus, { solutionHref } from "@/data/sbus";
 
 export type NavigationChild = {
   label: string;
@@ -37,18 +37,27 @@ export type NavigationItem =
 // SOLUTIONS NAVIGATION
 // ---------------------------------------------
 
+const SBU_ONE_SLUG = "process-equipment-separation";
+
 const solutionItems: NavigationDropdownItem[] = sbus.map((sbu) => ({
   label: sbu.name,
   href: sbu.href,
-  children: sbu.navigationGroups?.length
-    ? sbu.navigationGroups.map((group) => ({
-        label: group.title,
-        href: `/solutions/${sbu.slug}/${group.slug}`,
-      }))
-    : sbu.children.map((child) => ({
-        label: child.hero.name,
-        href: solutionHref(child.slug),
-      })),
+
+  children:
+    sbu.slug === SBU_ONE_SLUG
+      ? (sbu.navigationGroups ?? []).map((group) => ({
+          label: group.title,
+          href: `/solutions/${group.slug}`,
+        }))
+      : sbu.navigationGroups?.length
+        ? sbu.navigationGroups.map((group) => ({
+            label: group.title,
+            href: `/solutions/${sbu.slug}/${group.slug}`,
+          }))
+        : sbu.children.map((child) => ({
+            label: child.hero.name,
+            href: solutionHref(sbu.slug, child.slug),
+          })),
 }));
 
 
@@ -90,7 +99,7 @@ export const navigationItems: NavigationItem[] = [
     type: "dropdown",
     label: "Solutions",
     visualSrc: "/images/SBUs.png",
-    visualHref: "/#technologies",
+    visualHref: "/solutions",
     visualAlt: "Chemdist Group business units",
     panelTitle: "Business Portfolio",
     panelDescription:

@@ -130,7 +130,7 @@ function AnimatedDescription({
 }
 
 const headingClass =
-  "text-[clamp(3.5rem,8vw,7rem)] font-light leading-[0.9] tracking-[-0.075em]";
+  "text-[clamp(3.5rem,8vw,7rem)] font-heading font-light leading-[0.9] tracking-[-0.075em]";
 
 export default function VisionMissionSection() {
   const sectionRef = useRef<HTMLElement>(null);

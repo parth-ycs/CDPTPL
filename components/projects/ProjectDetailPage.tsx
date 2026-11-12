@@ -22,7 +22,6 @@ export default function ProjectDetailPage({
       <ProjectOverview project={project} />
       <ProjectScope project={project} />
       <RelatedProjects projects={relatedProjects} />
-      <ProjectCTA />
     </main>
   );
 }

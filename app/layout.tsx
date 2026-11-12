@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { inter, baiJamjuree, noaVoren } from "./fonts";
+import SmoothScroll from "@/components/smooth-scroll"
 
 
 export const metadata: Metadata = {
@@ -46,7 +47,9 @@ export default function RootLayout({
       className={`${inter.variable} ${baiJamjuree.variable} ${noaVoren.variable}`}
     >
       <body className="antialiased">
+        <SmoothScroll>
         {children}
+        </SmoothScroll>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -79,13 +79,8 @@ export const navigationItems: NavigationItem[] = [
         children: [],
       },
       {
-        label: "Leadership",
-        href: "/about-us/leadership",
-        children: [],
-      },
-      {
         label: "Our Group",
-        href: "/#group",
+        href: "/under-development",
         children: [],
       },
     ],
@@ -119,6 +114,6 @@ export const navigationItems: NavigationItem[] = [
   {
     type: "link",
     label: "Careers",
-    href: "/#careers",
+    href: "/under-development",
   },
 ];

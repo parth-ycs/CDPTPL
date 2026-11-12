@@ -102,7 +102,7 @@ export default function WhatWeStandForSection() {
           <h2
             className="
               text-[clamp(2.8rem,5.5vw,5.2rem)]
-              font-semibold leading-[0.88]
+              font-heading font-bold leading-[0.88]
               tracking-[-0.065em]
             "
           >
@@ -112,7 +112,7 @@ export default function WhatWeStandForSection() {
                 className={`block ${
                   index === 0
                     ? "text-[#102C59]"
-                    : "text-[#102C59]/25"
+                    : "text-[#102C59]/50"
                 }`}
               >
                 {line}
@@ -204,6 +204,7 @@ export default function WhatWeStandForSection() {
                   <h3
                     className={`
                       text-[clamp(1.5rem,2.8vw,2.8rem)]
+                      font-heading
                       font-semibold leading-none
                       tracking-[-0.045em]
                       transition-colors duration-700

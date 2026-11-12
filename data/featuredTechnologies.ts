@@ -30,7 +30,7 @@ export const featuredTechnologies: FeaturedTechnology[] = [
       "Custom-engineered equipment",
     ],
     image: "/images/products/heat-exchanger.png",
-    href: "/solutions/process-equipment",
+    href: "/solutions/process-equipment-separation/process-equipment",
 
     imageLayout: {
       width: "52%",
@@ -53,8 +53,7 @@ export const featuredTechnologies: FeaturedTechnology[] = [
       "Industrial separation systems",
     ],
     image: "/images/products/distillation-column.png",
-    href: "/solutions/process-equipment",
-
+    href: "/solutions/process-equipment-separation/process-equipment",
     imageLayout: {
       width: "52%",
       aspectRatio: "3 / 2",
@@ -76,7 +75,7 @@ export const featuredTechnologies: FeaturedTechnology[] = [
       "Application-specific systems",
     ],
     image: "/images/products/membrane-system.png",
-    href: "/solutions/membranes",
+    href: "/solutions/membranes/pervaporation",
 
     imageLayout: {
       width: "52%",

@@ -12,13 +12,13 @@ export default function FeaturedAwardsSection() {
       <Container className="!py-16 lg:!py-20">
         <h2 className="mb-12 text-center font-[var(--font-noa-voren)] text-4xl tracking-tight sm:text-5xl">
           {headingStart}{" "}
-          <span className="text-[#e32b2b]">{headingHighlight}</span>
+          <span className="text-brand-blue">{headingHighlight}</span>
         </h2>
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((award) => (
             <article key={award.id} className="group">
-              <div className="relative aspect-[283/240] overflow-hidden rounded-xl bg-[#d9dee5]">
+              <div className="relative aspect-[183/240] overflow-hidden rounded-xl bg-[#d9dee5]">
                 <Image
                   src={award.image}
                   alt={award.imageAlt}
@@ -32,7 +32,7 @@ export default function FeaturedAwardsSection() {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center">
+        {/* <div className="mt-12 flex justify-center">
           <Link
             href={cta.href}
             className="flex items-center gap-2 text-base font-medium transition-colors hover:text-[#e32b2b]"
@@ -40,7 +40,7 @@ export default function FeaturedAwardsSection() {
             <span className="h-3 w-3 rounded-full bg-[#e32b2b]" />
             {cta.label}
           </Link>
-        </div>
+        </div> */}
       </Container>
     </section>
   );

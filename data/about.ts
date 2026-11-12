@@ -28,7 +28,7 @@ export const aboutPageData = {
     },
     cta: {
       label: "Our Journey",
-      href: "/about",
+      href: "/about-us",
     },
   },
 
@@ -38,7 +38,7 @@ export const aboutPageData = {
     heading: "Engineering Progress. Enabling Possibilities.",
     description:
       "We bring together engineering expertise, technology and execution capabilities to develop integrated process solutions for industry.",
-    image: "/images/about-us/image.png",
+    image: "/images/about-us/hero/image.png",
     imageAlt: "Industrial process equipment and plant infrastructure",
   },
 
@@ -122,7 +122,7 @@ visionMission: {
       description:
         "To be a globally respected high performance organisation offering sustainable solutions in energy and the environment.",
       highlight: "high performance",
-      background: "/images/about-us/vision-bg.jpg",
+      background: "/images/about-us/vision-mission/vision.png",
     },
     {
       id: "mission",
@@ -130,15 +130,15 @@ visionMission: {
       description:
         "To execute technology-based EPC projects in the energy sector while prioritising safety, quality, time and cost.",
       highlight: "safety, quality, time and cost",
-      background: "/images/about-us/mission-bg.jpg",
+      background: "/images/about-us/vision-mission/mission.png",
     },
     {
       id: "core-values",
-      title: "CORE VALUES",
+      title: "VALUES",
       description:
         "Integrity, innovation, collaboration and responsibility guide every decision we make and every solution we deliver.",
       highlight: "integrity, innovation, collaboration",
-      background: "/images/about-us/values-bg.jpg",
+      background: "/images/about-us/values-bg.png",
     },
   ],
 },
@@ -181,51 +181,89 @@ whatWeStandFor: {
   ],
 },
 
+
 journey: [
   {
-    id: "1960s",
-    year: "1960s",
-    title: "The foundation years",
-    description: "Replace with the story of how Chemdist began.",
-    highlights: [{ title: "1st", subtitle: "Process plant delivered" }],
-    image: "/images/about-us/journey/1960s.jpg",
-    imageAlt: "Early Chemdist plant",
-    imageHeading: "Where it all began",
-  },
-  {
-    id: "1980s",
-    year: "1980s",
-    title: "Expanding engineering capabilities",
-    description: "Replace with the growth story for this period.",
-    highlights: [],
-    image: "/images/about-us/journey/1980s.jpg",
-    imageAlt: "Chemdist engineering team",
-    imageHeading: "Building expertise",
-  },
-  {
-    id: "2000s",
-    year: "2000s",
-    title: "Going global",
-    description: "Replace with your international expansion story.",
+    id: "2013",
+    year: "2013",
+    title: "Beginning with Process Solutions",
+    description:
+      "Established in 2013, Process Solutions began designing, manufacturing, and installing process technologies, delivering complete turnkey solutions.",
     highlights: [
-      { title: "90+", subtitle: "Countries served" },
-      { title: "45+", subtitle: "Offices" },
+      { title: "Turnkey", subtitle: "Process Solutions" },
     ],
-    image: "/images/about-us/journey/2000s.jpg",
-    imageAlt: "Chemdist global projects",
-    imageHeading: "A global footprint",
+    image: "/images/about-us/journey/2013.jpg",
+    imageAlt: "Chemdist Process Solutions",
+    imageHeading: "Building process solutions",
   },
   {
-    id: "today",
-    year: "Today",
-    title: "Engineering a sustainable future",
-    description: "Replace with where the company stands now.",
-    highlights: [{ title: "16", subtitle: "Manufacturing facilities" }],
-    image: "/images/about-us/journey/today.jpg",
-    imageAlt: "Modern Chemdist facility",
-    imageHeading: "Looking ahead",
+    id: "2014",
+    year: "2014",
+    title: "Introduced Mass Transfer Production Facility",
+    description:
+      "With over 300 applications and installations for distillation systems, we introduced a range of Mass Transfer Internals to address diverse separation challenges.",
+    highlights: [
+      { title: "300+", subtitle: "Installations" },
+    ],
+    image: "/images/about-us/journey/2014.jpg",
+    imageAlt: "Chemdist Mass Transfer production facility",
+    imageHeading: "Advancing separation technology",
+  },
+  {
+    id: "2018",
+    year: "2018",
+    title: "Innovation in Membrane Systems",
+    description:
+      "Introduced next-generation membrane-based separation and process technologies, alongside advanced heat transfer solutions for global applications.",
+    highlights: [
+      { title: "Next-Gen", subtitle: "Membrane Technology" },
+    ],
+    image: "/images/about-us/journey/2018.jpg",
+    imageAlt: "Chemdist membrane separation technology",
+    imageHeading: "Driving process innovation",
+  },
+  {
+    id: "2021",
+    year: "2021",
+    title: "Centre of Excellence at IIT Guwahati",
+    description:
+      "Introduced technologies for ethanol and sustainable products, advancing future-ready solutions in ethanol and green hydrogen production.",
+    highlights: [
+      { title: "IIT Guwahati", subtitle: "Centre of Excellence" },
+    ],
+    image: "/images/about-us/journey/2021.jpg",
+    imageAlt: "Chemdist IIT Guwahati Centre of Excellence",
+    imageHeading: "Collaborating for a sustainable future",
+  },
+  {
+    id: "2023",
+    year: "2023",
+    title: "HiTurb Patent & NCL-Chemdist MoU",
+    description:
+      "Developed HiTurb, a next-generation high-efficiency heat exchanger technology featuring turbulator elements that improve heat transfer efficiency by 30–40%. Also signed an MoU with NCL for engineering and scaling up batch-to-continuous processes using micro-reactor technology.",
+    highlights: [
+      { title: "30–40%", subtitle: "Higher Heat Transfer Efficiency" },
+      { title: "NCL", subtitle: "MoU Signed" },
+    ],
+    image: "/images/about-us/journey/2023.jpg",
+    imageAlt: "Chemdist HiTurb heat exchanger technology",
+    imageHeading: "Engineering the next generation",
+  },
+  {
+    id: "2026",
+    year: "2026",
+    title: "Global Expansion – Launched in USA",
+    description:
+      "Expanded our global presence with the launch of Chemdist in the United States, marking another milestone in our international growth.",
+    highlights: [
+      { title: "USA", subtitle: "New Global Presence" },
+    ],
+    image: "/images/about-us/journey/2026.jpg",
+    imageAlt: "Chemdist expansion into the United States",
+    imageHeading: "Expanding our global footprint",
   },
 ],
+
 
 awards: {
   headingStart: "Featured",

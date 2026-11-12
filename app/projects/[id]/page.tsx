@@ -8,6 +8,7 @@ import {
 
 import ProjectDetailPage from "@/components/projects/ProjectDetailPage";
 import Footer from "@/components/footer";
+import Enquiry from "@/components/enquiry";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -59,6 +60,7 @@ export default async function ProjectRoute({ params }: Props) {
         project={project}
         relatedProjects={relatedProjects}
       />
+      <Enquiry />
       <Footer />
     </>
   );

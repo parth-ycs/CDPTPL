@@ -1,39 +1,43 @@
 
 import Container from "./container";
 import Logo from "./ui/logo";
-import sbus from "@/data/sbus";
-
-const aboutLinks = [
-  { label: "Who We Are", href: "/about-us" },
-  { label: "Our Groups", href: "/about-us/our-groups" },
-  { label: "Our Journey", href: "/about-us/our-journey" },
-  { label: "CSR & Sustainability", href: "/about-us/csr" },
-  { label: "Awards & Recognition", href: "/about-us/awards" },
-  { label: "Research & Development", href: "/research-development" },
-];
-
-const resourceLinks = [
-  { label: "Innovations & Patents", href: "/resources/innovations-patents" },
-  { label: "Blogs & Insights", href: "/resources/blogs" },
-  { label: "Media & Press", href: "/resources/media" },
-  { label: "E-books & Publications", href: "/resources/publications" },
-  { label: "Events", href: "/resources/events" },
-  { label: "Investor Relations", href: "/resources/investor-relations" },
-];
-
-const exploreLinks = [
-  { label: "Projects", href: "/projects" },
-  { label: "Global Presence", href: "/global-presence" },
-  { label: "Careers", href: "/careers" },
-];
+import { navigationItems } from "@/data/navigation";
 
 const heading =
   "mb-5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45";
 
 const link =
-  "group mb-3 block w-fit text-[12px] leading-relaxed text-white/65 transition-colors duration-200 hover:text-brand-red-light";
+  "mb-3 block w-fit text-[12px] leading-relaxed text-white/65 transition-colors duration-200 hover:text-brand-red-light";
 
 export default function Footer() {
+  // Extract dropdowns and direct links from the main navigation.
+  const about = navigationItems.find(
+    (item) => item.label === "About Us"
+  );
+
+  const solutions = navigationItems.find(
+    (item) => item.label === "Solutions"
+  );
+
+  const resources = navigationItems.find(
+    (item) => item.label === "Resources"
+  );
+
+  const explore = navigationItems.filter(
+    (item): item is Extract<typeof item, { type: "link" }> =>
+      item.type === "link" &&
+      ["Projects", "Global Presence", "Careers"].includes(item.label)
+  );
+  
+  const aboutItems =
+    about?.type === "dropdown" ? about.items : [];
+
+  const solutionItems =
+    solutions?.type === "dropdown" ? solutions.items : [];
+
+  const resourceItems =
+    resources?.type === "dropdown" ? resources.items : [];
+
   return (
     <footer className="bg-[#041326] text-white">
 
@@ -68,18 +72,18 @@ export default function Footer() {
         <div>
           <p className={heading}>Solutions</p>
 
-          {sbus.map((s) => (
+          {solutionItems.map((item) => (
             <a
-              key={s.slug}
-              href={s.href}
+              key={item.href}
+              href={item.href}
               className={link}
             >
-              {s.name}
+              {item.label}
             </a>
           ))}
 
           <a
-            href="/solutions"
+            href={solutions?.type === "dropdown" ? solutions.visualHref : "/solutions"}
             className="mt-2 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-red-light transition-colors hover:text-white"
           >
             All Solutions <span>↗</span>
@@ -90,9 +94,9 @@ export default function Footer() {
         <div>
           <p className={heading}>About Us</p>
 
-          {aboutLinks.map((item) => (
+          {aboutItems.map((item) => (
             <a
-              key={item.label}
+              key={item.href}
               href={item.href}
               className={link}
             >
@@ -105,9 +109,9 @@ export default function Footer() {
         <div>
           <p className={heading}>Resources</p>
 
-          {resourceLinks.map((item) => (
+          {resourceItems.map((item) => (
             <a
-              key={item.label}
+              key={item.href}
               href={item.href}
               className={link}
             >
@@ -120,9 +124,9 @@ export default function Footer() {
         <div>
           <p className={heading}>Explore</p>
 
-          {exploreLinks.map((item) => (
+          {explore.map((item) => (
             <a
-              key={item.label}
+              key={item.href}
               href={item.href}
               className={link}
             >
@@ -142,10 +146,17 @@ export default function Footer() {
           </p>
 
           <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <a href="/privacy-policy" className="transition-colors hover:text-white">
+            <a
+              href="/privacy-policy"
+              className="transition-colors hover:text-white"
+            >
               Privacy Policy
             </a>
-            <a href="/terms-and-conditions" className="transition-colors hover:text-white">
+
+            <a
+              href="/terms-and-conditions"
+              className="transition-colors hover:text-white"
+            >
               Terms & Conditions
             </a>
           </div>

@@ -85,22 +85,22 @@ export const navigationItems: NavigationItem[] = [
       },
       {
         label: "Our Groups",
-        href: "/about-us/our-groups",
+        href: "/under-development",
         children: [],
       },
       {
         label: "Our Journey",
-        href: "/about-us/our-journey",
+        href: "/under-development",
         children: [],
       },
       {
         label: "CSR & Sustainability",
-        href: "/about-us/csr",
+        href: "/under-development",
         children: [],
       },
       {
         label: "Awards & Recognition",
-        href: "/about-us/awards",
+        href: "/under-development",
         children: [],
       },
       {
@@ -153,32 +153,32 @@ export const navigationItems: NavigationItem[] = [
     items: [
       {
         label: "Innovations & Patents",
-        href: "/resources/innovations-patents",
+        href: "/under-development",
         children: [],
       },
       {
         label: "Blogs & Insights",
-        href: "/resources/blogs",
+        href: "/under-development",
         children: [],
       },
       {
         label: "Media & Press",
-        href: "/resources/media",
+        href: "/under-development",
         children: [],
       },
       {
         label: "E-books & Publications",
-        href: "/resources/publications",
+        href: "/under-development",
         children: [],
       },
       {
         label: "Events",
-        href: "/resources/events",
+        href: "/under-development",
         children: [],
       },
       {
         label: "Investor Relations",
-        href: "/resources/investor-relations",
+        href: "/under-development",
         children: [],
       },
     ],

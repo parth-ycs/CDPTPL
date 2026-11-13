@@ -9,8 +9,7 @@ import { globalPresenceLocations, globalPresencePage } from "@/data/global-prese
 
 import OverviewSection from "./sections/OverviewSection";
 import GlobeExplorerSection, { GlobeExplorerSkeleton } from "./sections/GlobeExplorerSection";
-import OfficesSection from "./sections/OfficesSection";
-import ProjectsSection from "./sections/ProjectsSection";
+import NetworkSection from "./sections/NetworkSection";
 
 const sections: PageSectionItem[] = [
   {
@@ -29,14 +28,9 @@ const sections: PageSectionItem[] = [
     ),
   },
   {
-    id: "offices",
-    label: "Offices",
-    content: <OfficesSection />,
-  },
-  {
-    id: "projects",
-    label: "Projects",
-    content: <ProjectsSection />,
+    id: "network",
+    label: "Offices & Projects",
+    content: <NetworkSection />,
   },
 ];
 

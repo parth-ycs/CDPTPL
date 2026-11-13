@@ -25,25 +25,33 @@ export default function OverviewSection() {
   );
 
   return (
-    <div className="space-y-12">
-      <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-16">
+    <div className="space-y-8">
+      <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14">
         <div>
           <SectionHeading title={globalPresencePage.overview.heading} />
-          <div className="mt-5 max-w-[560px] space-y-4 text-base leading-7 text-slate-600">
+          <div className="mt-4 max-w-[560px] space-y-3 text-[15px] leading-7 text-slate-600">
             {globalPresencePage.overview.paragraphs.map((text) => (
               <p key={text}>{text}</p>
             ))}
           </div>
         </div>
 
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-8 border-t border-slate-200 pt-8 lg:border-t-0 lg:pt-2">
+        <dl className="grid grid-cols-2 gap-3">
           {stats.map(({ label, value, icon: Icon }) => (
-            <div key={label} className="border-l-2 border-[#B8D5F3] pl-4">
-              <dt className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
-                <Icon size={13} className="text-[#1557A0]" />
-                {label}
-              </dt>
-              <dd className="mt-1 font-heading text-3xl font-semibold tracking-tight text-slate-900">
+            <div
+              key={label}
+              className="rounded-2xl border border-slate-200 bg-gradient-to-br from-[#F5F9FE] to-white p-4 transition hover:border-[#B8D5F3] hover:shadow-sm"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <dt className="text-xs font-medium text-slate-500">{label}</dt>
+                <span
+                  aria-hidden
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EAF3FC] text-[#1557A0]"
+                >
+                  <Icon size={15} />
+                </span>
+              </div>
+              <dd className="mt-3 font-heading text-4xl font-semibold tracking-tight text-slate-900">
                 {value}
               </dd>
             </div>
@@ -51,23 +59,28 @@ export default function OverviewSection() {
         </dl>
       </div>
 
-      <div className="border-t border-slate-200">
-        {regions.map(([region, items]) => (
-          <div
-            key={region}
-            className="grid gap-3 border-b border-slate-100 py-4 sm:grid-cols-[200px_1fr] sm:items-center"
-          >
-            <p className="text-sm font-semibold text-slate-900">{region}</p>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2">
-              {items.map((location) => (
-                <li key={location.id} className="flex items-center gap-1.5 text-sm text-slate-600">
-                  <span aria-hidden>{getCountryFlag(location.countryCode)}</span>
-                  {location.country}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+          Where we operate
+        </p>
+        <div className="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+          {regions.map(([region, items]) => (
+            <div key={region}>
+              <p className="text-sm font-semibold text-slate-900">{region}</p>
+              <ul className="mt-2 flex flex-wrap gap-1.5">
+                {items.map((location) => (
+                  <li
+                    key={location.id}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-600"
+                  >
+                    <span aria-hidden>{getCountryFlag(location.countryCode)}</span>
+                    {location.country}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

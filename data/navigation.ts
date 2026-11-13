@@ -60,21 +60,22 @@ const solutionItems: NavigationDropdownItem[] = sbus.map((sbu) => ({
           })),
 }));
 
-
 // ---------------------------------------------
 // MAIN NAVIGATION
 // ---------------------------------------------
 
 export const navigationItems: NavigationItem[] = [
+
+  // ABOUT US
   {
     type: "dropdown",
     label: "About Us",
-    visualSrc: "/images/SBUs.png",
+    visualSrc: "/images/navigations/about_us.png",
     visualHref: "/about-us",
     visualAlt: "About Chemdist Group",
     panelTitle: "Who We Are",
     panelDescription:
-      "Discover Chemdist Group, our history, our people, and our commitment to delivering innovative industrial solutions.",
+      "Discover Chemdist Group, our businesses, journey, achievements, research capabilities, and commitment to a sustainable future.",
 
     items: [
       {
@@ -83,18 +84,34 @@ export const navigationItems: NavigationItem[] = [
         children: [],
       },
       {
-        label: "R&D",
-        href: "/research-development",
+        label: "Our Groups",
+        href: "/about-us/our-groups",
         children: [],
       },
       {
-        label: "Our Group",
-        href: "/under-development",
+        label: "Our Journey",
+        href: "/about-us/our-journey",
+        children: [],
+      },
+      {
+        label: "CSR & Sustainability",
+        href: "/about-us/csr",
+        children: [],
+      },
+      {
+        label: "Awards & Recognition",
+        href: "/about-us/awards",
+        children: [],
+      },
+      {
+        label: "Research & Development",
+        href: "/research-development",
         children: [],
       },
     ],
   },
 
+  // SOLUTIONS
   {
     type: "dropdown",
     label: "Solutions",
@@ -108,21 +125,69 @@ export const navigationItems: NavigationItem[] = [
     items: solutionItems,
   },
 
+  // PROJECTS
   {
     type: "link",
     label: "Projects",
     href: "/projects",
   },
 
+  // GLOBAL PRESENCE
   {
     type: "link",
     label: "Global Presence",
     href: "/global-presence",
   },
 
+  // RESOURCES
+  {
+    type: "dropdown",
+    label: "Resources",
+    visualSrc: "/images/navigations/resources.png",
+    visualHref: "/resources",
+    visualAlt: "Chemdist Group resources and publications",
+    panelTitle: "Resources & Insights",
+    panelDescription:
+      "Explore our innovations, technical knowledge, publications, industry insights, events, and corporate information.",
+
+    items: [
+      {
+        label: "Innovations & Patents",
+        href: "/resources/innovations-patents",
+        children: [],
+      },
+      {
+        label: "Blogs & Insights",
+        href: "/resources/blogs",
+        children: [],
+      },
+      {
+        label: "Media & Press",
+        href: "/resources/media",
+        children: [],
+      },
+      {
+        label: "E-books & Publications",
+        href: "/resources/publications",
+        children: [],
+      },
+      {
+        label: "Events",
+        href: "/resources/events",
+        children: [],
+      },
+      {
+        label: "Investor Relations",
+        href: "/resources/investor-relations",
+        children: [],
+      },
+    ],
+  },
+
+  // CAREERS
   {
     type: "link",
     label: "Careers",
-    href: "/under-development",
+    href: "/careers",
   },
 ];

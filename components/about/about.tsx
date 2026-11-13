@@ -12,7 +12,8 @@ import VisionMissionSection from "@/components/about/sections/VisionMissionSecti
 import JourneySection from "@/components/about/sections/JourneySection";
 import FeaturedAwardsSection from "@/components/about/sections/FeaturedAwardsSection";
 import CompanyProfileSection from "@/components/about/sections/CompanyProfileSection";
-
+import Footer from "@/components/footer";
+import Enquiry from "@/components/enquiry";
 
 const sections: PageSectionItem[] = [
   {
@@ -68,6 +69,8 @@ export default function AboutPage() {
       />
 
       <PageLayout sections={sections} />
+      <Enquiry />
+      <Footer />
     </main>
   );
 }

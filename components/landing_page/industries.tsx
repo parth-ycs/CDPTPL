@@ -18,7 +18,7 @@ import {
   Leaf,
 } from "lucide-react";
 
-const RD_IMG = "images/evening_industry.jpg";
+const RD_IMG = "images/landing-page/evening_industry.jpg";
 
 const industries = [
   { name: "Chemicals", icon: FlaskConical },

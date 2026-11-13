@@ -176,7 +176,7 @@ export default function NavDropdown({
                   <img
                     src={item.visualSrc}
                     alt={item.visualAlt ?? ""}
-                    className="h-auto w-full object-contain"
+                    className="h-auto w-full rounded-2xl object-contain"
                   />
                 </Link>
               </div>

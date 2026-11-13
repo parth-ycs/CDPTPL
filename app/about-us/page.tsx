@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 
 import AboutPage from "@/components/about/about";
-import Footer from "@/components/footer";
-import Enquiry from "@/components/enquiry";
 export const metadata: Metadata = {
   title: "About Us | Chemdist Group",
   description:
@@ -13,8 +11,7 @@ export default function AboutRoute() {
   return (
     <>
       <AboutPage />
-      <Enquiry />
-      <Footer />
+      
     </>
   );
 }

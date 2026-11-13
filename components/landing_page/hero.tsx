@@ -64,7 +64,7 @@ export default function Hero() {
           ref={backgroundRef}
           className="absolute inset-0 bg-cover bg-center will-change-transform"
           style={{
-            backgroundImage: "url('/images/Hero_BG.png')",
+            backgroundImage: "url('/images/landing-page/Hero_BG.png')",
             transform: "scale(1.18) translate3d(0, 0, 0)",
           }}
         />

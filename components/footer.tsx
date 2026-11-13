@@ -28,7 +28,7 @@ export default function Footer() {
       item.type === "link" &&
       ["Projects", "Global Presence", "Careers"].includes(item.label)
   );
-  
+
   const aboutItems =
     about?.type === "dropdown" ? about.items : [];
 
@@ -96,7 +96,7 @@ export default function Footer() {
 
           {aboutItems.map((item) => (
             <a
-              key={item.href}
+              key={item.label}
               href={item.href}
               className={link}
             >
@@ -111,7 +111,7 @@ export default function Footer() {
 
           {resourceItems.map((item) => (
             <a
-              key={item.href}
+              key={item.label}
               href={item.href}
               className={link}
             >
@@ -126,7 +126,7 @@ export default function Footer() {
 
           {explore.map((item) => (
             <a
-              key={item.href}
+              key={item.label}
               href={item.href}
               className={link}
             >

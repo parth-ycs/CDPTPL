@@ -166,6 +166,7 @@ workflow: {
   sustainability: {
     eyebrow: "Responsible Innovation",
     heading: "Engineering with long-term impact in mind.",
+    image:'/images/r&d/sustainability/image.png',
     description:
       "Industrial innovation must consider performance alongside resource use, environmental responsibility and operational practicality. Sustainability is an important lens for evaluating process improvements and emerging technology opportunities.",
     principles: [
@@ -177,7 +178,7 @@ workflow: {
       {
         title: "Process Optimisation",
         description:
-          "Explore improvements that support effective operation and responsible process performance.",
+          "Explore improvements that support effective operation and process performance.",
       },
       {
         title: "Practical Scalability",

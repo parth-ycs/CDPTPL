@@ -3,6 +3,12 @@ type SectionBase = {
   label: string;
 };
 
+export type SectionImage = {
+  src: string; // e.g. "/image/solutions/solution/images/step-design.jpg"
+  alt: string;
+  caption?: string;
+};
+
 export type OverviewSectionData = SectionBase & {
   type: "overview";
   heading: string;
@@ -42,6 +48,7 @@ export type IndustriesSectionData = SectionBase & {
   type: "industries";
   heading: string;
   intro?: string;
+  image?: SectionImage;
   items: { title: string; description: string }[];
 };
 
@@ -56,23 +63,11 @@ export type CapabilitiesSectionData = SectionBase & {
   }[];
 };
 
-export type TechnicalSpecificationItem = {
-  name: string;
-  value: string;
-};
-
-export type TechnicalSpecificationsSectionData = SectionBase & {
-  type: "technical-specifications";
-  heading: string;
-  intro?: string;
-  items: TechnicalSpecificationItem[];
-  note?: string;
-};
-
 export type ProcessFlowStep = {
   title: string;
   description: string;
   output?: string;
+  image?: SectionImage;
 };
 
 export type ProcessFlowSectionData = SectionBase & {
@@ -86,6 +81,7 @@ export type ProcessFlowSectionData = SectionBase & {
 export type LifecycleSupportItem = {
   title: string;
   description: string;
+  image?: SectionImage;
 };
 
 export type LifecycleSupportSectionData = SectionBase & {
@@ -93,19 +89,35 @@ export type LifecycleSupportSectionData = SectionBase & {
   heading: string;
   intro?: string;
   items: LifecycleSupportItem[];
+  note?: string;
 };
 
-export type StandardCertificationItem = {
+export type StandardsCertificationItem = {
   title: string;
   description: string;
   reference?: string;
+  image?: SectionImage;
 };
 
 export type StandardsCertificationsSectionData = SectionBase & {
   type: "standards-certifications";
   heading: string;
   intro?: string;
-  items: StandardCertificationItem[];
+  items: StandardsCertificationItem[];
+  note?: string;
+};
+
+export type TechnicalSpecificationItem = {
+  name: string;
+  value: string;
+};
+
+export type TechnicalSpecificationsSectionData = SectionBase & {
+  type: "technical-specifications";
+  heading: string;
+  intro?: string;
+  items: TechnicalSpecificationItem[];
+  image?: SectionImage;
   note?: string;
 };
 

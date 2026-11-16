@@ -38,7 +38,7 @@ export default function ServiceSectionRenderer({
                 return <ServicesSection data={section} />;
 
               case "industries":
-                return <IndustriesSection data={section} />;
+                return <IndustriesSection />;
 
               case "capabilities":
                 return <CapabilitiesSection data={section} />;

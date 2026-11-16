@@ -10,6 +10,8 @@ import { globalPresenceLocations, globalPresencePage } from "@/data/global-prese
 import OverviewSection from "./sections/OverviewSection";
 import GlobeExplorerSection, { GlobeExplorerSkeleton } from "./sections/GlobeExplorerSection";
 import NetworkSection from "./sections/NetworkSection";
+import Footer from "@/components/footer";
+import Enquiry from "@/components/enquiry";
 
 const sections: PageSectionItem[] = [
   {
@@ -54,14 +56,11 @@ export default function GlobalPresence() {
         ]}
         ctaLabel={hero.cta.label}
         ctaHref={hero.cta.href}
-        metadata={[
-          { label: "Countries", value: `${globalPresenceLocations.length} countries`, icon: <Globe2 size={16} /> },
-          { label: "Offices", value: `${officeCount} offices`, icon: <Building2 size={16} /> },
-          { label: "Projects", value: `${projectCount} projects`, icon: <Factory size={16} /> },
-        ]}
       />
 
       <PageLayout sections={sections} />
+      <Enquiry />
+      <Footer />
     </main>
   );
 }

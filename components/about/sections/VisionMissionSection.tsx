@@ -350,18 +350,14 @@ export default function VisionMissionSection() {
   return (
     <>
       <section
-        ref={sectionRef}
-        className="relative left-1/2 z-10 w-screen -translate-x-1/2 bg-[#061426]"
-        style={{
-          height: `${
-            (totalTimeline * SCROLL_PER_ITEM +
-              FINAL_HOLD +
-              OVERLAY_DURATION +
-              1) *
-            100
-          }svh`,
-        }}
-      >
+  ref={sectionRef}
+  className="relative z-10 ml-[calc(50%-50vw)] w-screen bg-[#061426]"
+  style={{
+    height: `${
+      (totalTimeline * SCROLL_PER_ITEM + FINAL_HOLD + OVERLAY_DURATION + 1) * 100
+    }svh`,
+  }}
+>
         <div className="sticky top-0 h-[100svh] min-h-[620px] w-full overflow-hidden text-white">
           {/* BACKGROUND */}
           <div className="absolute inset-0">

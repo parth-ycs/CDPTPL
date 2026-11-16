@@ -1,6 +1,6 @@
 export default function ProjectsIntroduction() {
   return (
-    <section className="py-16 sm:py-20 lg:py-24">
+    <section >
       <div className="mx-auto grid w-full max-w-[1440px] gap-8 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-16 lg:px-12">
         <div>
           <p className="flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">

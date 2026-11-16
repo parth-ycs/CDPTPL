@@ -46,7 +46,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${baiJamjuree.variable} ${noaVoren.variable}`}
     >
-      <body className="antialiased">
+      <body className="antialiased overflow-x-clip">
         <SmoothScroll>
         {children}
         </SmoothScroll>

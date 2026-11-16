@@ -22,7 +22,7 @@ export const projectsPageData = {
     eyebrow: "ENGINEERING EXCELLENCE",
     description:
       "Explore our portfolio of industrial projects, process plants, and engineering solutions delivered across global markets.",
-    image: "/images/projects/farabi-plant.png",
+    image: "/images/projects/hero.png",
     imageAlt: "Industrial process plant project",
   },
 };

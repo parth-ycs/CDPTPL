@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -20,8 +19,14 @@ export default function PageHero({
   metadata,
 }: PageHeroContent) {
   const [navbarVariant, setNavbarVariant] = useState<"light" | "dark">("dark");
-
+  const [mounted, setMounted] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+
+  // Single entrance reveal on load
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   // Navbar theme based on hero scroll position
   useEffect(() => {
@@ -30,7 +35,6 @@ export default function PageHero({
 
     const updateNavbar = () => {
       const heroBottom = hero.getBoundingClientRect().bottom;
-
       setNavbarVariant((current) => {
         const next = heroBottom <= 0 ? "light" : "dark";
         return current === next ? current : next;
@@ -38,11 +42,7 @@ export default function PageHero({
     };
 
     updateNavbar();
-
-    window.addEventListener("scroll", updateNavbar, {
-      passive: true,
-    });
-
+    window.addEventListener("scroll", updateNavbar, { passive: true });
     window.addEventListener("resize", updateNavbar);
 
     return () => {
@@ -51,16 +51,17 @@ export default function PageHero({
     };
   }, []);
 
+  const hasMetadata = metadata && metadata.length > 0;
+
   return (
     <>
-      {/* Global Navbar */}
       <Navbar variant={navbarVariant} />
 
       <section
         ref={heroRef}
-        className="relative isolate min-h-[540px] overflow-hidden bg-[#081a35] text-white lg:min-h-[640px]"
+        className="relative isolate flex min-h-[100svh] w-full flex-col overflow-hidden bg-[#081a35] text-white"
       >
-        {/* Background */}
+        {/* Background image */}
         <Image
           src={image}
           alt={imageAlt ?? name}
@@ -70,51 +71,69 @@ export default function PageHero({
           className="absolute inset-0 -z-20 object-cover object-center"
         />
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#07162d]/95 via-[#0a2040]/80 to-[#0a2040]/30" />
+        {/* Overlays: quiet, even tint + bottom-left depth for legibility */}
+        <div className="absolute inset-0 -z-10 bg-[#07162d]/35" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#07162d]/95 via-[#07162d]/45 to-transparent" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#07162d]/70 via-transparent to-transparent" />
 
-        {/* Hero Content */}
-        <div className="mx-auto flex min-h-[540px] w-full max-w-[1440px] items-end px-5 py-16 sm:px-8 sm:py-20 lg:min-h-[640px] lg:px-12 lg:py-24">
-          <div className="w-full max-w-[900px]">
-
+        {/* Main content (pushed to the bottom, below the navbar) */}
+        <div className="mx-auto flex w-full max-w-[1440px] flex-1 items-end px-6 pb-12 pt-32 sm:px-10 sm:pb-16 lg:px-16 lg:pb-20">
+          <div
+            className={`w-full max-w-[860px] transition-all duration-1000 ease-out motion-reduce:transition-none ${
+              mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
             {/* Tagline */}
-            <div className="mb-6 flex flex-wrap items-center gap-3">
-              <span className="h-[2px] w-10 bg-red-500" />
-
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/75">
+            <div className="mb-6 flex items-center gap-4">
+              <span className="h-px w-12 bg-red-500" />
+              <span className="text-sm font-medium tracking-wide text-white/70">
                 {tagline}
               </span>
             </div>
 
             {/* Heading */}
-            <h1 className="max-w-[900px] font-heading text-3xl font-semibold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="font-heading text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl lg:text-7xl">
               {name}
             </h1>
 
             {/* Description */}
-            <p className="mt-6 max-w-[700px] text-base leading-8 text-slate-200 sm:text-lg">
+            <p className="mt-6 max-w-[560px] text-base leading-relaxed text-white/75 sm:text-lg">
               {description}
             </p>
 
-            {/* Metadata */}
-            {metadata && metadata.length > 0 && (
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/80">
-                {metadata.map((item, index) => (
-                  <span
-                    key={`${item.label}-${index}`}
-                    className="inline-flex items-center gap-2"
-                  >
-                    <span className="text-red-400">{item.icon}</span>
-                    <span>{item.value}</span>
-                  </span>
-                ))}
-              </div>
-            )}
+            {/* CTA */}
+            <div className="mt-10">
+              <Link
+                href={ctaHref}
+                className="group inline-flex items-center gap-3 rounded-full bg-white py-3 pl-7 pr-3 text-sm font-medium text-[#081a35] transition-colors hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#081a35]"
+              >
+                {ctaLabel}
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#081a35] text-white transition-transform duration-300 group-hover:translate-x-0.5">
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Accent */}
-        <div className="absolute bottom-0 left-0 h-1 w-32 bg-red-600 sm:w-48" />
+        {/* Metadata strip */}
+        {hasMetadata && (
+          <div className="border-t border-white/15 bg-[#07162d]/30 backdrop-blur-sm">
+            <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5 text-sm text-white/80 sm:px-10 lg:px-16">
+              {metadata.map((item, index) => (
+                <span
+                  key={`${item.label}-${index}`}
+                  className="inline-flex items-center gap-2.5"
+                >
+                  <span className="text-red-400" aria-hidden="true">
+                    {item.icon}
+                  </span>
+                  <span>{item.value}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </>
   );

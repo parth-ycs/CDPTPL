@@ -255,7 +255,7 @@ export default function IntroductionSection() {
             </span>
           </div>
 
-          <h2 className="mt-6 max-w-[500px] text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+          <h2 className="mt-6 max-w-[500px] text-3xl font-semibold font-heading leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             {introduction.heading}
           </h2>
         </div>

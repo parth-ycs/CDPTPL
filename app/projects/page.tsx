@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import ProjectsPage from "@/components/projects/projects";
-import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Projects & Case Studies | Chemdist Group",
@@ -13,7 +12,6 @@ export default function ProjectsRoute() {
   return (
     <>
       <ProjectsPage />
-      <Footer />
     </>
   );
 }

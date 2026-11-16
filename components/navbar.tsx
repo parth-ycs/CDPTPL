@@ -57,7 +57,7 @@ export default function Navbar({
         </Link>
 
         {/* Desktop navigation */}
-        <div className="hidden items-center gap-7 xl:gap-9 lg:flex">
+        <div className="hidden items-center gap-7 xl:gap-9 lg:flex font-heading">
           {navigationItems.map((item) => {
             if (item.type === "dropdown") {
               return (
@@ -74,7 +74,7 @@ export default function Navbar({
               <Link
                 key={item.label}
                 href={item.href}
-                className={`relative flex h-[88px] shrink-0 items-center whitespace-nowrap text-xs font-semibold tracking-wide transition-colors duration-700 hover:text-brand-red ${navText} ${focusRing} after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand-red after:transition-transform after:duration-200 hover:after:scale-x-100`}
+                className={`relative flex h-[88px] shrink-0 items-center whitespace-nowrap text-sm font-semibold tracking-wide transition-colors duration-700 hover:text-brand-red ${navText} ${focusRing} after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand-red after:transition-transform after:duration-200 hover:after:scale-x-100`}
               >
                 {item.label}
               </Link>
@@ -84,7 +84,7 @@ export default function Navbar({
           {/* Contact CTA */}
           <a
             href="/#enquiry"
-            className={`ml-1 inline-flex shrink-0 items-center gap-2 border px-4 py-3 text-xs font-semibold tracking-wide transition-colors duration-700 hover:border-brand-red hover:bg-brand-red hover:text-white ${navBorder} ${navText} ${focusRing}`}
+            className={`ml-1 inline-flex shrink-0 items-center gap-2 border px-4 py-3 text-sm font-semibold tracking-wide transition-colors duration-700 hover:border-brand-red hover:bg-brand-red hover:text-white ${navBorder} ${navText} ${focusRing}`}
           >
             Contact
             <ArrowRight size={15} aria-hidden="true" />
@@ -151,7 +151,7 @@ export default function Navbar({
             <a
               href="/#enquiry"
               onClick={closeMobileMenu}
-              className={`mt-5 inline-flex w-full items-center justify-center gap-2 border px-4 py-3 text-xs font-semibold tracking-wide transition-colors duration-700 hover:border-brand-red hover:bg-brand-red hover:text-white ${navBorder} ${navText} ${focusRing}`}
+              className={`mt-5 inline-flex w-full items-center justify-center gap-2 border px-4 py-3 text-sm font-semibold tracking-wide transition-colors duration-700 hover:border-brand-red hover:bg-brand-red hover:text-white ${navBorder} ${navText} ${focusRing}`}
             >
               Contact
               <ArrowRight size={15} aria-hidden="true" />

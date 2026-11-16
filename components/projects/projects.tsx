@@ -6,12 +6,11 @@ import type { PageSectionItem } from "@/components/shared-page/types";
 
 import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
-
+import Footer from "@/components/footer";
+import Enquiry from "@/components/enquiry"; 
 import { projects, projectCategories, projectsPageData } from "@/data/projects";
-
 import ProjectsIntroduction from "./listing/ProjectsIntroduction";
 import ProjectDirectory from "./listing/ProjectDirectory";
-import ProjectsCTA from "./listing/ProjectsCTA";
 
 export default function ProjectsPage() {
   const [category, setCategory] = useState("All Projects");
@@ -69,11 +68,6 @@ export default function ProjectsPage() {
         />
       ),
     },
-    {
-      id: "projects-cta",
-      label: "Let's Connect",
-      content: <ProjectsCTA />,
-    },
   ];
 
   return (
@@ -93,6 +87,8 @@ export default function ProjectsPage() {
       />
 
       <PageLayout sections={sections} />
+      <Enquiry />
+      <Footer />
     </main>
   );
 }

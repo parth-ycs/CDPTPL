@@ -138,7 +138,7 @@ export default function NavDropdown({
         aria-haspopup="true"
         onClick={() => setOpen((current) => !current)}
         onFocus={() => setOpen(true)}
-        className={`relative flex h-full items-center gap-1.5 text-xs font-semibold tracking-wide  ${
+        className={`relative flex h-full items-center gap-1.5 text-sm font-semibold tracking-wide  ${
           open ? "text-brand-red" : linkColor
         } ${focusRing}`}
       >

@@ -70,36 +70,32 @@ export default function ProjectDirectory({
         </div>
 
         {/* Filters + count */}
-        <div className="mt-8 flex flex-col gap-4 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-4 border-b border-line pb-4 sm:flex-row sm:items-center sm:justify-between">
           <div
             role="group"
             aria-label="Filter projects by category"
-            className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden"
+            className="flex flex-wrap gap-x-6 gap-y-3"
           >
-            {categories.map((item) => {
-              const active = selectedCategory === item;
-
-              return (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={() => onCategoryChange(item)}
-                  aria-pressed={active}
-                  className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#102c59] ${
-                    active
-                      ? "border-[#102c59] bg-[#102c59] text-white"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-[#102c59] hover:text-[#102c59]"
-                  }`}
-                >
-                  {item}
-                </button>
-              );
-            })}
+            {categories.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => onCategoryChange(item)}
+                aria-pressed={selectedCategory === item}
+                className={`text-xs transition-colors ${
+                  selectedCategory === item
+                    ? "font-semibold text-brand-blue"
+                    : "text-muted hover:text-brand-deep"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
           </div>
 
-          <div className="flex shrink-0 items-center gap-4 text-sm text-slate-500">
+          <div className="flex shrink-0 items-center gap-4 text-xs text-muted">
             <span aria-live="polite">
-              <span className="font-semibold tabular-nums text-[#102c59]">
+              <span className="font-semibold tabular-nums text-brand-deep">
                 {projects.length}
               </span>{" "}
               {projects.length === 1 ? "project" : "projects"}
@@ -109,9 +105,8 @@ export default function ProjectDirectory({
               <button
                 type="button"
                 onClick={onReset}
-                className="inline-flex items-center gap-1 font-medium text-red-600 transition-colors hover:text-[#102c59]"
+                className="font-medium text-brand-red transition-colors hover:text-brand-deep"
               >
-                <X size={14} aria-hidden="true" />
                 Clear
               </button>
             )}

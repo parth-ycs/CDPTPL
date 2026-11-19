@@ -14,7 +14,7 @@ import {
   type Variants,
 } from "framer-motion";
 
-import { rdSectionData } from "@/data/r&d";
+import { rdSectionData } from "@/data/research-development/r&d";
 import Container from "@/components/container";
 
 /* ------------------------------------------------------------------ */
@@ -207,7 +207,7 @@ export default function WorkflowSection() {
       style={{ height: `${total * SCROLL_PER_STEP_VH + 100}vh` }}
     >
       {/* PINNED VIEWPORT */}
-      <div className="sticky top-0 flex h-screen items-center pb-6 pt-20 sm:pt-24">
+      <div className="sticky top-0 flex h-screen items-center">
         <Container>
           <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-14">
             {/* LEFT: SECTION INTRO */}

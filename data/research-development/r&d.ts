@@ -15,6 +15,13 @@ export interface RDSlide {
   title: string;
   description?: string;
 }
+export interface RDInnovation {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+}
 
 export interface RDFeature {
   title: string;
@@ -105,6 +112,51 @@ focusAreas: {
     },
   ],
 },
+
+
+innovationShowcase: {
+  heading: "Innovation Showcase",
+  items: [
+    {
+      id: "green-hydrogen",
+      title: "Green Hydrogen Technologies",
+      description:
+        "Developing hydrogen production pathways through renewable energy integration, ammonia cracking and chemical conversion processes.",
+      image:
+        "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1800&q=90",
+      imageAlt: "Industrial energy infrastructure",
+    },
+    {
+      id: "carbon-capture",
+      title: "Carbon Capture & Utilization",
+      description:
+        "Exploring technologies that convert captured carbon dioxide into methanol, DME, sustainable aviation fuel and nano-urea.",
+      image:
+        "/images/r&d/innovations/carbon_capture_hero.png",
+      imageAlt: "Industrial carbon utilization infrastructure",
+    },
+    {
+      id: "advanced-heat-transfer",
+      title: "Advanced Heat Transfer",
+      description:
+        "Engineering heat exchangers, evaporators and thermal processing systems for demanding industrial applications.",
+      image:
+        "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1800&q=90",
+      imageAlt: "Industrial thermal engineering equipment",
+    },
+    {
+      id: "biomass-conversion",
+      title: "Biomass Conversion Technologies",
+      description:
+        "Exploring biomass pyrolysis and downstream processing to produce bio-oil, biochar and potential sustainable aviation fuel intermediates.",
+      image:
+        "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1800&q=90",
+      imageAlt: "Agricultural biomass and renewable resources",
+    },
+  ] satisfies RDInnovation[],
+},
+
+
 workflow: {
   eyebrow: "Our Workflow",
   heading: "From Idea to Industrial Application",

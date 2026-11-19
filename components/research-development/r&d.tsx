@@ -1,26 +1,28 @@
 
 import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
+import PageOverview from "@/components/shared-page/PageOverview";
 import type { PageSectionItem } from "@/components/shared-page/types";
 
-import { rdSectionData } from "@/data/r&d";
+import { rdSectionData } from "@/data/research-development/r&d";
 
-import OverviewSection from "./sections/OverviewSection";
 import ResearchAreasSection from "./sections/ResearchAreasSection";
 import WorkflowSection from "./sections/WorkflowSection";
 import SustainabilitySection from "./sections/SustainabilitySection";
-import ResearchGallerySection from "./sections/ResearchGallerySection";
+import InnovationShowcaseSection from "./sections/InnovationShowcaseSection";
+import Enquiry from "@/components/enquiry";
+import Footer from "@/components/footer";
 
 const sections: PageSectionItem[] = [
-  {
-    id: "overview",
-    label: "Overview",
-    content: <OverviewSection />,
-  },
   {
     id: "research-areas",
     label: "Research Areas",
     content: <ResearchAreasSection />,
+  },
+  {
+    id: "innovation-showcase",
+    label: "Innovation Showcase",
+    content: <InnovationShowcaseSection />,
   },
   {
     id: "research-workflow",
@@ -32,18 +34,13 @@ const sections: PageSectionItem[] = [
     label: "Sustainability",
     content: <SustainabilitySection />,
   },
-  {
-    id: "research-gallery",
-    label: "Research Gallery",
-    content: <ResearchGallerySection />,
-  },
 ];
 
 export default function ResearchDevelopment() {
-  const { hero } = rdSectionData;
+  const { hero, overview } = rdSectionData;
 
   return (
-    <main>
+    <main className="bg-white text-[#102c59]">
       <PageHero
         name={hero.heading}
         tagline={hero.eyebrow}
@@ -58,7 +55,15 @@ export default function ResearchDevelopment() {
         ctaHref="#enquiry"
       />
 
+      <PageOverview
+        heading={overview.heading}
+        description={overview.description}
+      />
+
       <PageLayout sections={sections} />
+
+      <Enquiry />
+      <Footer />
     </main>
   );
 }

@@ -10,7 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import { rdSectionData } from "@/data/r&d";
+import { rdSectionData } from "@/data/research-development/r&d";
 import Container from "@/components/container";
 export default function RDSection() {
   const [activeIndex, setActiveIndex] = useState(0);

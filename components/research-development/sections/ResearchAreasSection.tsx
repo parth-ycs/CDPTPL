@@ -1,13 +1,13 @@
 
 import Image from "next/image";
-import { rdSectionData } from "@/data/r&d";
+import { rdSectionData } from "@/data/research-development/r&d";
 
 export default function ResearchAreasSection() {
   const data = rdSectionData.focusAreas;
 
   return (
-    <section className="pt-15">
-      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
+    <section >
+      <div className="mx-auto w-full max-w-[1440px]">
 
         {/* SECTION HEADER */}
         <div className="mb-7 flex flex-col justify-between gap-3 md:flex-row md:items-end">

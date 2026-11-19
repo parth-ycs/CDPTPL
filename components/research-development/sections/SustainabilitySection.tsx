@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { rdSectionData } from "@/data/r&d";
+import { rdSectionData } from "@/data/research-development/r&d";
 
 const EASE_OUT_POW: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
@@ -20,7 +20,7 @@ export default function SustainabilitySection() {
   });
 
   return (
-    <div className="bg-white p-6 text-[#102C59] sm:p-9 lg:p-12">
+    <div className="bg-white text-[#102C59]">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
         {/* LEFT: IMAGE + INTRO */}
         <motion.div className="lg:col-span-5" {...fadeUp()}>

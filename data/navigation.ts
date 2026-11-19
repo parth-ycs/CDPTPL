@@ -94,13 +94,13 @@ export const navigationItems: NavigationItem[] = [
         children: [],
       },
       {
-        label: "CSR & Sustainability",
-        href: "/under-development",
+        label: "Corporate Social Responsibility ",
+        href: "/csr",
         children: [],
       },
       {
         label: "Awards & Recognition",
-        href: "/under-development",
+        href: "/awards",
         children: [],
       },
       {
@@ -152,23 +152,18 @@ export const navigationItems: NavigationItem[] = [
 
     items: [
       {
-        label: "Innovations & Patents",
-        href: "/under-development",
+        label: "Patents",
+        href: "/patents",
         children: [],
       },
       {
         label: "Blogs & Insights",
-        href: "/under-development",
+        href: "/blogs",
         children: [],
       },
       {
         label: "Media & Press",
-        href: "/under-development",
-        children: [],
-      },
-      {
-        label: "E-books & Publications",
-        href: "/under-development",
+        href: "/news",
         children: [],
       },
       {

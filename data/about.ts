@@ -41,42 +41,18 @@ export const aboutPageData = {
     image: "/images/about-us/hero/image.png",
     imageAlt: "Industrial process equipment and plant infrastructure",
   },
+  
+overview: {
+  heading: {
+    before: "Engineering expertise with a",
+    highlight: "purpose",
+    after: ".",
+  },
 
-  introduction: {
-  label: "Who We Are",
-  heading: "Engineering expertise with a purpose.",
-  paragraphs: [
-    "At Chemdist, we combine deep engineering knowledge, advanced technology and practical execution capabilities to address complex industrial process requirements.",
-    "Our focus is on delivering integrated solutions that support operational reliability, engineering excellence and more sustainable industrial development.",
-  ],
-
-  kpis: [
-    {
-      id: "legacy",
-      value: "60",
-      suffix: "+",
-      label: "Years of legacy",
-    },
-    {
-      id: "countries",
-      value: "90",
-      suffix: "+",
-      label: "Countries served",
-    },
-    {
-      id: "offices",
-      value: "45",
-      suffix: "+",
-      label: "Offices globally",
-    },
-    {
-      id: "facilities",
-      value: "16",
-      suffix: "",
-      label: "Manufacturing facilities",
-    },
-  ],
+  description:
+    "At Chemdist, we combine deep engineering knowledge, advanced technology and practical execution capabilities to address complex industrial process requirements. Our focus is on delivering integrated solutions that support operational reliability, engineering excellence and more sustainable industrial development.",
 },
+
 leadership: {
   label: "Our Leadership",
   heading: "The People Behind Chemdist",

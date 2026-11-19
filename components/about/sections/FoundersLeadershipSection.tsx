@@ -12,7 +12,7 @@ export default function FoundersLeadershipSection() {
   return (
     <section
       id="leadership"
-      className="bg-[#F7F8FA] py-16 sm:py-20 lg:py-24"
+      className="bg-[#F7F8FA] rounded-2xl"
     >
       <Container>
         {/* SECTION INTRO */}

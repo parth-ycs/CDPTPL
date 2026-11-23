@@ -115,7 +115,7 @@ export const navigationItems: NavigationItem[] = [
   {
     type: "dropdown",
     label: "Solutions",
-    visualSrc: "/images/SBUs.png",
+    visualSrc: "/images/navigations/solutions.png",
     visualHref: "/solutions",
     visualAlt: "Chemdist Group business units",
     panelTitle: "Business Portfolio",
@@ -168,7 +168,7 @@ export const navigationItems: NavigationItem[] = [
       },
       {
         label: "Events",
-        href: "/under-development",
+        href: "/events",
         children: [],
       },
       {
@@ -183,6 +183,6 @@ export const navigationItems: NavigationItem[] = [
   {
     type: "link",
     label: "Careers",
-    href: "/careers",
+    href: "/under-development",
   },
 ];

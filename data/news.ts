@@ -18,7 +18,7 @@ export const newsItems: NewsItem[] = [
     title: "Building a clearer digital expression for process technology.",
     location: "Chemdist Office",
     description:
-      "Exploring digital tools to visualize complex processes, improve operational visibility, and support more efficient industrial workflows.",
+      "Exploring digital tools to visualize complex processes, improve operational visibility, and support more efficient industrial workflows. \n Exploring digital tools to visualize complex processes, improve operational visibility, and support more efficient industrial workflows. Exploring digital tools to visualize complex processes, improve operational visibility, and support more efficient industrial workflows.",
     image:
       "https://images.unsplash.com/photo-1786532852011-443cba5dc9fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
     href: "#enquiry",

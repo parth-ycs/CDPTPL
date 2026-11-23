@@ -114,6 +114,25 @@ focusAreas: {
 },
 
 
+iitGuwahati: {
+  eyebrow: "Academic Collaboration · 2021",
+  heading: "Centre of Excellence at IIT Guwahati",
+  description:
+    "A dedicated Centre of Excellence advancing research in ethanol technologies, sustainable products and emerging energy solutions through scientific research and engineering innovation.",
+  tagline: "Research. Innovation. Sustainability.",
+  images: [
+    {
+      image: "/images/r&d/iit/iit-guwahati-1.png",
+      alt: "IIT Guwahati Centre of Excellence",
+    },
+    {
+      image: "/images/r&d/iit/iit-guwahati-2.png",
+      alt: "Research and development collaboration at IIT Guwahati",
+    },
+  ],
+},
+
+
 innovationShowcase: {
   heading: "Innovation Showcase",
   items: [
@@ -281,13 +300,4 @@ workflow: {
         "Considering how engineering concepts translate into practical applications.",
     },
   ] satisfies RDSlide[],
-
-  cta: {
-    eyebrow: "Collaborate With Us",
-    heading: "Have an industrial challenge to explore?",
-    description:
-      "Connect with our team to discuss process requirements, engineering challenges and potential technology applications.",
-    buttonLabel: "Contact Our Team",
-    href: "/contact",
-  },
 };

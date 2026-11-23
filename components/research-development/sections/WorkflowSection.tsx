@@ -20,23 +20,25 @@ import Container from "@/components/container";
 /* ------------------------------------------------------------------ */
 /* Tuning                                                              */
 /* ------------------------------------------------------------------ */
-const SCROLL_PER_STEP_VH = 90; // more = slower, calmer pacing (was 70)
 
-// Hysteresis: how far (in step units) you must pass a boundary before
-// the step actually changes. Prevents flicker when scrolling jitters.
+// Height of your fixed/sticky site header. Set --header-h in your global CSS
+// (e.g. :root { --header-h: 4.5rem }) so the pinned area never hides under it.
+const HEADER_H = "var(--header-h, 0px)";
+
+// Scroll distance (in vh) spent on each step. More = slower pacing.
+const SCROLL_PER_STEP_VH = 90;
+
+// Distance (in step units) past a boundary before the step switches.
 const SWITCH_HYSTERESIS = 0.06;
 
-// Spring that smooths raw scroll (higher damping = less float)
-const SCROLL_SPRING = { stiffness: 110, damping: 28, mass: 0.5 };
+// Smooths raw scroll.
+const SCROLL_SPRING = { stiffness: 110, damping: 28, mass: 0.5, restDelta: 0.0005 };
 
-// ease-out quart, the CSS/framer form of 1 - pow(1 - t, 4)
-const EASE_OUT_POW: [number, number, number, number] = [0.25, 1, 0.5, 1];
-const EASE_IN_POW: [number, number, number, number] = [0.5, 0, 0.75, 0];
+const EASE_OUT: [number, number, number, number] = [0.25, 1, 0.5, 1];
+const EASE_IN: [number, number, number, number] = [0.5, 0, 0.75, 0];
 
 /* ------------------------------------------------------------------ */
-/* Text panel variants (direction-aware)                               */
-/* dir =  1 -> scrolling down: new content rises in, old drifts up     */
-/* dir = -1 -> scrolling up:   new content drops in, old drifts down   */
+/* Variants (direction-aware)                                          */
 /* ------------------------------------------------------------------ */
 const panelVariants: Variants = {
   enter: (dir: number) => ({ opacity: 0, y: dir * 28 }),
@@ -45,7 +47,7 @@ const panelVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: EASE_OUT_POW,
+      ease: EASE_OUT,
       delayChildren: 0.12,
       staggerChildren: 0.07,
     },
@@ -53,21 +55,28 @@ const panelVariants: Variants = {
   exit: (dir: number) => ({
     opacity: 0,
     y: dir * -18,
-    transition: { duration: 0.28, ease: EASE_IN_POW },
+    transition: { duration: 0.28, ease: EASE_IN },
   }),
 };
 
 const itemVariants: Variants = {
   enter: { opacity: 0, y: 14 },
-  center: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, ease: EASE_OUT_POW },
-  },
+  center: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE_OUT } },
+};
+
+// Reduced motion: no movement, instant swap.
+const reducedPanelVariants: Variants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1, transition: { duration: 0 } },
+  exit: { opacity: 0, transition: { duration: 0 } },
+};
+const reducedItemVariants: Variants = {
+  enter: { opacity: 1 },
+  center: { opacity: 1 },
 };
 
 /* ------------------------------------------------------------------ */
-/* Image layer: crossfade + slow push-in tied to scroll                */
+/* Image layer: crossfade + slow scroll-linked push-in                 */
 /* ------------------------------------------------------------------ */
 const ImageLayer = memo(function ImageLayer({
   src,
@@ -88,11 +97,10 @@ const ImageLayer = memo(function ImageLayer({
   priority: boolean;
   reduce: boolean;
 }) {
-  // Slow zoom across this step's slice of the scroll (gives life during the hold)
   const zoom = useTransform(
     progress,
     [index / total, (index + 1) / total],
-    [1.0, 1.07],
+    [1, 1.07],
     { clamp: true }
   );
 
@@ -103,9 +111,10 @@ const ImageLayer = memo(function ImageLayer({
       animate={{ opacity: isActive ? 1 : 0 }}
       transition={{
         duration: reduce ? 0 : isActive ? 0.9 : 0.6,
-        ease: EASE_OUT_POW,
+        ease: EASE_OUT,
       }}
       style={{ scale: reduce ? 1 : zoom, willChange: "transform, opacity" }}
+      aria-hidden={!isActive}
     >
       <Image
         src={src}
@@ -120,7 +129,7 @@ const ImageLayer = memo(function ImageLayer({
 });
 
 /* ------------------------------------------------------------------ */
-/* Progress segment: fills continuously with scroll                    */
+/* Progress segment                                                    */
 /* ------------------------------------------------------------------ */
 const ProgressSegment = memo(function ProgressSegment({
   index,
@@ -144,7 +153,7 @@ const ProgressSegment = memo(function ProgressSegment({
     <motion.div
       className="relative h-1 overflow-hidden rounded-full bg-line"
       animate={{ width: isActive ? 40 : 20 }}
-      transition={{ duration: 0.6, ease: EASE_OUT_POW }}
+      transition={{ duration: 0.6, ease: EASE_OUT }}
     >
       <motion.div
         className="absolute inset-0 origin-left rounded-full bg-brand-red"
@@ -163,60 +172,73 @@ export default function WorkflowSection() {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
+  const indexRef = useRef(0); // source of truth for hysteresis (no side effects in setState)
 
   const sectionRef = useRef<HTMLElement>(null);
-  const shouldReduceMotion = useReducedMotion() ?? false;
+  const reduce = useReducedMotion() ?? false;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  // Smoothed (inertial) scroll value drives everything
   const springProgress = useSpring(scrollYProgress, SCROLL_SPRING);
-  const progress = shouldReduceMotion ? scrollYProgress : springProgress;
+  const progress = reduce ? scrollYProgress : springProgress;
 
   useMotionValueEvent(progress, "change", (value) => {
     const raw = Math.min(Math.max(value, 0), 1) * total;
-    const target = Math.min(total - 1, Math.floor(raw));
+    const prev = indexRef.current;
+    let next = prev;
 
-    setActiveIndex((prev) => {
-      if (target === prev) return prev;
+    if (raw >= prev + 1 + SWITCH_HYSTERESIS) {
+      next = Math.min(total - 1, Math.floor(raw - SWITCH_HYSTERESIS));
+    } else if (raw <= prev - SWITCH_HYSTERESIS) {
+      next = Math.max(0, Math.ceil(raw + SWITCH_HYSTERESIS) - 1);
+    }
 
-      // Moving forward: must clearly pass the boundary
-      if (target > prev && raw < prev + 1 + SWITCH_HYSTERESIS) return prev;
-
-      // Moving backward: must clearly cross back over it
-      if (target < prev && raw > prev - SWITCH_HYSTERESIS) return prev;
-
-      setDirection(target > prev ? 1 : -1);
-      return target;
-    });
+    if (next !== prev) {
+      indexRef.current = next;
+      setDirection(next > prev ? 1 : -1);
+      setActiveIndex(next);
+    }
   });
 
   const activeStep = data.steps[activeIndex];
-
-  // Overall progress line under the intro
   const overall = useTransform(progress, [0, 1], [0.08, 1], { clamp: true });
 
   return (
     <section
       ref={sectionRef}
       className="relative bg-pale"
-      // total scroll distance = total * SCROLL_PER_STEP_VH, plus 100vh for the pinned viewport
-      style={{ height: `${total * SCROLL_PER_STEP_VH + 100}vh` }}
+      // scroll distance + one viewport for the pinned stage
+      style={{ height: `calc(${total * SCROLL_PER_STEP_VH}vh + 100svh)` }}
+      aria-label={data.heading}
     >
-      {/* PINNED VIEWPORT */}
-      <div className="sticky top-0 flex h-screen items-center">
+      {/* PINNED STAGE — svh avoids the mobile address-bar jump; offset clears the header */}
+      <div
+        className="sticky flex w-full items-center overflow-hidden"
+        style={{ top: HEADER_H, height: `calc(100svh - ${HEADER_H})` }}
+      >
         <Container>
-          <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-14">
-            {/* LEFT: SECTION INTRO */}
+          {/*
+            One explicit height drives the whole layout:
+            mobile  -> intro (auto) + panel (fills the rest)
+            desktop -> intro column + panel column, both full height
+          */}
+          <div
+            className="grid w-full grid-cols-1 grid-rows-[auto_minmax(0,1fr)] gap-4 lg:grid-cols-12 lg:grid-rows-1 lg:items-center lg:gap-14"
+            style={{
+              height: `calc(100svh - ${HEADER_H} - 2rem)`,
+              maxHeight: 680,
+            }}
+          >
+            {/* LEFT: INTRO */}
             <motion.div
               className="lg:col-span-4"
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+              initial={reduce ? false : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ amount: 0.3, once: true }}
-              transition={{ duration: 0.9, ease: EASE_OUT_POW }}
+              transition={{ duration: 0.9, ease: EASE_OUT }}
             >
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
                 {data.eyebrow}
@@ -226,12 +248,11 @@ export default function WorkflowSection() {
                 {data.heading}
               </h2>
 
-              <p className="mt-4 hidden max-w-sm text-sm leading-7 text-muted lg:block sm:text-base">
+              <p className="mt-4 hidden max-w-sm text-base leading-7 text-muted lg:block">
                 {data.description}
               </p>
 
-              {/* Scroll-linked progress line (replaces the static red bar) */}
-              <div className="relative mt-4 h-[3px] w-full max-w-[200px] overflow-hidden rounded-full bg-line lg:mt-6">
+              <div className="relative mt-3 h-[3px] w-full max-w-[200px] overflow-hidden rounded-full bg-line lg:mt-6">
                 <motion.div
                   className="absolute inset-0 origin-left bg-brand-red"
                   style={{ scaleX: overall }}
@@ -239,10 +260,10 @@ export default function WorkflowSection() {
               </div>
             </motion.div>
 
-            {/* RIGHT: PANEL */}
-            <div className="lg:col-span-8">
-              <div className="relative grid h-[min(560px,calc(100svh-11rem))] grid-cols-1 grid-rows-[40%_60%] overflow-hidden rounded-2xl bg-white shadow-sm md:grid-cols-2 md:grid-rows-1">
-                {/* IMAGES: stacked, crossfade + scroll-linked push-in */}
+            {/* RIGHT: PANEL — fills whatever height the grid gives it */}
+            <div className="min-h-0 lg:col-span-8 lg:h-full lg:max-h-[560px]">
+              <div className="grid h-full min-h-0 grid-cols-1 grid-rows-[34%_minmax(0,1fr)] overflow-hidden rounded-2xl bg-white shadow-sm md:grid-cols-2 md:grid-rows-1">
+                {/* IMAGES */}
                 <div className="relative h-full w-full overflow-hidden">
                   {data.steps.map((step, index) => (
                     <ImageLayer
@@ -254,13 +275,15 @@ export default function WorkflowSection() {
                       isActive={index === activeIndex}
                       progress={progress}
                       priority={index === 0}
-                      reduce={shouldReduceMotion}
+                      reduce={reduce}
                     />
                   ))}
                 </div>
 
-                {/* CONTENT */}
-                <div className="relative flex h-full items-center overflow-y-auto p-5 sm:p-8 lg:p-10">
+                {/* CONTENT
+                    flex-col + my-auto centers short content but still lets
+                    long content scroll from the top (items-center would clip it). */}
+                <div className="relative flex min-h-0 flex-col overflow-y-auto overscroll-contain p-5 sm:p-8 lg:p-10">
                   <AnimatePresence
                     mode="popLayout"
                     initial={false}
@@ -269,16 +292,16 @@ export default function WorkflowSection() {
                     <motion.div
                       key={activeIndex}
                       custom={direction}
-                      className="w-full"
-                      variants={shouldReduceMotion ? undefined : panelVariants}
+                      className="my-auto w-full"
+                      variants={reduce ? reducedPanelVariants : panelVariants}
                       initial="enter"
                       animate="center"
                       exit="exit"
+                      aria-live="polite"
                     >
-                      {/* STEP NUMBER */}
                       <motion.div
-                        variants={itemVariants}
-                        className="mb-4 flex items-center gap-3"
+                        variants={reduce ? reducedItemVariants : itemVariants}
+                        className="mb-3 flex items-center gap-3 sm:mb-4"
                       >
                         <span className="text-xs font-bold tracking-[0.15em] text-brand-red">
                           STEP {activeStep.number}
@@ -289,28 +312,27 @@ export default function WorkflowSection() {
                         </span>
                       </motion.div>
 
-                      {/* TITLE */}
                       <motion.h3
-                        variants={itemVariants}
-                        className="font-heading text-xl font-semibold leading-tight text-brand-deep sm:text-2xl lg:text-3xl"
+                        variants={reduce ? reducedItemVariants : itemVariants}
+                        className="font-heading text-lg font-semibold leading-tight text-brand-deep sm:text-2xl lg:text-3xl"
                       >
                         {activeStep.title}
                       </motion.h3>
 
-                      {/* DESCRIPTION */}
                       <motion.p
-                        variants={itemVariants}
-                        className="mt-3 text-sm leading-6 text-ink sm:text-base sm:leading-7"
+                        variants={reduce ? reducedItemVariants : itemVariants}
+                        className="mt-2 text-sm leading-6 text-ink sm:mt-3 sm:text-base sm:leading-7"
                       >
                         {activeStep.description}
                       </motion.p>
 
-                      {/* POINTS (each one staggers in) */}
-                      <ul className="mt-5 space-y-3">
+                      <ul className="mt-4 space-y-2 sm:mt-5 sm:space-y-3">
                         {activeStep.points.map((point, pointIndex) => (
                           <motion.li
                             key={pointIndex}
-                            variants={itemVariants}
+                            variants={
+                              reduce ? reducedItemVariants : itemVariants
+                            }
                             className="flex items-start gap-3 text-sm leading-6 text-ink sm:text-base"
                           >
                             <span className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-brand-red" />
@@ -319,10 +341,9 @@ export default function WorkflowSection() {
                         ))}
                       </ul>
 
-                      {/* PROGRESS INDICATORS (fill with scroll) */}
                       <motion.div
-                        variants={itemVariants}
-                        className="mt-6 flex items-center gap-2"
+                        variants={reduce ? reducedItemVariants : itemVariants}
+                        className="mt-5 flex items-center gap-2 sm:mt-6"
                       >
                         {data.steps.map((step, index) => (
                           <ProgressSegment

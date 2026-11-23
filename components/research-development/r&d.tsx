@@ -10,6 +10,7 @@ import ResearchAreasSection from "./sections/ResearchAreasSection";
 import WorkflowSection from "./sections/WorkflowSection";
 import SustainabilitySection from "./sections/SustainabilitySection";
 import InnovationShowcaseSection from "./sections/InnovationShowcaseSection";
+import IITGuwahatiSection from "./sections/IITGuwahatiSection";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 
@@ -19,6 +20,12 @@ const sections: PageSectionItem[] = [
     label: "Research Areas",
     content: <ResearchAreasSection />,
   },
+  {
+    id: "iit-guwahati",
+    label: "IIT Guwahati",
+    content: <IITGuwahatiSection />,
+  },
+  
   {
     id: "innovation-showcase",
     label: "Innovation Showcase",

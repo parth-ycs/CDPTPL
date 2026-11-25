@@ -12,38 +12,38 @@ export default function FoundersLeadershipSection() {
   return (
     <section
       id="leadership"
-      className="bg-[#F7F8FA] rounded-2xl"
+      className="rounded-2xl bg-[#F7F8FA]"
     >
       <Container>
-        {/* SECTION INTRO */}
+        {/* Section intro */}
         <div className="grid items-end gap-6 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
           <div>
             <div className="mb-5 flex items-center gap-4">
               <span className="h-[2px] w-10 bg-red-600" />
 
-              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+              <span className="text-caption font-semibold uppercase tracking-[0.22em] text-slate-500">
                 {data.label}
               </span>
             </div>
 
-            <h2 className="max-w-[550px] text-3xl font-semibold leading-tight tracking-tight text-[#102C59] sm:text-4xl lg:text-5xl">
+            <h2 className="max-w-[550px] font-heading text-h1 font-semibold tracking-tight text-[#102C59]">
               {data.heading}
             </h2>
           </div>
 
-          <p className="max-w-[540px] text-sm leading-7 text-slate-600 sm:text-base lg:pb-1">
+          <p className="max-w-[540px] text-body text-slate-600 lg:pb-1">
             {data.description}
           </p>
         </div>
 
-        {/* LEADERSHIP CARDS */}
+        {/* Leadership cards */}
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {data.members.map((member) => (
             <article
               key={member.id}
               className="group min-w-0"
             >
-              {/* PORTRAIT */}
+              {/* Portrait */}
               <div className="relative aspect-[4/4.7] overflow-hidden rounded-xl bg-slate-200">
                 <Image
                   src={member.image}
@@ -53,10 +53,10 @@ export default function FoundersLeadershipSection() {
                   className="object-cover object-center grayscale transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:grayscale-0"
                 />
 
-                {/* IMAGE OVERLAY */}
+                {/* Image overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071D36]/35 via-transparent to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-100" />
 
-                {/* LINKEDIN */}
+                {/* LinkedIn */}
                 {member.linkedin && (
                   <Link
                     href={member.linkedin}
@@ -70,13 +70,13 @@ export default function FoundersLeadershipSection() {
                 )}
               </div>
 
-              {/* MEMBER DETAILS */}
+              {/* Member details */}
               <div className="mt-5 border-b border-slate-200 pb-5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-red-600">
+                <p className="text-caption font-semibold uppercase tracking-[0.16em] text-red-600">
                   {member.designation}
                 </p>
 
-                <h3 className="mt-2 text-lg font-semibold tracking-tight text-[#102C59] transition-colors duration-300 group-hover:text-red-600 sm:text-xl">
+                <h3 className="mt-2 font-heading text-h3 font-semibold tracking-tight text-[#102C59] transition-colors duration-300 group-hover:text-red-600">
                   {member.name}
                 </h3>
               </div>

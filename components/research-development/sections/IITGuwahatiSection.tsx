@@ -47,7 +47,7 @@ export default function IITGuwahatiSection() {
   if (!active) return null;
 
   return (
-    <section className="bg-white py-16 text-brand-deep md:py-20">
+    <section className="bg-white text-brand-deep">
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 items-center gap-10 px-6 md:px-12 lg:grid-cols-2 lg:gap-16">
 
         {/* CONTENT */}
@@ -58,21 +58,21 @@ export default function IITGuwahatiSection() {
           transition={{ duration: 0.9, ease: EASE_OUT_POW }}
           className="max-w-xl"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
+          <p className="text-caption font-semibold uppercase tracking-[0.2em] text-brand-blue">
             {data.eyebrow}
           </p>
 
-          <h2 className="mt-5 font-heading text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+          <h2 className="mt-5 font-heading text-h2 font-semibold text-brand-deep">
             {data.heading}
           </h2>
 
-          <p className="mt-6 text-sm leading-7 text-muted sm:text-base sm:leading-8">
+          <p className="mt-6 text-body text-muted">
             {data.description}
           </p>
 
           <div className="mt-8 flex items-center gap-3">
             <span className="h-px w-10 bg-brand-blue" />
-            <span className="text-sm font-medium text-brand-deep">
+            <span className="text-small font-medium text-brand-deep">
               {data.tagline}
             </span>
           </div>
@@ -108,10 +108,11 @@ export default function IITGuwahatiSection() {
           {/* NAVIGATION */}
           <div className="mt-6 flex items-center justify-between border-t border-line pt-5">
             <div className="flex items-center gap-3">
-              <span className="font-heading text-2xl font-semibold tabular-nums text-brand-deep">
+              <span className="font-heading text-h2 font-semibold tabular-nums text-brand-deep">
                 {pad(activeIndex + 1)}
               </span>
-              <span className="text-sm text-muted">
+
+              <span className="text-small text-muted">
                 / {pad(data.images.length)}
               </span>
             </div>
@@ -146,11 +147,7 @@ export default function IITGuwahatiSection() {
                 onClick={() => setActiveIndex(index)}
                 aria-label={`Show image ${index + 1}`}
                 aria-current={index === activeIndex ? "true" : undefined}
-                className={`h-[3px] transition-all duration-500 ${
-                  index === activeIndex
-                    ? "w-10 bg-brand-red"
-                    : "w-5 bg-slate-200 hover:bg-slate-400"
-                }`}
+                
               />
             ))}
           </div>

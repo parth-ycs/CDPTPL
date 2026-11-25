@@ -26,7 +26,7 @@ export type ResearchDevelopmentData = {
 
 export const researchDevelopment: ResearchDevelopmentData = {
   eyebrow: "Innovation & Technology",
-  title: "Research &",
+  title: "Research and",
   titleAccent: "Development",
 
   primaryImage: {

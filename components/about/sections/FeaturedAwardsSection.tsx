@@ -1,16 +1,15 @@
+
 import Image from "next/image";
-import Link from "next/link";
 import { aboutPageData } from "@/data/about";
 import Container from "@/components/container";
 
 export default function FeaturedAwardsSection() {
-  const { headingStart, headingHighlight, items, cta } =
+  const { headingStart, headingHighlight, items } =
     aboutPageData.awards;
 
   return (
-    <section id="awards" className=" text-[#171717]">
-      <Container className="!py-16 lg:!py-20">
-        <h2 className="mb-12 text-center font-[var(--font-noa-voren)] text-4xl tracking-tight sm:text-5xl">
+    <section id="awards" className="text-[#171717]">
+        <h2 className="mb-12 text-center font-heading text-h2 tracking-tight">
           {headingStart}{" "}
           <span className="text-brand-blue">{headingHighlight}</span>
         </h2>
@@ -27,21 +26,14 @@ export default function FeaturedAwardsSection() {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <p className="mt-3 text-[17px] leading-tight">{award.title}</p>
+
+              <p className="mt-3 text-body text-brand-deep">
+                {award.title}
+              </p>
             </article>
           ))}
         </div>
 
-        {/* <div className="mt-12 flex justify-center">
-          <Link
-            href={cta.href}
-            className="flex items-center gap-2 text-base font-medium transition-colors hover:text-[#e32b2b]"
-          >
-            <span className="h-3 w-3 rounded-full bg-[#e32b2b]" />
-            {cta.label}
-          </Link>
-        </div> */}
-      </Container>
     </section>
   );
 }

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
@@ -41,10 +42,11 @@ function Select({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-9 appearance-none rounded-full border border-slate-200 bg-white pl-3.5 pr-8 text-xs font-medium text-slate-700 transition-colors hover:border-[#B8D5F3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
+        className="h-9 appearance-none rounded-full border border-slate-200 bg-white pl-3.5 pr-8 text-small font-medium text-slate-700 transition-colors hover:border-[#B8D5F3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
       >
         {children}
       </select>
+
       <ChevronDown
         size={14}
         aria-hidden
@@ -97,15 +99,17 @@ export default function NetworkSection() {
   const isProjects = tab === "projects";
   const theme = THEME[tab];
 
-  // Only offer countries and industries that actually have entries in this tab
+  // Only offer countries and industries that actually have entries in this tab.
   const countries = useMemo(() => {
     const map = new Map<string, { id: string; label: string }>();
+
     source.forEach(({ location }) =>
       map.set(location.id, {
         id: location.id,
         label: `${getCountryFlag(location.countryCode)} ${location.country}`,
       }),
     );
+
     return [...map.values()];
   }, [source]);
 
@@ -114,7 +118,9 @@ export default function NetworkSection() {
     [projects],
   );
 
-  const activeCountry = countries.some((c) => c.id === country) ? country : "all";
+  const activeCountry = countries.some((c) => c.id === country)
+    ? country
+    : "all";
 
   const visible = source.filter(
     (item) =>
@@ -126,8 +132,10 @@ export default function NetworkSection() {
 
   const shown = expanded ? visible : visible.slice(0, INITIAL_COUNT);
   const hiddenCount = visible.length - shown.length;
+
   const filtersActive =
-    activeCountry !== "all" || (isProjects && (industry !== "all" || status !== "all"));
+    activeCountry !== "all" ||
+    (isProjects && (industry !== "all" || status !== "all"));
 
   const reset = () => {
     setCountry("all");
@@ -168,13 +176,14 @@ export default function NetworkSection() {
               role="tab"
               aria-selected={tab === item.id}
               onClick={() => switchTab(item.id)}
-              className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] ${
+              className={`rounded-full px-4 py-1.5 text-small font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] ${
                 tab === item.id
                   ? "bg-white text-slate-900 shadow-sm"
                   : "text-slate-500 hover:text-slate-800"
               }`}
             >
-              {item.label} <span className="text-slate-400">{item.count}</span>
+              {item.label}{" "}
+              <span className="text-slate-400">{item.count}</span>
             </button>
           ))}
         </div>
@@ -213,6 +222,7 @@ export default function NetworkSection() {
                   </option>
                 ))}
               </Select>
+
               <Select
                 label="Filter by status"
                 value={status}
@@ -232,52 +242,68 @@ export default function NetworkSection() {
 
       {/* Cards */}
       <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map(({ location, id, name, subtitle, summary, status: itemStatus }) => (
-          <li key={id}>
-            <Link
-              href={pointHref(location, id)}
-              scroll={false}
-              className={`group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${theme.hover} ${theme.ring}`}
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="inline-flex items-center gap-1.5 text-xs text-slate-500">
-                  <span aria-hidden>{getCountryFlag(location.countryCode)}</span>
-                  {location.country}
-                </span>
-                {itemStatus ? (
-                  <StatusBadge status={itemStatus} />
-                ) : (
-                  <Icon size={14} className="text-slate-300" aria-hidden />
-                )}
-              </div>
-
-              <h3 className="mt-3 text-sm font-semibold leading-snug text-slate-900">{name}</h3>
-              <p className="mt-0.5 text-xs text-slate-500">{subtitle}</p>
-              {summary && (
-                <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600">{summary}</p>
-              )}
-
-              <span
-                className={`mt-auto inline-flex items-center gap-1 pt-3 text-xs font-semibold ${theme.text}`}
+        {shown.map(
+          ({ location, id, name, subtitle, summary, status: itemStatus }) => (
+            <li key={id}>
+              <Link
+                href={pointHref(location, id)}
+                scroll={false}
+                className={`group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${theme.hover} ${theme.ring}`}
               >
-                View on globe
-                <ArrowUpRight
-                  size={13}
-                  className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </span>
-            </Link>
-          </li>
-        ))}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 text-small text-slate-500">
+                    <span aria-hidden>
+                      {getCountryFlag(location.countryCode)}
+                    </span>
+                    {location.country}
+                  </span>
+
+                  {itemStatus ? (
+                    <StatusBadge status={itemStatus} />
+                  ) : (
+                    <Icon size={14} className="text-slate-300" aria-hidden />
+                  )}
+                </div>
+
+                <h3 className="mt-3 font-heading text-h3 font-semibold text-slate-900">
+                  {name}
+                </h3>
+
+                <p className="mt-0.5 text-small text-slate-500">
+                  {subtitle}
+                </p>
+
+                {summary && (
+                  <p className="mt-2 line-clamp-2 text-small text-slate-600">
+                    {summary}
+                  </p>
+                )}
+
+                <span
+                  className={`mt-auto inline-flex items-center gap-1 pt-3 text-small font-semibold ${theme.text}`}
+                >
+                  View on globe
+                  <ArrowUpRight
+                    size={13}
+                    className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </Link>
+            </li>
+          ),
+        )}
       </ul>
 
       {visible.length === 0 && (
         <div className="py-12 text-center">
-          <p className="text-sm text-slate-600">Nothing matches these filters.</p>
+          <p className="text-small text-slate-600">
+            Nothing matches these filters.
+          </p>
+
           <button
             type="button"
             onClick={reset}
-            className="mt-3 text-sm font-semibold text-[#1557A0] hover:underline"
+            className="mt-3 text-small font-semibold text-[#1557A0] hover:underline"
           >
             Clear filters
           </button>
@@ -285,28 +311,31 @@ export default function NetworkSection() {
       )}
 
       {/* Footer: show more / clear */}
-      {visible.length > 0 && (hiddenCount > 0 || expanded || filtersActive) && (
-        <div className="mt-5 flex items-center justify-center gap-4">
-          {(hiddenCount > 0 || (expanded && visible.length > INITIAL_COUNT)) && (
-            <button
-              type="button"
-              onClick={() => setExpanded((value) => !value)}
-              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-[#B8D5F3] hover:text-[#1557A0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
-            >
-              {expanded ? "Show less" : `Show ${hiddenCount} more`}
-            </button>
-          )}
-          {filtersActive && (
-            <button
-              type="button"
-              onClick={reset}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-800 hover:underline"
-            >
-              Clear filters
-            </button>
-          )}
-        </div>
-      )}
+      {visible.length > 0 &&
+        (hiddenCount > 0 || expanded || filtersActive) && (
+          <div className="mt-5 flex items-center justify-center gap-4">
+            {(hiddenCount > 0 ||
+              (expanded && visible.length > INITIAL_COUNT)) && (
+              <button
+                type="button"
+                onClick={() => setExpanded((value) => !value)}
+                className="rounded-full border border-slate-200 bg-white px-4 py-2 text-small font-semibold text-slate-700 transition-colors hover:border-[#B8D5F3] hover:text-[#1557A0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
+              >
+                {expanded ? "Show less" : `Show ${hiddenCount} more`}
+              </button>
+            )}
+
+            {filtersActive && (
+              <button
+                type="button"
+                onClick={reset}
+                className="text-small font-semibold text-slate-500 hover:text-slate-800 hover:underline"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+        )}
     </div>
   );
 }

@@ -48,7 +48,7 @@ const HOVERABLE_ITEM_IDS = new Set([
 const industrialItems: IndustrialItem[] = [
   {
     id: "process-equipment",
-    title: "Process Equipment & Separation",
+    title: "Process Equipment and Separation",
     category: "01",
     description:
       "Advanced process equipment, distillation columns, pressure vessels and separation technologies.",

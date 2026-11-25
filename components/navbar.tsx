@@ -1,13 +1,13 @@
-
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronRight, Menu, X } from "lucide-react";
 
 import Logo from "./ui/logo";
 import NavDropdown from "./ui/NavDropdown";
 import { navigationItems } from "@/data/navigation";
+import Button from "@/components/ui/button";
 
 type NavbarProps = {
   variant?: "light" | "dark";
@@ -17,19 +17,113 @@ const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue";
 
 export default function Navbar({
-  variant = "light",
+  variant: baseVariant = "light",
 }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // True while the pointer is anywhere over the header (including dropdown panels,
+  // since they are DOM children of the header).
+  const [hovered, setHovered] = useState(false);
+
+  // Ref to the header so we can ask the browser whether it is currently hovered.
+  const headerRef = useRef<HTMLElement | null>(null);
+
+  // One shared state for desktop dropdowns so only one panel is ever open.
+  // `instant` is true when jumping from one dropdown straight to another,
+  // so the panels swap with no fade (that fade overlap was the flicker).
+  const [menu, setMenu] = useState<{ label: string | null; instant: boolean }>({
+    label: null,
+    instant: false,
+  });
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function cancelClose() {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }
+
+  function openMenu(label: string) {
+    cancelClose();
+    setMenu((current) => ({
+      label,
+      instant: current.label !== null && current.label !== label,
+    }));
+  }
+
+  // Small delay so crossing the gap between items doesn't close the panel.
+  function scheduleClose() {
+    cancelClose();
+    closeTimer.current = setTimeout(() => {
+      setMenu({ label: null, instant: false });
+    }, 120);
+  }
+
+  function closeMenuNow() {
+    cancelClose();
+    setMenu({ label: null, instant: false });
+  }
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") closeMenuNow();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      cancelClose();
+    };
+  }, []);
+
+  // After a route change the navbar remounts with hovered = false, even though
+  // the cursor may still be over it (so onMouseEnter never fires). Re-check on
+  // mount so the state stays in sync with the real pointer position.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const sync = () => {
+      if (el.matches(":hover")) setHovered(true);
+    };
+
+    sync();
+    // Browsers sometimes update :hover a frame or two after a DOM change.
+    const raf = requestAnimationFrame(() => requestAnimationFrame(sync));
+    const timer = setTimeout(sync, 150);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // Effective variant: a dark navbar turns light on hover (or while a dropdown /
+  // the mobile menu is open) and returns to dark once the pointer leaves.
+  const variant: "light" | "dark" =
+    baseVariant === "dark" && !hovered && menu.label === null && !mobileOpen
+      ? "dark"
+      : "light";
 
   const dark = variant === "dark";
 
   const navText = dark ? "text-white" : "text-[#102c59]";
   const navBorder = dark ? "border-white/40" : "border-[#102c59]/35";
 
-  // Preserve the original dark gradient.
-  const headerBackground = dark
-    ? "bg-gradient-to-b from-[#051a35]/95 via-[#051a35]/30 to-[#051a35]/0"
-    : "bg-white/80";
+  const navHoverText = "hover:text-brand-blue";
+
+  // True while hovering the header, a desktop dropdown is open, or mobile menu is open.
+  const isActive = hovered || menu.label !== null || mobileOpen;
+
+  // Shared timing: slow and smooth in both directions, kept identical for the
+  // background layers and the text colours so they never get out of sync.
+  const speed = isActive ? "duration-500" : "duration-700";
+
+  // Gradient and solid backgrounds are separate layers cross-fading with
+  // opacity. (A gradient is a background-image, which CSS can't transition,
+  // so swapping it for bg-white used to snap instantly.)
+  const whiteOpacity = isActive ? "opacity-100" : dark ? "opacity-0" : "opacity-80";
+  const gradientOpacity = dark ? "opacity-100" : "opacity-0";
 
   function closeMobileMenu() {
     setMobileOpen(false);
@@ -37,8 +131,26 @@ export default function Navbar({
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 text-[#102c59] backdrop-blur-md transition-all duration-700 ease-in-out ${headerBackground}`}
+      ref={headerRef}
+      onMouseEnter={() => setHovered(true)}
+      // Safety net: if :hover wasn't ready yet on mount, the first tiny mouse
+      // movement over the header switches it to light mode.
+      onMouseMove={() => {
+        if (!hovered) setHovered(true);
+      }}
+      onMouseLeave={() => setHovered(false)}
+      className="fixed inset-x-0 top-0 z-50 text-[#102c59] backdrop-blur-md"
     >
+      {/* Background layers */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-[#051a35]/95 via-[#051a35]/30 to-[#051a35]/0 transition-opacity ease-in-out ${speed} ${gradientOpacity}`}
+      />
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 -z-10 bg-white transition-opacity ease-in-out ${speed} ${whiteOpacity}`}
+      />
+
       {/* Main navigation */}
       <nav
         aria-label="Primary navigation"
@@ -49,7 +161,7 @@ export default function Navbar({
           href="/"
           aria-label="Chemdist Group home"
           onClick={closeMobileMenu}
-          className={`inline-flex shrink-0 items-center transition-[filter] duration-700 ease-in-out ${focusRing} ${
+          className={`inline-flex shrink-0 items-center transition-[filter] ease-in-out ${speed} ${focusRing} ${
             dark ? "brightness-0 invert" : ""
           }`}
         >
@@ -66,6 +178,11 @@ export default function Navbar({
                   item={item}
                   variant={variant}
                   mode="desktop"
+                  isOpen={menu.label === item.label}
+                  instant={menu.instant}
+                  onOpen={() => openMenu(item.label)}
+                  onClose={scheduleClose}
+                  onCloseNow={closeMenuNow}
                 />
               );
             }
@@ -74,7 +191,7 @@ export default function Navbar({
               <Link
                 key={item.label}
                 href={item.href}
-                className={`relative flex h-[88px] shrink-0 items-center whitespace-nowrap text-sm font-semibold tracking-wide transition-colors duration-700 hover:text-brand-red ${navText} ${focusRing} after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand-red after:transition-transform after:duration-200 hover:after:scale-x-100`}
+                className={`-mx-3 flex h-10 shrink-0 items-center whitespace-nowrap rounded-full px-3 text-sm font-semibold tracking-wide transition-all ease-in-out ${speed} hover:bg-[#ebf2fc] ${navHoverText} ${navText} ${focusRing}`}
               >
                 {item.label}
               </Link>
@@ -82,13 +199,17 @@ export default function Navbar({
           })}
 
           {/* Contact CTA */}
-          <a
-            href="/#enquiry"
-            className={`ml-1 inline-flex shrink-0 items-center gap-2 border px-4 py-3 text-sm font-semibold tracking-wide transition-colors duration-700 hover:border-brand-red hover:bg-brand-red hover:text-white ${navBorder} ${navText} ${focusRing}`}
+          <Button
+            href="/contact"
+            onClick={closeMobileMenu}
+            size="sm"
+            variant="dark"
+            fullWidth
+            className="py-1 text-sm font-heading"
+            circleClassName="h-8 w-8"
           >
             Contact
-            <ArrowRight size={15} aria-hidden="true" />
-          </a>
+          </Button>
         </div>
 
         {/* Mobile menu toggle */}
@@ -98,7 +219,7 @@ export default function Navbar({
           aria-expanded={mobileOpen}
           aria-controls="mobile-navigation"
           onClick={() => setMobileOpen((current) => !current)}
-          className={`inline-flex items-center justify-center p-2 transition-colors duration-700 lg:hidden ${navText} ${focusRing}`}
+          className={`inline-flex items-center justify-center p-2 transition-all ease-in-out ${speed} hover:font-bold lg:hidden ${navHoverText} ${navText} ${focusRing}`}
         >
           {mobileOpen ? (
             <X size={24} aria-hidden="true" />
@@ -137,7 +258,7 @@ export default function Navbar({
                   key={item.label}
                   href={item.href}
                   onClick={closeMobileMenu}
-                  className={`flex items-center justify-between border-b py-4 transition-colors duration-700 ${
+                  className={`flex items-center justify-between border-b py-4 transition-all duration-200 hover:font-bold ${navHoverText} ${
                     dark ? "border-white/15" : "border-black/10"
                   } ${navText} ${focusRing}`}
                 >
@@ -148,14 +269,15 @@ export default function Navbar({
             })}
 
             {/* Mobile contact CTA */}
-            <a
+            <Button
               href="/#enquiry"
               onClick={closeMobileMenu}
-              className={`mt-5 inline-flex w-full items-center justify-center gap-2 border px-4 py-3 text-sm font-semibold tracking-wide transition-colors duration-700 hover:border-brand-red hover:bg-brand-red hover:text-white ${navBorder} ${navText} ${focusRing}`}
+              variant={dark ? "light" : "dark"}
+              fullWidth
+              className="mt-5"
             >
               Contact
-              <ArrowRight size={15} aria-hidden="true" />
-            </a>
+            </Button>
           </div>
         </div>
       )}

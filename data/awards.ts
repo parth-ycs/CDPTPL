@@ -10,7 +10,7 @@ export interface AwardItem {
 
 export const awardsPageData = {
   hero: {
-    heading: "Awards & Recognition",
+    heading: "Awards and Recognition",
     eyebrow: "OUR ACHIEVEMENTS",
     description:
       "Recognising the achievements, milestones and contributions that reflect our commitment to excellence and innovation.",
@@ -29,8 +29,8 @@ export const awardsPageData = {
   },
 
   listing: {
-    eyebrow: "MILESTONES & RECOGNITION",
-    heading: "Awards & Achievements",
+    eyebrow: "MILESTONES and RECOGNITION",
+    heading: "Awards and Achievements",
     description:
       "A collection of recognitions celebrating excellence, leadership and meaningful contributions.",
   },

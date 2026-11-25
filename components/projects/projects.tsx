@@ -9,21 +9,21 @@ import PageLayout from "@/components/shared-page/PageLayout";
 import Footer from "@/components/footer";
 import Enquiry from "@/components/enquiry"; 
 import { projects, projectCategories, projectsPageData } from "@/data/projects";
-import ProjectsIntroduction from "./listing/ProjectsIntroduction";
 import ProjectDirectory from "./listing/ProjectDirectory";
+import PageOverview from "@/components/shared-page/PageOverview";
 
 export default function ProjectsPage() {
-  const [category, setCategory] = useState("All Projects");
+  const [category, setCategory] = useState("ALL PROJECTS");
   const [query, setQuery] = useState("");
 
-  const { hero } = projectsPageData;
+  const { hero, overview } = projectsPageData;
 
   const filteredProjects = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return projects.filter((project) => {
       const matchesCategory =
-        category === "All Projects" ||
+        category === "ALL PROJECTS" ||
         project.category === category;
 
       const searchableText = [
@@ -46,11 +46,6 @@ export default function ProjectsPage() {
 
   const sections: PageSectionItem[] = [
     {
-      id: "projects-introduction",
-      label: "Overview",
-      content: <ProjectsIntroduction />,
-    },
-    {
       id: "project-directory",
       label: "Project Directory",
       content: (
@@ -62,7 +57,7 @@ export default function ProjectsPage() {
           onCategoryChange={setCategory}
           onSearchChange={setQuery}
           onReset={() => {
-            setCategory("All Projects");
+            setCategory("ALL PROJECTS");
             setQuery("");
           }}
         />
@@ -84,6 +79,10 @@ export default function ProjectsPage() {
         ]}
         ctaLabel="Explore Our Projects"
         ctaHref="#project-directory"
+      />
+      <PageOverview
+        heading={overview.heading}
+        description={overview.description}
       />
 
       <PageLayout sections={sections} />

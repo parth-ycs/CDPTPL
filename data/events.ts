@@ -9,6 +9,7 @@ export interface EventItem {
   description: string;
   image: string;
   imageAlt: string;
+  url?: string;
 }
 
 export const eventsPageData = {
@@ -52,6 +53,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in ChemProTech 2026, an international exhibition focused on chemical processing technology, equipment and industrial supplies. The event provided an opportunity to showcase its process engineering and industrial solutions.",
   image: "/images/events/chemprotech-2026.png",
   imageAlt: "JNK Chemdist at ChemProTech 2026, Mumbai",
+  url: "https://chemprotechindia.com/",
 },
 {
     id: "chemtech-world-expo-2026",
@@ -66,6 +68,7 @@ export const eventItems: EventItem[] = [
     image: "/images/events/chemtech-world-expo-2026.png",
     imageAlt:
       "JNK Chemdist at ChemTECH World Expo 2026, Mumbai",
+    url: "https://chemtech-online.com/chemtech-world-expo-2026/",
   },
 {
   id: "india-energy-week-2026",
@@ -79,6 +82,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in India Energy Week 2026, engaging with industry professionals and showcasing its engineering capabilities in support of India's evolving energy sector.",
   image: "/images/events/india-energy-week-2026.png",
   imageAlt: "JNK Chemdist at India Energy Week 2026, Goa",
+  url: "https://www.indiaenergyweek.com/delegate?utm_source=google&utm_medium=search&utm_campaign=iew2027_delprom_domestic&gad_source=1&gad_campaignid=24404940373&gbraid=0AAAAAqdb0fJNjz8U9vCQj0Eh9tGRjfGGt&gclid=Cj0KCQiAiJXYBhD_ARIsAAx2AHlCj30BENi81r_x2Q_BGTJBvHdQ7DGlJeoSoWQJz5bV9N64SFRP2N8aAoZbEALw_wcB",
 },
 {
   id: "ifat-india-2025",
@@ -92,6 +96,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in IFAT India 2025, India's leading trade fair for water, sewage, solid waste and recycling. The exhibition brought together industry leaders and technology providers focused on environmental and wastewater management solutions.",
   image: "/images/events/ifat-india-2025.png",
   imageAlt: "JNK Chemdist at IFAT India 2025, Mumbai",
+  url: "https://ifat-india.com/en/",
 },
 {
   id: "chemprotech-india-2025",
@@ -105,6 +110,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in ChemProTech India 2025, an international exhibition dedicated to chemical processing technology, equipment and supplies, connecting with professionals across the chemical and process industries.",
   image: "/images/events/chemprotech-india-2025.png",
   imageAlt: "ChemProTech India 2025 exhibition, Mumbai",
+  url: "https://chemprotechindia.com/",
 },
 {
   id: "process-innovation-expo-2024",
@@ -118,6 +124,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in Process Innovation Expo Asia Pacific 2024, powered by ACHEMA, showcasing its presence in the international process engineering and industrial innovation ecosystem.",
   image: "/images/events/process-innovation-expo-2024.png",
   imageAlt: "JNK Chemdist at Process Innovation Expo 2024, Singapore",
+  url: "https://www.achema.de/en/the-achema/process-innovation-asia-pacific",
 },
 {
   id: "chemtech-world-expo-2024",
@@ -131,6 +138,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in ChemTECH World Expo 2024, an international exhibition and conference bringing together companies and professionals from the chemical, petrochemical and process engineering industries.",
   image: "/images/events/chemtech-world-expo-2024.png",
   imageAlt: "JNK Chemdist at ChemTECH World Expo 2024, Mumbai",
+  url: "https://www.cgitoronto.gov.in/docs/1696620770chemtech-2024-brochure-8%20pages.pdf",
 },
 {
   id: "ifat-india-2023",
@@ -144,6 +152,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in IFAT India 2023, engaging with the water, sewage, solid waste and recycling industries through one of India's leading environmental technology exhibitions.",
   image: "/images/events/ifat-india-2023.png",
   imageAlt: "JNK Chemdist at IFAT India 2023, Mumbai",
+  url: "https://ifat-india.com/en/",
 },
 {
   id: "ipec-2023",
@@ -157,6 +166,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in IPEC 2023, a pan-India process engineering exhibition and conference bringing together engineering companies and industry professionals to explore advancements in process technologies.",
   image: "/images/events/ipec-2023.png",
   imageAlt: "JNK Chemdist at IPEC 2023, Hyderabad",
+  url: "https://hitex.co.in/events/ipec-2023/index.html",
 },
 {
   id: "industrial-expo-2022",
@@ -170,6 +180,7 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in the 2nd Industrial Expo 2022 at Dahej, Gujarat, connecting with industrial businesses and showcasing its engineering and process technology capabilities.",
   image: "/images/events/industrial-expo-2022.png",
   imageAlt: "JNK Chemdist at Dahej Industrial Expo 2022, Gujarat",
+  url: "https://chemprotechindia.com/",
 },
 {
   id: "chemtech-world-expo-2022",
@@ -183,5 +194,6 @@ export const eventItems: EventItem[] = [
     "JNK Chemdist participated in the 30th International Exhibition and Conference of ChemTECH World Expo 2022, connecting with the chemicals, petrochemicals and process industry in India.",
   image: "/images/events/chemtech-world-expo-2022.png",
   imageAlt: "JNK Chemdist at ChemTECH World Expo 2022, Mumbai",
+  url: "https://chemprotechindia.com/",
 },
 ];

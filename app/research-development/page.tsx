@@ -6,7 +6,7 @@ import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Research & Development | Chemdist Group",
+  title: "Research and Development | Chemdist Group",
   description:
     "Explore research approaches, process innovation, engineering development and sustainable industrial technologies at Chemdist.",
 };

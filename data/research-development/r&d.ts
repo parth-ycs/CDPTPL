@@ -31,7 +31,7 @@ export interface RDFeature {
 }
 
 export const rdSectionData = {
-  eyebrow: "Research & Development",
+  eyebrow: "Research and Development",
 
   heading: ["Engineering", "What Comes Next"],
 
@@ -45,7 +45,7 @@ export const rdSectionData = {
 
 
   hero: {
-    eyebrow: "Research & Development",
+    eyebrow: "Research and Development",
     heading: "Engineering What Comes Next.",
     description:
       "Exploring process innovation, advanced engineering and sustainable technologies to address evolving industrial challenges.",
@@ -63,7 +63,7 @@ highlights: [
 overview: {
   heading: {
     before: "Driving Industrial Progress Through",
-    highlight: "Research & Innovation",
+    highlight: "Research and Innovation",
     after: "",
   },
   description:

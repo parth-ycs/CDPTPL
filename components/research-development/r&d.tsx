@@ -13,6 +13,7 @@ import InnovationShowcaseSection from "./sections/InnovationShowcaseSection";
 import IITGuwahatiSection from "./sections/IITGuwahatiSection";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
+import Container from "../container";
 
 const sections: PageSectionItem[] = [
   {
@@ -26,21 +27,6 @@ const sections: PageSectionItem[] = [
     content: <IITGuwahatiSection />,
   },
   
-  {
-    id: "innovation-showcase",
-    label: "Innovation Showcase",
-    content: <InnovationShowcaseSection />,
-  },
-  {
-    id: "research-workflow",
-    label: "Our Approach",
-    content: <WorkflowSection />,
-  },
-  {
-    id: "sustainability",
-    label: "Sustainability",
-    content: <SustainabilitySection />,
-  },
 ];
 
 export default function ResearchDevelopment() {
@@ -56,7 +42,7 @@ export default function ResearchDevelopment() {
         imageAlt={hero.imageAlt}
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Research & Development" },
+          { label: "Research and Development" },
         ]}
         ctaLabel="Discuss an Opportunity"
         ctaHref="#enquiry"
@@ -68,6 +54,11 @@ export default function ResearchDevelopment() {
       />
 
       <PageLayout sections={sections} />
+      <WorkflowSection />
+      <Container>
+        <InnovationShowcaseSection />
+      </Container>
+      <SustainabilitySection />
 
       <Enquiry />
       <Footer />

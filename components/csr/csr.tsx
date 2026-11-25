@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 
 import PageHero from "@/components/shared-page/PageHero";
@@ -48,22 +49,22 @@ function InitiativeCard({
         }`}
       >
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-blue">
+          <span className="text-caption font-semibold uppercase tracking-[0.16em] text-brand-blue">
             {item.category}
           </span>
 
           <span className="h-1 w-1 rounded-full bg-muted" />
 
-          <span className="text-xs text-muted">
+          <span className="text-small text-muted">
             {item.location}
           </span>
         </div>
 
-        <h3 className="mt-5 max-w-xl font-heading text-2xl font-bold leading-[1.2] tracking-tight text-brand-deep sm:text-3xl">
+        <h3 className="mt-5 max-w-xl font-heading text-h2 font-bold tracking-tight text-brand-deep">
           {item.title}
         </h3>
 
-        <p className="mt-5 max-w-lg text-sm leading-7 text-muted">
+        <p className="mt-5 max-w-lg text-body text-muted">
           {item.description}
         </p>
       </div>
@@ -81,7 +82,6 @@ export default function CSR() {
 
   return (
     <main className="bg-white text-ink">
-
       {/* Hero */}
       <PageHero
         name={hero.heading}
@@ -97,104 +97,105 @@ export default function CSR() {
         ctaHref="#csr-initiatives"
       />
 
-      {/* Overview */}
-      <PageOverview
-        heading={overview.heading}
-        description={overview.description}
-      />
-    <Container>
-      {/* Initiatives */}
-      <section
-        id="csr-initiatives"
-        className="scroll-mt-24 "
-      >
-        <div className="mx-auto max-w-[1500px]">
-
-          <div className="mb-8 max-w-2xl">
-            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-blue">
+      <Container>
+        {/* Initiatives */}
+        <section
+          id="csr-initiatives"
+          className="scroll-mt-24"
+        >
+          <div className="mx-auto max-w-[1500px]">
+            <p className="mb-4 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
               {initiativesSection.eyebrow}
             </p>
-
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-deep sm:text-4xl">
-              {initiativesSection.heading}
+            <div className="grid grid-cols-1 gap-8 border-line lg:grid-cols-2 lg:gap-16">
+            {/* Heading */}
+            <h2 className="text-h1 max-w-2xl font-heading font-semibold tracking-tight text-brand-deep">
+              {initiativesSection.before}{" "}
+              {initiativesSection.highlight && (
+                <span className="text-brand-blue">
+                  {initiativesSection.highlight}
+                </span>
+              )}{" "}
+              {initiativesSection.after}
             </h2>
 
-            <p className="mt-4 text-sm leading-7 text-muted">
-              {initiativesSection.description}
-            </p>
+            {/* Description */}
+            <div>
+              <p className="text-lead text-ink">
+                {initiativesSection.description}
+              </p>
+            </div>
           </div>
 
-          <div>
-            {csrInitiatives.map((item, index) => (
+            <div>
+              {csrInitiatives.map((item, index) => (
                 <InitiativeCard
-                key={item.id}
-                item={item}
-                index={index}
+                  key={item.id}
+                  item={item}
+                  index={index}
                 />
-            ))}
+              ))}
             </div>
+          </div>
+        </section>
 
-        </div>
-      </section>
-
-      {/* Commitment */}
+        {/* Commitment */}
         <section className="py-20">
-        <div className="mx-auto max-w-[1500px]">
+          <div className="mx-auto max-w-[1500px]">
             <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-
-            {/* Left Content */}
-            <div className="max-w-xl">
-                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-blue">
-                {commitment.eyebrow}
+              {/* Left Content */}
+              <div className="max-w-xl">
+                <p className="mb-4 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
+                  {commitment.eyebrow}
                 </p>
 
-                <h2 className="font-heading text-3xl font-bold leading-[1.12] tracking-tight text-brand-deep sm:text-5xl">
-                {commitment.heading}
+                <h2 className="font-heading text-h2 font-bold tracking-tight text-brand-deep">
+                  {commitment.heading}
                 </h2>
 
-                <p className="mt-6 text-sm leading-8 text-muted">
-                {commitment.description}
+                <p className="mt-6 text-body text-muted">
+                  {commitment.description}
                 </p>
 
                 <div className="mt-9 flex items-center gap-3">
-                <span className="h-[2px] w-10 bg-brand-blue" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-brand-deep">
-                    Responsibility in Action
-                </span>
-                </div>
-            </div>
+                  <span className="h-[2px] w-10 bg-brand-blue" />
 
-            {/* Right Image */}
-            <div className="relative">
+                  <span className="text-small font-semibold uppercase tracking-wider text-brand-deep">
+                    Responsibility in Action
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Image */}
+              <div className="relative">
                 <div className="relative aspect-[7/4] overflow-hidden rounded-lg bg-pale">
-                <Image
+                  <Image
                     src={commitment.image}
                     alt={commitment.imageAlt}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
-                />
+                  />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/65 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/65 via-transparent to-transparent" />
 
-                <div className="absolute bottom-0 left-0 p-7 sm:p-9">
-                    <p className="max-w-sm font-heading text-xl font-semibold leading-snug text-white sm:text-2xl">
-                    {commitment.imageLabel}
+                  <div className="absolute bottom-0 left-0 p-7 sm:p-9">
+                    <p className="max-w-sm font-heading text-h3 font-semibold text-white">
+                      {commitment.imageLabel}
                     </p>
-                </div>
+                  </div>
                 </div>
 
                 {/* Decorative accent */}
                 <div className="absolute -bottom-3 -right-3 -z-10 h-28 w-28 border-b-2 border-r-2 border-brand-blue/30" />
+              </div>
             </div>
-
-            </div>
-        </div>
+          </div>
         </section>
       </Container>
+
       <Enquiry />
       <Footer />
-
     </main>
   );
 }

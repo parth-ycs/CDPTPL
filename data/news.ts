@@ -87,7 +87,7 @@ export const newsItems: NewsItem[] = [
 
 export const newsPageData = {
   hero: {
-    heading: "Media & News",
+    heading: "Media",
     eyebrow: "NEWSROOM",
     description:
       "Stay informed about the latest developments, milestones, announcements and activities from Chemdist Group.",

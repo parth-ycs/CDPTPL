@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -5,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import { Building2, Factory, Globe2, MapPin } from "lucide-react";
 import { globalPresenceLocations, globalPresencePage } from "@/data/global-presence";
 import type { GlobalLocation } from "@/data/global-presence";
-// TODO: update this path to wherever your landing-page globe component lives.
 import GlobalPresenceGlobe from "@/components/landing_page/global_presence/global-presence-globe";
 import {
   findLocationByPoint,
@@ -23,14 +23,20 @@ function resolveFromParams(countryParam: string | null, pointParam: string | nul
   const byCountry = countryParam
     ? globalPresenceLocations.find((location) => location.id === countryParam)
     : undefined;
-  const location = byCountry ?? (pointParam ? findLocationByPoint(pointParam) : undefined);
+
+  const location =
+    byCountry ?? (pointParam ? findLocationByPoint(pointParam) : undefined);
+
   if (!location) return null;
 
-  const pointId = pointParam && getPoint(location, pointParam) ? pointParam : null;
+  const pointId =
+    pointParam && getPoint(location, pointParam) ? pointParam : null;
+
   const tab: Tab =
     pointId && location.projects.some((project) => project.id === pointId)
       ? "projects"
       : "offices";
+
   return { location, pointId, tab };
 }
 
@@ -48,7 +54,7 @@ export default function GlobeExplorerSection() {
   const countryParam = searchParams.get("country");
   const pointParam = searchParams.get("point");
 
-  // Read the URL once for the very first render, so the globe opens in the right place.
+  // Read the URL once for the very first render.
   const initial = useMemo(
     () => resolveFromParams(countryParam, pointParam),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,37 +62,53 @@ export default function GlobeExplorerSection() {
   );
 
   const rootRef = useRef<HTMLDivElement | null>(null);
+
   const [activeLocationId, setActiveLocationId] = useState(
     initial?.location.id ?? "india",
   );
-  const [viewMode, setViewMode] = useState<ViewMode>(initial ? "country" : "global");
+
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    initial ? "country" : "global",
+  );
+
   const [selectedPointId, setSelectedPointId] = useState<string | null>(
     initial?.pointId ?? null,
   );
+
   const [tab, setTab] = useState<Tab>(initial?.tab ?? "offices");
 
   const activeLocation = useMemo(
     () =>
-      globalPresenceLocations.find((location) => location.id === activeLocationId) ??
-      globalPresenceLocations[0],
+      globalPresenceLocations.find(
+        (location) => location.id === activeLocationId,
+      ) ?? globalPresenceLocations[0],
     [activeLocationId],
   );
 
   // Globe callbacks must stay stable, otherwise the globe is rebuilt.
   const selectCountryFromGlobe = useCallback((location: GlobalLocation) => {
     setActiveLocationId(location.id);
-    // Keep the selected point if it belongs to the country that was just activated.
-    setSelectedPointId((previous) => (previous && getPoint(location, previous) ? previous : null));
+    setSelectedPointId((previous) =>
+      previous && getPoint(location, previous) ? previous : null,
+    );
     setViewMode("country");
   }, []);
 
-  const selectPoint = useCallback((location: GlobalLocation, pointId: string) => {
-    if (!getPoint(location, pointId)) return;
-    setActiveLocationId(location.id);
-    setSelectedPointId(pointId);
-    setViewMode("country");
-    setTab(location.projects.some((project) => project.id === pointId) ? "projects" : "offices");
-  }, []);
+  const selectPoint = useCallback(
+    (location: GlobalLocation, pointId: string) => {
+      if (!getPoint(location, pointId)) return;
+
+      setActiveLocationId(location.id);
+      setSelectedPointId(pointId);
+      setViewMode("country");
+      setTab(
+        location.projects.some((project) => project.id === pointId)
+          ? "projects"
+          : "offices",
+      );
+    },
+    [],
+  );
 
   const chooseCountry = useCallback((location: GlobalLocation) => {
     setActiveLocationId(location.id);
@@ -100,8 +122,9 @@ export default function GlobeExplorerSection() {
     setSelectedPointId(null);
   }, []);
 
-  // Links from other sections or the landing page change the URL: follow it and scroll here.
+  // Links from other sections or the landing page change the URL.
   const firstRun = useRef(true);
+
   useEffect(() => {
     const target = resolveFromParams(countryParam, pointParam);
     if (!target) return;
@@ -112,18 +135,31 @@ export default function GlobeExplorerSection() {
       setViewMode("country");
       setTab(target.tab);
     }
+
     firstRun.current = false;
 
     const timer = window.setTimeout(() => {
-      rootRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      rootRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }, 300);
+
     return () => window.clearTimeout(timer);
   }, [countryParam, pointParam]);
 
   const officeCount = activeLocation.offices.length;
   const projectCount = activeLocation.projects.length;
-  const totalOffices = globalPresenceLocations.reduce((sum, l) => sum + l.offices.length, 0);
-  const totalProjects = globalPresenceLocations.reduce((sum, l) => sum + l.projects.length, 0);
+
+  const totalOffices = globalPresenceLocations.reduce(
+    (sum, l) => sum + l.offices.length,
+    0,
+  );
+
+  const totalProjects = globalPresenceLocations.reduce(
+    (sum, l) => sum + l.projects.length,
+    0,
+  );
 
   const rows =
     tab === "offices"
@@ -156,34 +192,43 @@ export default function GlobeExplorerSection() {
         <div className="flex min-h-0 flex-col border-b border-slate-100 lg:border-b-0 lg:border-r">
           <div className="border-b border-slate-100 px-5 pb-3 pt-4">
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-xs font-medium text-slate-500">Countries</p>
+              <p className="text-small font-medium text-slate-500">
+                Countries
+              </p>
+
               {viewMode === "country" && (
                 <button
                   type="button"
                   onClick={showGlobal}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#1557A0] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
+                  className="inline-flex items-center gap-1 text-small font-semibold text-[#1557A0] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
                 >
                   <Globe2 size={12} /> Show all
                 </button>
               )}
             </div>
+
             {/* Scrolls sideways, so any number of countries fits */}
             <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
               {globalPresenceLocations.map((location) => {
-                const active = viewMode === "country" && location.id === activeLocation.id;
+                const active =
+                  viewMode === "country" &&
+                  location.id === activeLocation.id;
+
                 return (
                   <button
                     key={location.id}
                     type="button"
                     onClick={() => chooseCountry(location)}
                     aria-pressed={active}
-                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] focus-visible:ring-offset-2 ${
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-small font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] focus-visible:ring-offset-2 ${
                       active
                         ? "border-[#1557A0] bg-[#EAF3FC] text-[#1557A0]"
                         : "border-slate-200 text-slate-600 hover:border-[#B8D5F3] hover:text-[#1557A0]"
                     }`}
                   >
-                    <span aria-hidden>{getCountryFlag(location.countryCode)}</span>
+                    <span aria-hidden>
+                      {getCountryFlag(location.countryCode)}
+                    </span>
                     {location.country}
                   </button>
                 );
@@ -194,10 +239,13 @@ export default function GlobeExplorerSection() {
           {viewMode === "global" ? (
             <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
               <Globe2 size={26} className="text-slate-300" />
-              <p className="mt-3 text-sm font-semibold text-slate-800">
-                {totalOffices} offices and {totalProjects} projects in {globalPresenceLocations.length} countries
+
+              <p className="mt-3 text-body font-semibold text-slate-800">
+                {totalOffices} offices and {totalProjects} projects in{" "}
+                {globalPresenceLocations.length} countries
               </p>
-              <p className="mt-1 max-w-[260px] text-xs leading-5 text-slate-500">
+
+              <p className="mt-1 max-w-[260px] text-small text-slate-500">
                 Select a country to see its offices and projects.
               </p>
             </div>
@@ -211,16 +259,21 @@ export default function GlobeExplorerSection() {
                   >
                     {getCountryFlag(activeLocation.countryCode)}
                   </span>
+
                   <div className="min-w-0">
-                    <h3 className="font-heading text-lg font-semibold leading-6 text-slate-900">
+                    <h3 className="font-heading text-h3 font-semibold text-slate-900">
                       {activeLocation.country}
                     </h3>
-                    <p className="text-xs text-slate-500">
+
+                    <p className="text-small text-slate-500">
                       {activeLocation.city} ({activeLocation.region})
                     </p>
                   </div>
                 </div>
-                <p className="mt-3 text-sm leading-6 text-slate-600">{activeLocation.summary}</p>
+
+                <p className="mt-3 text-body text-slate-600">
+                  {activeLocation.summary}
+                </p>
 
                 <div
                   role="tablist"
@@ -230,7 +283,11 @@ export default function GlobeExplorerSection() {
                   {(
                     [
                       { id: "offices", label: "Offices", count: officeCount },
-                      { id: "projects", label: "Projects", count: projectCount },
+                      {
+                        id: "projects",
+                        label: "Projects",
+                        count: projectCount,
+                      },
                     ] as const
                   ).map((item) => (
                     <button
@@ -239,13 +296,14 @@ export default function GlobeExplorerSection() {
                       role="tab"
                       aria-selected={tab === item.id}
                       onClick={() => setTab(item.id)}
-                      className={`rounded-full px-3.5 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] ${
+                      className={`rounded-full px-3.5 py-1 text-small font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] ${
                         tab === item.id
                           ? "bg-white text-slate-900 shadow-sm"
                           : "text-slate-500 hover:text-slate-800"
                       }`}
                     >
-                      {item.label} <span className="text-slate-400">{item.count}</span>
+                      {item.label}{" "}
+                      <span className="text-slate-400">{item.count}</span>
                     </button>
                   ))}
                 </div>
@@ -254,14 +312,16 @@ export default function GlobeExplorerSection() {
               {/* This list scrolls, so it keeps working as more offices and projects are added */}
               <ul className="mt-3 max-h-[360px] min-h-0 flex-1 space-y-0.5 overflow-y-auto px-3 pb-4 lg:max-h-none">
                 {rows.length === 0 && (
-                  <li className="px-3 py-8 text-center text-xs text-slate-500">
+                  <li className="px-3 py-8 text-center text-small text-slate-500">
                     No {tab} added for {activeLocation.country} yet.
                   </li>
                 )}
+
                 {rows.map((row) => {
                   const selected = selectedPointId === row.id;
                   const isOffice = row.kind === "office";
                   const Icon = isOffice ? Building2 : Factory;
+
                   return (
                     <li key={row.id}>
                       <button
@@ -282,25 +342,36 @@ export default function GlobeExplorerSection() {
                       >
                         <span
                           className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                            isOffice ? "bg-[#EAF3FC] text-[#1557A0]" : "bg-orange-50 text-[#C45A28]"
+                            isOffice
+                              ? "bg-[#EAF3FC] text-[#1557A0]"
+                              : "bg-orange-50 text-[#C45A28]"
                           }`}
                         >
                           <Icon size={15} />
                         </span>
+
                         <span className="min-w-0 flex-1">
                           <span className="flex items-center gap-2">
-                            <span className="truncate text-sm font-semibold text-slate-900">
+                            <span className="truncate text-small font-semibold text-slate-900">
                               {row.title}
                             </span>
-                            {row.status && <StatusBadge status={row.status} />}
+
+                            {row.status && (
+                              <StatusBadge status={row.status} />
+                            )}
                           </span>
-                          <span className="mt-0.5 block text-xs text-slate-500">{row.subtitle}</span>
+
+                          <span className="mt-0.5 block text-small text-slate-500">
+                            {row.subtitle}
+                          </span>
+
                           {selected && row.summary && (
-                            <span className="mt-2 block text-xs leading-5 text-slate-600">
+                            <span className="mt-2 block text-small text-slate-600">
                               {row.summary}
                             </span>
                           )}
                         </span>
+
                         <MapPin
                           size={14}
                           className={`mt-1 shrink-0 ${
@@ -322,10 +393,11 @@ export default function GlobeExplorerSection() {
 
         {/* Right: the globe */}
         <div className="relative min-h-[420px] overflow-hidden bg-gradient-to-br from-[#F0F6FF] via-white to-[#EAF3FC]">
-          <div className="pointer-events-none absolute left-4 top-4 z-10 flex items-center gap-3 rounded-full bg-white/90 px-3 py-1.5 text-[11px] text-slate-600 shadow-sm backdrop-blur">
+          <div className="pointer-events-none absolute left-4 top-4 z-10 flex items-center gap-3 rounded-full bg-white/90 px-3 py-1.5 text-caption text-slate-600 shadow-sm backdrop-blur">
             <span className="inline-flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-[#1557A0]" /> Office
             </span>
+
             <span className="inline-flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-[#C45A28]" /> Project
             </span>

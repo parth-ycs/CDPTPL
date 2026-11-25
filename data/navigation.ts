@@ -69,7 +69,7 @@ export const navigationItems: NavigationItem[] = [
   // ABOUT US
   {
     type: "dropdown",
-    label: "About Us",
+    label: "About",
     visualSrc: "/images/navigations/about_us.png",
     visualHref: "/about-us",
     visualAlt: "About Chemdist Group",
@@ -79,7 +79,7 @@ export const navigationItems: NavigationItem[] = [
 
     items: [
       {
-        label: "Who We Are",
+        label: "Company Overview",
         href: "/about-us",
         children: [],
       },
@@ -94,18 +94,18 @@ export const navigationItems: NavigationItem[] = [
         children: [],
       },
       {
-        label: "Corporate Social Responsibility ",
-        href: "/csr",
-        children: [],
-      },
-      {
-        label: "Awards & Recognition",
+        label: "Awards and Recognition",
         href: "/awards",
         children: [],
       },
       {
-        label: "Research & Development",
+        label: "Research and Development",
         href: "/research-development",
+        children: [],
+      },
+      {
+        label: "Corporate Social Responsibility ",
+        href: "/csr",
         children: [],
       },
     ],
@@ -146,24 +146,19 @@ export const navigationItems: NavigationItem[] = [
     visualSrc: "/images/navigations/resources.png",
     visualHref: "/resources",
     visualAlt: "Chemdist Group resources and publications",
-    panelTitle: "Resources & Insights",
+    panelTitle: "Resources and Insights",
     panelDescription:
       "Explore our innovations, technical knowledge, publications, industry insights, events, and corporate information.",
 
     items: [
       {
-        label: "Patents",
-        href: "/patents",
-        children: [],
-      },
-      {
-        label: "Blogs & Insights",
+        label: "Blogs",
         href: "/blogs",
         children: [],
       },
       {
-        label: "Media & Press",
-        href: "/news",
+        label: "Media",
+        href: "/media",
         children: [],
       },
       {
@@ -172,17 +167,15 @@ export const navigationItems: NavigationItem[] = [
         children: [],
       },
       {
+        label: "Patents",
+        href: "/patents",
+        children: [],
+      },
+      {
         label: "Investor Relations",
         href: "/under-development",
         children: [],
       },
     ],
-  },
-
-  // CAREERS
-  {
-    type: "link",
-    label: "Careers",
-    href: "/under-development",
   },
 ];

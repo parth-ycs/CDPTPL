@@ -1,3 +1,4 @@
+
 "use client";
 
 import { memo, useEffect, useMemo, useRef, useState } from "react";
@@ -16,35 +17,25 @@ type StoryItem = {
 /* Timing                                                              */
 /* ------------------------------------------------------------------ */
 
-/*
- * Each item owns one "slot" of the timeline, split into 3 phases.
- * REVEAL + HOLD + TRANSITION must add up to 1.
- *
- *  REVEAL     -> heading + description fade in with scroll
- *  HOLD       -> nothing moves; the reader gets a calm pause to read
- *  TRANSITION -> heading flies to the queue, next item fades in
- */
 const REVEAL = 0.5;
 const HOLD = 0.3;
-const TRANSITION = 1 - REVEAL - HOLD; // 0.2
+const TRANSITION = 1 - REVEAL - HOLD;
 
-// Scroll length (in viewport heights)
-const SCROLL_PER_ITEM = 1.15; // more = slower, more relaxed pacing
+const SCROLL_PER_ITEM = 1.15;
 const FINAL_HOLD = 0.15;
 const OVERLAY_DURATION = 1;
 
-// Scroll inertia: higher = snappier, lower = floatier (try 5 - 10)
 const DAMPING = 7;
 
-// Layout
-const ACTIVE_TOP = 52; // % - active heading position
-const QUEUE_START = 17; // % - first queued heading
+const ACTIVE_TOP = 52;
+const QUEUE_START = 17;
 const QUEUE_SCALE = 0.58;
 const QUEUE_OPACITY = 0.43;
 
 /* ------------------------------------------------------------------ */
 /* Math helpers                                                        */
 /* ------------------------------------------------------------------ */
+
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(Math.max(value, min), max);
 
@@ -55,7 +46,6 @@ const smoothstep = (value: number) => {
   return x * x * (3 - 2 * x);
 };
 
-/* Symmetric ease-in-out built on pow() */
 const easeInOutPow = (value: number, power = 3) => {
   const t = clamp(value);
   return t < 0.5
@@ -71,6 +61,7 @@ const queueTop = (index: number, count: number) =>
 
 function getHighlightIndexes(text: string, highlight = "") {
   const words = text.split(/\s+/);
+
   const normalize = (word: string) =>
     word.toLowerCase().replace(/[^\w]/g, "");
 
@@ -92,12 +83,12 @@ function getHighlightIndexes(text: string, highlight = "") {
 /* Text reveal                                                         */
 /* ------------------------------------------------------------------ */
 
-/*
- * Feathered reveal: instead of each letter/word switching on one after
- * another, a soft "wave" (SOFT units wide) sweeps across the text.
- */
-const revealAmount = (progress: number, count: number, index: number, soft: number) =>
-  smoothstep((progress * (count + soft) - index) / soft);
+const revealAmount = (
+  progress: number,
+  count: number,
+  index: number,
+  soft: number
+) => smoothstep((progress * (count + soft) - index) / soft);
 
 const AnimatedHeading = memo(function AnimatedHeading({
   title,
@@ -135,14 +126,18 @@ const AnimatedDescription = memo(function AnimatedDescription({
   item: StoryItem;
   progress: number;
 }) {
-  const words = useMemo(() => item.description.split(/\s+/), [item.description]);
+  const words = useMemo(
+    () => item.description.split(/\s+/),
+    [item.description]
+  );
+
   const highlighted = useMemo(
     () => getHighlightIndexes(item.description, item.highlight),
     [item.description, item.highlight]
   );
 
   return (
-    <p className="max-w-[620px] text-base font-light leading-[1.75] tracking-[-0.015em] sm:text-lg sm:leading-[1.8] lg:text-[23px] lg:leading-[1.75]">
+    <p className="max-w-[620px] text-h2 font-light tracking-[-0.015em]">
       {words.map((word, index) => {
         const amount = revealAmount(progress, words.length, index, 3);
         const baseColor = highlighted.has(index) ? "96,165,250" : "255,255,255";
@@ -162,15 +157,15 @@ const AnimatedDescription = memo(function AnimatedDescription({
 });
 
 const headingClass =
-  "text-[clamp(3.5rem,8vw,7rem)] font-heading font-light leading-[0.9] tracking-[-0.075em]";
+  "font-heading text-[100px] font-light tracking-[-0.075em]";
 
 /* ------------------------------------------------------------------ */
 /* Section                                                             */
 /* ------------------------------------------------------------------ */
+
 export default function VisionMissionSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Raw scroll position vs. smoothed (inertial) position
   const targetRef = useRef(0);
   const currentRef = useRef(0);
 
@@ -179,7 +174,6 @@ export default function VisionMissionSection() {
   const items = aboutPageData.visionMission.items as StoryItem[];
   const itemCount = items.length;
 
-  // Timeline is measured in "item slots"
   const totalTimeline = itemCount;
 
   useEffect(() => {
@@ -198,15 +192,16 @@ export default function VisionMissionSection() {
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
+
       const scrollDistance =
-        rect.height - (FINAL_HOLD + OVERLAY_DURATION + 1) * window.innerHeight;
+        rect.height -
+        (FINAL_HOLD + OVERLAY_DURATION + 1) * window.innerHeight;
 
       if (scrollDistance <= 0) return;
 
       targetRef.current = clamp(-rect.top / scrollDistance);
     };
 
-    /* Exponential damping: frame-rate independent smoothing */
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
@@ -237,7 +232,6 @@ export default function VisionMissionSection() {
       kick();
     };
 
-    // Initial position: no animation from 0 if the page loads mid-scroll
     measure();
     currentRef.current = targetRef.current;
     setProgress(currentRef.current);
@@ -257,17 +251,14 @@ export default function VisionMissionSection() {
   /* -------------------------------------------------------------- */
   /* Timeline -> phases                                              */
   /* -------------------------------------------------------------- */
+
   const timeline = clamp(progress * totalTimeline, 0, totalTimeline);
   const activeIndex = Math.min(Math.floor(timeline), itemCount - 1);
-  const phase = timeline - activeIndex; // 0 -> 1 inside the active slot
+  const phase = timeline - activeIndex;
   const hasNext = activeIndex < itemCount - 1;
 
-  // 1) Reveal: text fades in with scroll
   const revealP = easeInOutPow(phase / REVEAL, 2);
 
-  // 2) Hold: (REVEAL -> REVEAL + HOLD) nothing changes
-
-  // 3) Transition: heading moves to queue, next item arrives
   const transP = hasNext
     ? easeInOutPow((phase - REVEAL - HOLD) / TRANSITION, 3)
     : 0;
@@ -275,23 +266,24 @@ export default function VisionMissionSection() {
   const nextIndex = activeIndex + 1;
 
   /* Background */
+
   const backgroundItem = items[activeIndex];
   const incomingBackground = hasNext ? items[nextIndex] : null;
   const bgBlend = smoothstep(transP);
 
-  // Slow "push-in" across each slot for a bit of life during the hold
   const bgScaleActive = 1.02 + phase * 0.05;
   const bgScaleIncoming = 1.02;
 
   /* Divider */
+
   const lineProgress = smoothstep(timeline / totalTimeline);
   const lineScale = 0.14 + lineProgress * 0.86;
 
   /* -------------------------------------------------------------- */
-  /* Per-item visual state, fully derived from scroll                */
+  /* Per-item visual state                                           */
   /* -------------------------------------------------------------- */
+
   const getState = (index: number) => {
-    // Already in the queue
     if (index < activeIndex) {
       return {
         top: lerp(
@@ -307,7 +299,6 @@ export default function VisionMissionSection() {
       };
     }
 
-    // The active item
     if (index === activeIndex) {
       return {
         top: lerp(ACTIVE_TOP, queueTop(index, index + 1), transP),
@@ -319,7 +310,6 @@ export default function VisionMissionSection() {
       };
     }
 
-    // The next item, arriving after the outgoing heading clears the stage
     if (index === nextIndex && transP > 0) {
       return {
         top: ACTIVE_TOP,
@@ -331,7 +321,6 @@ export default function VisionMissionSection() {
       };
     }
 
-    // Everything else is hidden
     return {
       top: ACTIVE_TOP,
       scale: 1,
@@ -350,14 +339,18 @@ export default function VisionMissionSection() {
   return (
     <>
       <section
-  ref={sectionRef}
-  className="relative z-10 ml-[calc(50%-50vw)] w-screen bg-[#061426]"
-  style={{
-    height: `${
-      (totalTimeline * SCROLL_PER_ITEM + FINAL_HOLD + OVERLAY_DURATION + 1) * 100
-    }svh`,
-  }}
->
+        ref={sectionRef}
+        className="relative z-10 ml-[calc(50%-50vw)] w-screen bg-[#061426]"
+        style={{
+          height: `${
+            (totalTimeline * SCROLL_PER_ITEM +
+              FINAL_HOLD +
+              OVERLAY_DURATION +
+              1) *
+            100
+          }svh`,
+        }}
+      >
         <div className="sticky top-0 h-[100svh] min-h-[620px] w-full overflow-hidden text-white">
           {/* BACKGROUND */}
           <div className="absolute inset-0">
@@ -390,7 +383,7 @@ export default function VisionMissionSection() {
 
           {/* CONTENT */}
           <div className="relative z-10 mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
-            {/* SHARED DIVIDER (smoothing comes from the damped scroll value) */}
+            {/* SHARED DIVIDER */}
             <div className="absolute left-0 right-0 top-[46%] h-px bg-white/20">
               <div
                 className="h-full w-full bg-white/80"
@@ -403,7 +396,6 @@ export default function VisionMissionSection() {
 
               <span className="absolute -top-[2px] left-0 h-[5px] w-[5px] rounded-full bg-red-500" />
 
-              {/* Glowing head that travels with the line */}
               <span
                 className="absolute -top-[2px] h-[5px] w-[5px] -translate-x-1/2 rounded-full bg-white shadow-[0_0_12px_2px_rgba(255,255,255,0.55)]"
                 style={{ left: `${lineScale * 100}%` }}
@@ -448,7 +440,6 @@ export default function VisionMissionSection() {
                   className="absolute left-6 right-6 top-[52%] sm:left-10 sm:right-10 lg:left-16 lg:right-16"
                   style={{
                     opacity: s.descOpacity,
-                    // Gentle upward drift while it appears
                     transform: `translate3d(0, ${(1 - s.descOpacity) * 14}px, 0)`,
                     pointerEvents: isActive ? "auto" : "none",
                     willChange: "transform, opacity",
@@ -469,7 +460,7 @@ export default function VisionMissionSection() {
 
             {/* STEP INDICATOR */}
             <div className="absolute bottom-8 right-6 flex items-center gap-4 sm:right-10 lg:right-16">
-              <span className="text-[11px] font-medium tabular-nums tracking-[0.22em] text-white/60">
+              <span className="text-caption font-medium tabular-nums tracking-[0.22em] text-white/60">
                 {String(displayNumber + 1).padStart(2, "0")} /{" "}
                 {String(itemCount).padStart(2, "0")}
               </span>

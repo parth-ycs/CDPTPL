@@ -1,5 +1,4 @@
 import Hero from "@/components/landing_page/hero";
-import ProcessSection from "@/components/landing_page/process-section";
 import Industries from "@/components/landing_page/industries";
 import News from "@/components/landing_page/news";
 import Enquiry from "@/components/enquiry";

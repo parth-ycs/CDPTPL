@@ -48,7 +48,7 @@ export default function RDSection() {
           {/* LEFT: R&D CONTENT */}
           <div className="flex min-w-0 flex-col items-start">
             <h2 id="rd-heading" className="section-heading max-w-[620px]">
-              Research & <span className="text-brand-blue">Development</span>
+              Research and <span className="text-brand-blue">Development</span>
             </h2>
 
             <p className="mt-7 max-w-[550px] text-[15px] leading-[1.9] text-slate-600 sm:text-base">
@@ -164,7 +164,7 @@ export default function RDSection() {
                 aria-live="polite"
               >
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                  Research & Development
+                  Research and Development
                 </p>
 
                 <p className="mt-2 animate-[rdCaptionIn_700ms_ease-out_both] text-xl font-semibold text-white sm:text-2xl">

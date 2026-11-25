@@ -91,11 +91,11 @@ function slugify(value: string) {
 }
 
 // =============================================
-// SBU 1: PROCESS EQUIPMENT & SEPARATION
+// SBU 1: PROCESS EQUIPMENT and SEPARATION
 // =============================================
 
 const processEquipmentAndSeparation: RawSBU = {
-  name: "Process Equipment & Separation",
+  name: "Process Equipment and Separation",
 
   offerings:
     "Process equipment, process technologies, and mass transfer solutions for industrial applications.",
@@ -216,7 +216,7 @@ const sbuPresentation = {
 
 const sbus: SBU[] = rawSbus.map((sbu) => {
   const slug =
-    sbu.name === "Process Equipment & Separation"
+    sbu.name === "Process Equipment and Separation"
       ? "process-equipment-separation"
       : slugify(sbu.name);
 

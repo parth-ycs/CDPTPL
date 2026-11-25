@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -35,14 +36,13 @@ export default function InnovationShowcaseSection() {
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.9, ease: EASE_OUT_POW }}
       >
-        <h2 className="max-w-[560px] font-heading text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 className="max-w-[560px] font-heading text-h2 font-semibold">
           {data.heading}
         </h2>
       </motion.div>
 
-      {/* FEATURED INNOVATION */}
-      <div className="mt-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
-        {/* IMAGE (shorter: 16/10 on mobile, 16/9 on desktop) */}
+      <div className="mt-5 grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
+        {/* IMAGE */}
         <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-pale lg:aspect-[16/9]">
           <AnimatePresence mode="wait">
             <motion.div
@@ -67,8 +67,8 @@ export default function InnovationShowcaseSection() {
 
         {/* CONTENT */}
         <div className="flex flex-col">
-          {/* FIXED-HEIGHT TEXT AREA: nothing below ever moves */}
-          <div className="h-[300px] overflow-hidden sm:h-[280px] lg:h-[300px]">
+          {/* FIXED-HEIGHT TEXT AREA */}
+          <div className="h-[250px] overflow-hidden sm:h-[280px] lg:h-[230px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.id}
@@ -78,28 +78,25 @@ export default function InnovationShowcaseSection() {
                 exit={reduce ? undefined : { opacity: 0, y: -18 }}
                 transition={{ duration: 0.5, ease: EASE_OUT_POW }}
               >
-                <p className="shrink-0 text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
-                  Innovation {pad(activeIndex + 1)}
-                </p>
 
-                {/* Title: clamped to 3 lines */}
+                {/* Title */}
                 <h3
                   title={active.title}
-                  className="mt-4 line-clamp-3 max-w-xl shrink-0 font-heading text-3xl font-semibold leading-tight tracking-tight sm:text-4xl"
+                  className=" line-clamp-3 max-w-xl shrink-0 font-heading text-h2 font-semibold"
                 >
                   {active.title}
                 </h3>
 
-                {/* Description: takes remaining space, scrolls if too long */}
+                {/* Description */}
                 <div className="mt-5 min-h-0 flex-1 overflow-y-auto pr-2 [scrollbar-width:thin]">
-                  <p className="max-w-xl text-sm leading-7 text-muted sm:text-base sm:leading-8">
+                  <p className="max-w-xl text-body text-muted">
                     {active.description}
                   </p>
                 </div>
 
                 <Link
                   href={`/research-development/${active.id}`}
-                  className="group mt-5 inline-flex w-fit shrink-0 items-center gap-3 border-b border-brand-blue pb-2 text-sm font-semibold text-brand-blue transition-colors hover:text-brand-red"
+                  className="group mt-5 inline-flex w-fit shrink-0 items-center gap-3 border-b border-brand-blue pb-2 text-small font-semibold text-brand-blue transition-colors hover:text-brand-red"
                 >
                   Explore Innovation
                   <ArrowUpRight
@@ -111,13 +108,14 @@ export default function InnovationShowcaseSection() {
             </AnimatePresence>
           </div>
 
-          {/* NAVIGATION (always at the same position) */}
+          {/* NAVIGATION */}
           <div className="mt-8 flex items-center justify-between border-t border-line pt-6">
             <div className="flex items-center gap-3">
-              <span className="font-heading text-2xl font-semibold tabular-nums text-brand-deep">
+              <span className="font-heading text-h2 font-semibold tabular-nums text-brand-deep">
                 {pad(activeIndex + 1)}
               </span>
-              <span className="text-sm text-muted">
+
+              <span className="text-small text-muted">
                 / {pad(data.items.length)}
               </span>
             </div>
@@ -141,25 +139,7 @@ export default function InnovationShowcaseSection() {
                 <ArrowRight size={18} />
               </button>
             </div>
-          </div>
-
-          {/* POSITION INDICATORS */}
-          <div className="mt-5 flex items-center gap-2">
-            {data.items.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                aria-label={`Show innovation ${index + 1}`}
-                aria-current={index === activeIndex ? "true" : undefined}
-                className={`h-[3px] transition-all duration-500 ${
-                  index === activeIndex
-                    ? "w-10 bg-brand-red"
-                    : "w-5 bg-slate-200 hover:bg-slate-400"
-                }`}
-              />
-            ))}
-          </div>
+          </div>          
         </div>
       </div>
     </section>

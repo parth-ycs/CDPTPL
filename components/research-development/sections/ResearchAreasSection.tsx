@@ -17,10 +17,6 @@ export default function ResearchAreasSection() {
               {data.heading}
             </h2>
           </div>
-
-          <p className="max-w-md text-sm leading-6 text-muted sm:text-base">
-            {data.description}
-          </p>
         </div>
 
         {/* RESEARCH AREA CARDS */}
@@ -63,8 +59,6 @@ export default function ResearchAreasSection() {
                   <p className="mt-1 max-w-sm text-xs leading-5 text-white/75 sm:text-sm">
                     {description}
                   </p>
-
-                  <div className="mt-3 h-[2px] w-8 bg-brand-red transition-all duration-300 group-hover:w-14" />
                 </div>
 
               </div>

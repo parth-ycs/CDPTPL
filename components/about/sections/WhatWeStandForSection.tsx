@@ -1,85 +1,94 @@
-
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type React from "react";
 import { aboutPageData } from "@/data/about";
+import Container from "@/components/container";
+
+// Where the "reading line" sits in the viewport (0 = top, 1 = bottom).
+// The row closest to this line is the one highlighted while scrolling.
+const READING_LINE = 0.65;
 
 export default function WhatWeStandForSection() {
   const data = aboutPageData.whatWeStandFor;
 
-  const [activeValue, setActiveValue] = useState<string | null>(null);
+  // Three input sources. Priority: focus > hover > scroll.
+  const [scrollId, setScrollId] = useState<string | null>(null);
+  const [hoverId, setHoverId] = useState<string | null>(null);
+  const [focusId, setFocusId] = useState<string | null>(null);
 
-  const pointerRef = useRef<{ x: number; y: number } | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
+  const rowRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  const activeId = activeValue ?? data.items[0]?.id;
+  const activeId =
+    focusId ?? hoverId ?? scrollId ?? data.items[0]?.id;
 
-  // Detect the value currently underneath the stationary cursor.
-  const updateActiveValue = () => {
-    const pointer = pointerRef.current;
+  // Pick the row whose centre is closest to the reading line.
+  const updateScrollActive = useCallback(() => {
+    const lineY = window.innerHeight * READING_LINE;
 
-    if (!pointer || !sectionRef.current) return;
+    let closestId: string | null = null;
+    let closestDistance = Infinity;
 
-    const element = document.elementFromPoint(pointer.x, pointer.y);
+    for (const item of data.items) {
+      const el = rowRefs.current[item.id];
+      if (!el) continue;
 
-    const row = element?.closest<HTMLElement>("[data-value-id]");
+      const rect = el.getBoundingClientRect();
+      const centre = rect.top + rect.height / 2;
+      const distance = Math.abs(centre - lineY);
 
-    if (row && sectionRef.current.contains(row)) {
-      setActiveValue(row.dataset.valueId ?? null);
-    } else {
-      setActiveValue(null);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestId = item.id;
+      }
     }
-  };
 
-  // Recalculate hover whenever scrolling or resizing occurs.
+    if (closestId) setScrollId(closestId);
+  }, [data.items]);
+
+  // Scroll-driven activation. Scrolling also releases any hover override,
+  // so the cursor resting on a row doesn't fight the scroll position.
   useEffect(() => {
     let raf = 0;
 
     const handleScroll = () => {
       cancelAnimationFrame(raf);
-
-      raf = requestAnimationFrame(updateActiveValue);
+      raf = requestAnimationFrame(() => {
+        setHoverId(null);
+        updateScrollActive();
+      });
     };
 
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+    const handleResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(updateScrollActive);
+    };
 
-    window.addEventListener("resize", handleScroll);
+    updateScrollActive(); // initial state on mount
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [updateScrollActive]);
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
-    if (event.pointerType === "touch") return;
-
-    pointerRef.current = {
-      x: event.clientX,
-      y: event.clientY,
+  // Hover: any mouse/pen movement over a row takes control from scroll.
+  const handlePointerMove =
+    (id: string) => (event: React.PointerEvent<HTMLElement>) => {
+      if (event.pointerType === "touch") return;
+      setHoverId(id);
     };
-
-    updateActiveValue();
-  };
-
-  const handlePointerLeave = () => {
-    pointerRef.current = null;
-    setActiveValue(null);
-  };
 
   return (
     <section
-      ref={sectionRef}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
       className="
         relative left-1/2 z-20
         w-screen -translate-x-1/2
         bg-white text-[#102C59]
-        py-[clamp(2rem,5vh,4.5rem)]
       "
     >
       <div
@@ -89,7 +98,7 @@ export default function WhatWeStandForSection() {
           py-[clamp(2rem,6vh,4.5rem)]
         "
       >
-        {/* INTRO */}
+        {/* Intro */}
         <div
           className="
             grid grid-cols-1 items-center
@@ -99,20 +108,12 @@ export default function WhatWeStandForSection() {
             lg:pb-[clamp(1.5rem,3vh,2.5rem)]
           "
         >
-          <h2
-            className="
-              text-[clamp(2.8rem,5.5vw,5.2rem)]
-              font-heading font-bold leading-[0.88]
-              tracking-[-0.065em]
-            "
-          >
+          <h2 className="font-heading text-h1 font-bold tracking-tight">
             {data.heading.map((line, index) => (
               <span
                 key={`${line}-${index}`}
                 className={`block ${
-                  index === 0
-                    ? "text-[#102C59]"
-                    : "text-[#102C59]/50"
+                  index === 0 ? "text-[#102C59]" : "text-[#102C59]/50"
                 }`}
               >
                 {line}
@@ -122,32 +123,35 @@ export default function WhatWeStandForSection() {
 
           <p
             className="
-              max-w-[540px] text-base font-light
-              leading-[1.65] text-slate-500
-              sm:text-lg
+              max-w-[540px] text-lead font-light text-slate-500
               lg:ml-auto
-              lg:text-[clamp(0.9rem,1.15vw,1.125rem)]
             "
           >
             {data.description}
           </p>
         </div>
 
-        {/* SIX VALUES */}
-        <div className="flex flex-col border-t border-[#102C59]/20">
+        {/* Six values */}
+        <div
+          className="flex flex-col border-t border-[#102C59]/20"
+          onPointerLeave={() => setHoverId(null)}
+        >
           {data.items.map((item) => {
             const isActive = activeId === item.id;
 
             return (
               <article
                 key={item.id}
+                ref={(el) => {
+                  rowRefs.current[item.id] = el;
+                }}
                 data-value-id={item.id}
-                onFocus={() => setActiveValue(item.id)}
+                onPointerEnter={handlePointerMove(item.id)}
+                onPointerMove={handlePointerMove(item.id)}
+                onFocus={() => setFocusId(item.id)}
                 onBlur={(event) => {
-                  if (
-                    !event.currentTarget.contains(event.relatedTarget)
-                  ) {
-                    setActiveValue(null);
+                  if (!event.currentTarget.contains(event.relatedTarget)) {
+                    setFocusId(null);
                   }
                 }}
                 tabIndex={0}
@@ -158,7 +162,7 @@ export default function WhatWeStandForSection() {
                   outline-none
                 "
               >
-                {/* SMOOTH ACTIVE LINE */}
+                {/* Active line */}
                 <div
                   className={`
                     absolute inset-x-0 top-0 h-px
@@ -167,11 +171,7 @@ export default function WhatWeStandForSection() {
                     duration-[900ms]
                     ease-[cubic-bezier(0.16,1,0.3,1)]
                     will-change-transform
-                    ${
-                      isActive
-                        ? "scale-x-100"
-                        : "scale-x-0"
-                    }
+                    ${isActive ? "scale-x-100" : "scale-x-0"}
                   `}
                 />
 
@@ -185,53 +185,38 @@ export default function WhatWeStandForSection() {
                     lg:gap-8
                   "
                 >
-                  {/* NUMBER */}
+                  {/* Number */}
                   <span
                     className={`
-                      text-xs font-medium tabular-nums
+                      text-caption font-medium tabular-nums
                       transition-colors duration-700
-                      ${
-                        isActive
-                          ? "text-[#102C59]"
-                          : "text-[#102C59]/30"
-                      }
+                      ${isActive ? "text-[#102C59]" : "text-[#102C59]/30"}
                     `}
                   >
                     {item.id}
                   </span>
 
-                  {/* TITLE */}
+                  {/* Title */}
                   <h3
                     className={`
-                      text-[clamp(1.5rem,2.8vw,2.8rem)]
-                      font-heading
-                      font-semibold leading-none
-                      tracking-[-0.045em]
+                      font-heading text-h2 font-semibold
+                      tracking-tight
                       transition-colors duration-700
-                      ${
-                        isActive
-                          ? "text-[#102C59]"
-                          : "text-[#102C59]/25"
-                      }
+                      ${isActive ? "text-[#102C59]" : "text-[#102C59]/25"}
                     `}
                   >
                     {item.title}
                   </h3>
 
-                  {/* DESCRIPTION */}
+                  {/* Description */}
                   <p
                     className={`
                       col-start-2 mt-3 max-w-[540px]
-                      text-sm leading-relaxed
+                      text-small
                       transition-colors duration-700
                       sm:col-start-auto sm:mt-0
-                      sm:justify-self-end sm:text-base
-                      lg:text-[clamp(0.8rem,1vw,1rem)]
-                      ${
-                        isActive
-                          ? "text-slate-600"
-                          : "text-slate-300"
-                      }
+                      sm:justify-self-end sm:text-body
+                      ${isActive ? "text-slate-600" : "text-slate-300"}
                     `}
                   >
                     {item.description}

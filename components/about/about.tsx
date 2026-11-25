@@ -16,25 +16,15 @@ import Footer from "@/components/footer";
 import Enquiry from "@/components/enquiry";
 
 const sections: PageSectionItem[] = [
-  {
-    id: "leadership",
-    label: "Our Leadership",
-    content: <FoundersLeadershipSection />,
-  },
+  // {
+  //   id: "leadership",
+  //   label: "Our Leadership",
+  //   content: <FoundersLeadershipSection />,
+  // },
   {
     id: "vision-mission",
     label: "Vision & Mission",
     content: <VisionMissionSection />,
-  },
-  {
-    id: "our-journey",
-    label: "Our Journey",
-    content: <JourneySection />,
-  },
-  {
-    id: "awards",
-    label: "Awards",
-    content: <FeaturedAwardsSection />,
   },
   {
     id: "company-profile",
@@ -58,8 +48,6 @@ export default function AboutPage() {
           { label: "Home", href: "/" },
           { label: "About Us" },
         ]}
-        ctaLabel="Discover Chemdist"
-        ctaHref="#leadership"
       />
 
       <PageOverview

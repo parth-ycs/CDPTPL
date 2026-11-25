@@ -7,7 +7,7 @@ import PageHero from "@/components/shared-page/PageHero";
 import PageOverview from "@/components/shared-page/PageOverview";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
-
+import Container from "@/components/container";
 import { newsItems, newsPageData } from "@/data/news";
 
 function NewsCard({
@@ -34,7 +34,7 @@ function NewsCard({
       </a>
 
       {/* Metadata */}
-      <div className="flex flex-wrap items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.1em]">
+      <div className="flex flex-wrap items-center gap-2 text-caption font-semibold uppercase tracking-[0.1em]">
         <span className="text-brand-blue">{item.category}</span>
         <span className="text-[#aeb5be]">/</span>
         <time className="text-muted">{item.date}</time>
@@ -42,7 +42,7 @@ function NewsCard({
 
       {/* Title */}
       <h3
-        className={`mt-2 font-heading text-[17px] font-bold leading-[1.25] tracking-tight text-brand-deep ${
+        className={`mt-2 font-heading text-h3 font-bold tracking-tight text-brand-deep ${
           expanded ? "" : "line-clamp-2"
         }`}
       >
@@ -50,14 +50,14 @@ function NewsCard({
       </h3>
 
       {/* Location */}
-      <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.08em] text-muted">
+      <p className="mt-2 text-caption font-medium uppercase tracking-[0.08em] text-muted">
         {item.location}
       </p>
 
       {/* Description */}
       {item.description && (
         <p
-          className={`mt-3 text-[12px] leading-[1.7] text-muted ${
+          className={`mt-3 text-small text-muted ${
             expanded ? "" : "line-clamp-3"
           }`}
         >
@@ -70,7 +70,7 @@ function NewsCard({
         type="button"
         onClick={() => setExpanded((value) => !value)}
         aria-expanded={expanded}
-        className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold text-brand-blue transition-colors hover:text-brand-deep"
+        className="mt-3 inline-flex items-center gap-2 text-small font-semibold text-brand-blue transition-colors hover:text-brand-deep"
       >
         {expanded ? "Read less" : "Read more"}
 
@@ -129,35 +129,34 @@ export default function News() {
         imageAlt={hero.imageAlt}
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Media & News" },
+          { label: "Media" },
         ]}
         ctaLabel="Explore News"
         ctaHref="#news-listing"
       />
-
+      <Container>
       <section
         id="news-listing"
-        className="scroll-mt-24 border-t border-line py-16 sm:py-20 lg:py-24"
+        className="scroll-mt-24"
       >
-        <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
-
+        <div className="mx-auto max-w-[1500px]">
           {/* Heading */}
           <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div>
-              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-blue">
+              <p className="mb-3 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
                 {listing.eyebrow}
               </p>
 
-              <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-deep md:text-4xl">
+              <h2 className="font-heading text-h1 font-bold tracking-tight text-brand-deep">
                 {listing.heading}
               </h2>
 
-              <p className="mt-3 max-w-xl text-sm leading-7 text-muted">
+              <p className="mt-3 max-w-xl text-body text-muted">
                 {listing.description}
               </p>
             </div>
 
-            <p className="text-[11px] font-medium uppercase tracking-wider text-muted">
+            <p className="text-caption font-medium uppercase tracking-wider text-muted">
               {String(filteredNews.length).padStart(2, "0")} Articles
             </p>
           </div>
@@ -170,7 +169,7 @@ export default function News() {
                 type="button"
                 onClick={() => setActiveCategory(category)}
                 aria-pressed={activeCategory === category}
-                className={`text-xs transition-colors ${
+                className={`text-small transition-colors ${
                   activeCategory === category
                     ? "font-semibold text-brand-blue"
                     : "text-muted hover:text-brand-deep"
@@ -189,14 +188,13 @@ export default function News() {
               ))}
             </div>
           ) : (
-            <div className="py-20 text-center text-sm text-muted">
+            <div className="py-20 text-center text-small text-muted">
               {listing.emptyMessage}
             </div>
           )}
-
         </div>
       </section>
-
+      </Container>
       <Enquiry />
       <Footer />
     </main>

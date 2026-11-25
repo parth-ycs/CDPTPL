@@ -37,7 +37,7 @@ export default function RelatedProjects({
             href="/projects"
             className="inline-flex items-center gap-2 self-start text-sm font-semibold transition-colors hover:text-red-600 sm:self-auto"
           >
-            View All Projects
+            View ALL PROJECTS
             <ArrowRight size={17} />
           </Link>
         </div>

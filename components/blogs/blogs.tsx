@@ -1,35 +1,56 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 
 import PageHero from "@/components/shared-page/PageHero";
 import PageOverview from "@/components/shared-page/PageOverview";
-import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 
-import { blogsPageData } from "@/data/blogs";
+import BlogCard from "@/components/blogs/sections/BlogCard";
+import TrendingBlogs from "@/components/blogs/sections/TrendingBlogs";
+
+import { blogsPageData, getAllBlogs, getCategories } from "@/data/blogs";
 
 export default function Blogs() {
-  const { hero, overview, section, blogs } = blogsPageData;
+  const { hero, overview, section } = blogsPageData;
 
-  const categories = [
-    section.allCategoriesLabel,
-    ...Array.from(new Set(blogs.map((blog) => blog.category))),
-  ];
+  const blogs = useMemo(() => getAllBlogs(), []);
+
+  const categories = useMemo(
+    () => [section.allCategoriesLabel, ...getCategories()],
+    [section.allCategoriesLabel],
+  );
 
   const [activeCategory, setActiveCategory] = useState(
     section.allCategoriesLabel,
   );
+  const [query, setQuery] = useState("");
+
+  const isFiltering =
+    activeCategory !== section.allCategoriesLabel || query.trim() !== "";
 
   const filteredBlogs = useMemo(() => {
-    if (activeCategory === section.allCategoriesLabel) {
-      return blogs;
-    }
+    const term = query.trim().toLowerCase();
 
-    return blogs.filter((blog) => blog.category === activeCategory);
-  }, [activeCategory, blogs, section.allCategoriesLabel]);
+    return blogs.filter((blog) => {
+      const matchesCategory =
+        activeCategory === section.allCategoriesLabel ||
+        blog.category === activeCategory;
+
+      const matchesQuery =
+        term === "" ||
+        [blog.title, blog.excerpt, blog.category, ...blog.tags]
+          .join(" ")
+          .toLowerCase()
+          .includes(term);
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [activeCategory, blogs, query, section.allCategoriesLabel]);
+
+  // The latest post is featured only on the unfiltered view
+  const featured = !isFiltering ? filteredBlogs[0] : undefined;
+  const feed = featured ? filteredBlogs.slice(1) : filteredBlogs;
 
   return (
     <main className="bg-white text-ink">
@@ -39,10 +60,7 @@ export default function Blogs() {
         description={hero.description}
         image={hero.image}
         imageAlt={hero.imageAlt}
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Blogs" },
-        ]}
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Blogs" }]}
         ctaLabel="Explore Articles"
         ctaHref="#articles"
       />
@@ -57,108 +75,106 @@ export default function Blogs() {
         className="scroll-mt-24 border-t border-line py-20 md:py-24"
       >
         <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-          <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          {/* Header */}
+          <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue">
-                THE JOURNAL
+              <p className="mb-3 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
+                {section.eyebrow}
               </p>
 
-              <h2 className="font-heading text-3xl font-bold tracking-tight text-brand-deep md:text-4xl">
+              <h2 className="font-heading text-h2 font-bold text-brand-deep">
                 {section.heading}
               </h2>
 
-              <p className="mt-3 max-w-xl text-sm leading-7 text-muted md:text-base">
+              <p className="mt-3 max-w-xl text-body text-muted">
                 {section.description}
               </p>
             </div>
 
             {blogs.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`border px-4 py-2 text-sm transition-colors ${
-                      activeCategory === category
-                        ? "border-brand-blue bg-brand-blue text-white"
-                        : "border-line text-muted hover:border-brand-blue hover:text-brand-blue"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+              <div className="relative w-full md:w-72">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" />
+                </svg>
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder={section.searchPlaceholder}
+                  aria-label={section.searchPlaceholder}
+                  className="w-full rounded-full border border-line bg-white py-2.5 pl-11 pr-4 text-small text-ink outline-none transition-colors placeholder:text-muted focus:border-brand-blue"
+                />
               </div>
             )}
           </div>
 
-          {filteredBlogs.length > 0 ? (
-            <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredBlogs.map((blog) => (
-                <Link
-                  key={blog.id}
-                  href={`/blogs/${blog.id}`}
-                  className="group block"
+          {/* Category chips */}
+          {blogs.length > 0 && (
+            <div
+              className="mb-12 flex gap-2 overflow-x-auto border-b border-line pb-5"
+              role="tablist"
+              aria-label="Article categories"
+            >
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  role="tab"
+                  aria-selected={activeCategory === category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`shrink-0 rounded-full border px-4 py-2 text-small transition-colors ${
+                    activeCategory === category
+                      ? "border-brand-blue bg-brand-blue text-white"
+                      : "border-line text-muted hover:border-brand-blue hover:text-brand-blue"
+                  }`}
                 >
-                  <div className="relative rounded-lg mb-6 aspect-[4/3] overflow-hidden bg-pale">
-                    <Image
-                      src={blog.image}
-                      alt={blog.imageAlt}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-
-                  <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-muted">
-                    <span className="font-semibold uppercase tracking-wider text-brand-blue">
-                      {blog.category}
-                    </span>
-
-                    <span className="h-1 w-1 rounded-full bg-line" />
-
-                    <time dateTime={blog.publishedAt}>
-                      {new Date(blog.publishedAt).toLocaleDateString(
-                        "en-IN",
-                        {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        },
-                      )}
-                    </time>
-                  </div>
-
-                  <h3 className="mb-3 font-heading text-xl font-bold leading-snug text-brand-deep transition-colors group-hover:text-brand-blue md:text-2xl">
-                    {blog.title}
-                  </h3>
-
-                  <p className="mb-5 line-clamp-3 text-sm leading-7 text-muted">
-                    {blog.excerpt}
-                  </p>
-
-                  <div className="flex items-center justify-between border-t border-line pt-4">
-                    <span className="text-xs text-muted">
-                      {blog.readTime}
-                    </span>
-
-                    <span className="text-sm font-semibold text-brand-blue transition-transform group-hover:translate-x-1">
-                      {section.readMoreLabel} →
-                    </span>
-                  </div>
-                </Link>
+                  {category}
+                </button>
               ))}
+            </div>
+          )}
+
+          {/* Feed + sidebar */}
+          {filteredBlogs.length > 0 ? (
+            <div className="grid gap-16 lg:grid-cols-[minmax(0,1fr)_320px]">
+              <div>
+                {featured && (
+                  <div className="mb-12">
+                    <BlogCard blog={featured} variant="featured" />
+                  </div>
+                )}
+
+                <div>
+                  {feed.map((blog) => (
+                    <BlogCard key={blog.id} blog={blog} variant="row" />
+                  ))}
+                </div>
+              </div>
+
+              <div className="hidden lg:block">
+                <TrendingBlogs />
+              </div>
             </div>
           ) : (
             <div className="border-y border-line py-24 text-center">
-              <p className="font-heading text-xl font-semibold text-brand-deep">
-                {section.emptyMessage}
+              <p className="font-heading text-h3 font-semibold text-brand-deep">
+                {blogs.length === 0
+                  ? section.emptyMessage
+                  : section.noResultsMessage}
               </p>
             </div>
           )}
         </div>
       </section>
 
-      <Enquiry />
       <Footer />
     </main>
   );

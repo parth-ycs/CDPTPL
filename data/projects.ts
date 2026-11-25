@@ -18,12 +18,21 @@ export type Project = {
 
 export const projectsPageData = {
   hero: {
-    heading: "Our Projects",
+    heading: "Projects Delivered",
     eyebrow: "ENGINEERING EXCELLENCE",
     description:
       "Explore our portfolio of industrial projects, process plants, and engineering solutions delivered across global markets.",
     image: "/images/projects/hero.png",
     imageAlt: "Industrial process plant project",
+  },
+  overview: {
+    heading: {
+      before: "Delivering excellence through",
+      highlight: "engineering projects",
+      after: "and execution.",
+    },
+    description:
+      "Our projects showcase Chemdist Group's engineering capabilities, technical expertise and execution experience across diverse industries and international markets. Each project reflects our commitment to delivering solutions tailored to complex industrial requirements and specifications.",
   },
 };
 
@@ -214,7 +223,7 @@ export const projects: Project[] = [
 ];
 
 export const projectCategories = [
-  "All Projects",
+  "ALL PROJECTS",
   ...Array.from(new Set(projects.map((project) => project.category))),
 ];
 

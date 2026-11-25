@@ -30,7 +30,9 @@ export const csrPageData = {
 
   initiativesSection: {
     eyebrow: "OUR INITIATIVES",
-    heading: "Small actions. Meaningful impact.",
+    before: "Small actions.",
+    highlight: "Meaningful",
+    after: "impact.",
     description:
       "Our initiatives reflect a commitment to environmental awareness, collective responsibility and creating a positive difference in the communities around us.",
   },

@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Lightbulb, Target, TrendingUp } from "lucide-react";
@@ -42,7 +43,7 @@ export default function InnovationPage({ id }: InnovationPageProps) {
         imageAlt={hero.imageAlt}
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Research & Development", href: "/research-development" },
+          { label: "Research and Development", href: "/research-development" },
           { label: hero.heading },
         ]}
         ctaLabel="Discuss an Opportunity"
@@ -53,7 +54,7 @@ export default function InnovationPage({ id }: InnovationPageProps) {
       <section className="px-6 py-12 lg:px-16 lg:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
-            <h2 className="max-w-xl font-heading text-3xl font-medium leading-tight sm:text-4xl">
+            <h2 className="max-w-xl font-heading text-h1 font-medium text-brand-deep">
               {before}
               {highlight && (
                 <>
@@ -64,7 +65,7 @@ export default function InnovationPage({ id }: InnovationPageProps) {
               {after && <> {after}</>}
             </h2>
 
-            <p className="mt-6 max-w-xl text-sm leading-7 text-ink sm:text-base">
+            <p className="mt-6 max-w-xl text-body text-ink">
               {overview.description}
             </p>
           </div>
@@ -103,17 +104,23 @@ export default function InnovationPage({ id }: InnovationPageProps) {
                     strokeWidth={1}
                     className="shrink-0 text-brand-red"
                   />
-                  <h2 className="font-heading text-3xl font-medium sm:text-4xl">
+
+                  <h2 className="font-heading text-h1 font-medium text-brand-deep">
                     {title}
                   </h2>
                 </div>
 
                 <div className="max-w-2xl">
-                  <p className="font-medium text-brand-deep">{data.heading}</p>
-                  <p className="mt-3 leading-8 text-muted">{data.description}</p>
+                  <p className="text-lead font-medium text-brand-deep">
+                    {data.heading}
+                  </p>
+
+                  <p className="mt-3 text-body text-muted">
+                    {data.description}
+                  </p>
 
                   {points.length > 0 && (
-                    <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-muted marker:text-brand-red">
+                    <ul className="mt-4 list-disc space-y-2 pl-5 text-body text-muted marker:text-brand-red">
                       {points.map((point, i) => (
                         <li key={i}>{point}</li>
                       ))}

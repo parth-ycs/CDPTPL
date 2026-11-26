@@ -160,36 +160,7 @@ const gasSeparation: SBUChild = {
         },
       ],
     },
-    {
-      type: "industries",
-      id: "industries",
-      label: "Applications",
-      heading: "Potential application areas",
-      intro:
-        "Suitability must be confirmed for the specific gas mixture, contaminants, operating conditions and product requirements.",
-      items: [
-        {
-          title: "Industrial Gases",
-          description:
-            "Evaluation of membrane separation for selected industrial gas mixtures and recovery duties.",
-        },
-        {
-          title: "Energy Processing",
-          description:
-            "Potential gas treatment or component-recovery applications within energy-related processes.",
-        },
-        {
-          title: "Chemical Plants",
-          description:
-            "Gas conditioning and recovery opportunities associated with selected chemical operations.",
-        },
-        {
-          title: "Environmental Process Streams",
-          description:
-            "Assessment of suitable gas streams where separation or recovery may support a defined process objective.",
-        },
-      ],
-    },
+    
     {
       type: "technical-specifications",
       id: "technical-specifications",

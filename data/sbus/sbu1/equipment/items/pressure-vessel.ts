@@ -153,36 +153,6 @@ const pressureVessel: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Pressure Vessel Industrial Applications",
-      intro:
-        "Pressure vessel solutions for industrial facilities involving fluid containment, storage, processing and separation.",
-      items: [
-        {
-          title: "Chemical Process Plants",
-          description:
-            "Pressure-containing equipment for chemical production, storage and process operations.",
-        },
-        {
-          title: "Oil and Gas Facilities",
-          description:
-            "Vessels for hydrocarbon processing, fluid containment and associated process operations.",
-        },
-        {
-          title: "Petrochemical Processing",
-          description:
-            "Pressure vessel applications supporting petrochemical production and industrial processing systems.",
-        },
-        {
-          title: "Industrial Utilities",
-          description:
-            "Pressure-containing equipment for selected utility systems and supporting industrial operations.",
-        },
-      ],
-    },
 
     {
       id: "technical-specifications",

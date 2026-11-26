@@ -141,31 +141,7 @@ const plantEngineering: SBUChild = {
             },
           ],
         },
-        {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "Plant Engineering Applications",
-          intro:
-            "Potential application areas; verify sector relevance against actual project experience before publication.",
-          items: [
-            {
-              title: "Chemical Plants",
-              description:
-                "Engineering coordination for process manufacturing facilities and associated utilities.",
-            },
-            {
-              title: "Energy and Utilities",
-              description:
-                "Plant systems supporting industrial energy and utility requirements.",
-            },
-            {
-              title: "Industrial Manufacturing",
-              description:
-                "Integrated engineering for production facilities and supporting process systems.",
-            },
-          ],
-        },
+        
         {
           id: "technical-specifications",
           label: "Technical Specifications",

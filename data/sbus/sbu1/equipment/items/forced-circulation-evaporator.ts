@@ -154,37 +154,6 @@ const forcedCirculationEvaporator: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Forced Circulation Evaporator Industrial Applications",
-      intro:
-        "Evaporation solutions for industrial operations involving challenging liquid characteristics, concentration and recovery requirements.",
-      items: [
-        {
-          title: "Chemical Process Concentration",
-          description:
-            "Concentration of chemical solutions and process liquids requiring controlled circulation and thermal processing.",
-        },
-        {
-          title: "High-Solids Liquid Processing",
-          description:
-            "Applications involving liquid streams with elevated solids content where suitable forced circulation arrangements are required.",
-        },
-        {
-          title: "Industrial Wastewater Concentration",
-          description:
-            "Evaporation applications for concentrating suitable industrial wastewater streams and supporting liquid recovery processes.",
-        },
-        {
-          title: "Scaling-Prone Process Streams",
-          description:
-            "Applications involving process liquids with scaling tendencies where circulation and operating conditions require careful evaluation.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

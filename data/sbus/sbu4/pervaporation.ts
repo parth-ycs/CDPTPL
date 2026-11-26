@@ -160,36 +160,7 @@ const pervaporation: SBUChild = {
         },
       ],
     },
-    {
-      type: "industries",
-      id: "industries",
-      label: "Applications",
-      heading: "Potential application areas",
-      intro:
-        "Pervaporation is not suitable for every liquid mixture. Each application requires validation of membrane compatibility and achievable separation performance.",
-      items: [
-        {
-          title: "Chemical Processing",
-          description:
-            "Evaluation of membrane separation for selected liquid mixtures within chemical production processes.",
-        },
-        {
-          title: "Solvent Recovery",
-          description:
-            "Assessment of suitable solvent-containing streams where selective permeation may support recovery objectives.",
-        },
-        {
-          title: "Dehydration Duties",
-          description:
-            "Potential removal of water from compatible mixtures where membrane selectivity and operating conditions are appropriate.",
-        },
-        {
-          title: "Specialty Production",
-          description:
-            "Purification or concentration concepts for selected products, subject to material compatibility and validation.",
-        },
-      ],
-    },
+    
     {
       type: "technical-specifications",
       id: "technical-specifications",

@@ -167,37 +167,6 @@ const liquidLiquidExtractionTechnology: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Liquid-Liquid Extraction Technology Applications",
-      intro:
-        "Extraction solutions for industrial processes involving selective component transfer, liquid separation and solvent-based recovery.",
-      items: [
-        {
-          title: "Hydrometallurgical Processing",
-          description:
-            "Support selective recovery and separation of valuable components from suitable liquid process streams.",
-        },
-        {
-          title: "Specialty Chemical Separation",
-          description:
-            "Address selective component separation requirements in specialty chemical manufacturing.",
-        },
-        {
-          title: "Pharmaceutical Intermediates",
-          description:
-            "Support solvent-based separation and purification operations involving pharmaceutical intermediates.",
-        },
-        {
-          title: "Solvent-Based Recovery",
-          description:
-            "Recover and manage components through controlled liquid-liquid extraction and solvent handling.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

@@ -142,31 +142,6 @@ const hydrogenSystems: SBUChild =     {
           ],
         },
         {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "Hydrogen System Applications",
-          intro:
-            "Potential application areas. System suitability depends on supply conditions, end-use requirements and project-specific safety assessment.",
-          items: [
-            {
-              title: "Industrial Hydrogen Users",
-              description:
-                "Hydrogen supply and conditioning concepts for industrial processes with defined quality and pressure requirements.",
-            },
-            {
-              title: "Energy Infrastructure Projects",
-              description:
-                "Hydrogen systems considered within suitable energy infrastructure and transition projects.",
-            },
-            {
-              title: "Pilot and Demonstration Facilities",
-              description:
-                "System concepts for appropriately scoped research, pilot or demonstration projects.",
-            },
-          ],
-        },
-        {
           id: "technical-specifications",
           label: "Technical Specifications",
           type: "technical-specifications",

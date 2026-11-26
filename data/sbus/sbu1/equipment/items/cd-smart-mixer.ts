@@ -152,38 +152,6 @@ const cdSmartMixer: SBUChild = {
         },
       ],
     },
-
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "CD-Smart Mixer Industrial Applications",
-      intro:
-        "Mixing solutions for industrial sectors involving blending, agitation and material homogenization.",
-      items: [
-        {
-          title: "Chemical Manufacturing",
-          description:
-            "Mixing and agitation applications for chemical production and processing operations.",
-        },
-        {
-          title: "Specialty Chemicals",
-          description:
-            "Controlled mixing arrangements for specialty chemical formulations and production processes.",
-        },
-        {
-          title: "Pharmaceutical Processing",
-          description:
-            "Mixing applications where process consistency and controlled material distribution are important.",
-        },
-        {
-          title: "Industrial Formulations",
-          description:
-            "Blending and homogenization of liquid formulations and process materials.",
-        },
-      ],
-    },
-
     {
       id: "technical-specifications",
       label: "Technical Specifications",

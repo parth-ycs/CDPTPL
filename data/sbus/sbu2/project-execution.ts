@@ -141,31 +141,7 @@ const projectExecution: SBUChild = {
             },
           ],
         },
-        {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "Project Execution Applications",
-          intro:
-            "Potential project types where structured delivery coordination may be relevant.",
-          items: [
-            {
-              title: "Process Industries",
-              description:
-                "Delivery coordination for industrial process facilities and associated systems.",
-            },
-            {
-              title: "Industrial Infrastructure",
-              description:
-                "Project controls and interface management for defined industrial infrastructure scopes.",
-            },
-            {
-              title: "Plant Upgrades and Expansions",
-              description:
-                "Planning and coordination for retrofit, debottlenecking and expansion projects.",
-            },
-          ],
-        },
+        
         {
           id: "technical-specifications",
           label: "Technical Specifications",

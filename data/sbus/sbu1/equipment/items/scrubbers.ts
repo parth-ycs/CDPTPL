@@ -153,36 +153,7 @@ const scrubbers: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Scrubber Applications",
-      intro:
-        "Gas treatment solutions for industrial operations involving process gas conditioning and contaminant removal.",
-      items: [
-        {
-          title: "Chemical Manufacturing",
-          description:
-            "Gas scrubbing applications for treating process exhaust and selected contaminant-bearing gas streams.",
-        },
-        {
-          title: "Industrial Exhaust Treatment",
-          description:
-            "Scrubbing systems for treating suitable industrial exhaust streams according to applicable treatment requirements.",
-        },
-        {
-          title: "Process Gas Conditioning",
-          description:
-            "Gas treatment equipment supporting the conditioning of process streams before subsequent industrial operations.",
-        },
-        {
-          title: "Emission-Control Applications",
-          description:
-            "Scrubbing arrangements for suitable emission-control duties based on contaminant characteristics and project requirements.",
-        },
-      ],
-    },
+   
 
     {
       id: "technical-specifications",

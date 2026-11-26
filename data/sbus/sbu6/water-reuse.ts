@@ -1,16 +1,13 @@
-import type { SBUChild } from "./types";
+import type { SBUChild } from "../types";
 
 const waterReuse: SBUChild = {
   slug: "water-reuse",
-  name: "Water Reuse and Recycling",
-  tagline: "Water & Wastewater Treatment",
-  description:
-    "Explore industrial water reuse and recycling concepts built around site water balances, source-water quality, intended reuse applications and practical treatment requirements.",
   hero: {
     name: "Water Reuse and Recycling",
     tagline: "Water & Wastewater Treatment",
     description:
       "Industrial water reuse starts with understanding where water is used, where wastewater is generated and what quality each potential reuse application requires.",
+    image: "/images/services/water-reuse.jpg",
     imageAlt: "Industrial water reuse and recycling treatment systems",
     ctaLabel: "Discuss a Water Reuse Project",
     ctaHref: "/contact",
@@ -150,36 +147,6 @@ const waterReuse: SBUChild = {
           title: "Monitoring and Performance Planning",
           description:
             "Define water quality, flow and operating indicators needed to verify the reuse system's performance.",
-        },
-      ],
-    },
-    {
-      type: "industries",
-      id: "industries",
-      label: "Applications",
-      heading: "Potential water reuse application areas",
-      intro:
-        "Every reuse application needs an agreed quality specification and a review of health, process, materials and regulatory constraints.",
-      items: [
-        {
-          title: "Chemical and Process Plants",
-          description:
-            "Assess reuse opportunities across selected process, wash-water and utility-water operations.",
-        },
-        {
-          title: "Manufacturing Facilities",
-          description:
-            "Evaluate recovery of suitable utility and process water streams for defined internal uses.",
-        },
-        {
-          title: "Cooling and Utility Systems",
-          description:
-            "Consider recovered water for compatible utility duties after checking chemistry, scaling, corrosion and biological risks.",
-        },
-        {
-          title: "Water-Stressed Sites",
-          description:
-            "Assess recycling as one part of a broader site water-management strategy.",
         },
       ],
     },

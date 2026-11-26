@@ -167,37 +167,6 @@ const microReactorContinuousFlowSynthesis: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Micro Reactor Technology Applications",
-      intro:
-        "Continuous flow synthesis solutions for applications requiring controlled chemical reactions and defined processing conditions.",
-      items: [
-        {
-          title: "Specialty Chemical Synthesis",
-          description:
-            "Support specialty chemical manufacturing through controlled continuous reaction processes.",
-        },
-        {
-          title: "Fine Chemical Manufacturing",
-          description:
-            "Address fine chemical synthesis requirements involving application-specific reaction conditions.",
-        },
-        {
-          title: "Pharmaceutical Intermediates",
-          description:
-            "Support continuous synthesis and process development for suitable pharmaceutical intermediate applications.",
-        },
-        {
-          title: "Research and Process Development",
-          description:
-            "Evaluate reaction behaviour and continuous processing configurations during chemical process development.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

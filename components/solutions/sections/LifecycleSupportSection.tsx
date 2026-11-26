@@ -2,7 +2,7 @@ import type { LifecycleSupportSectionData } from "@/components/solutions/types";
 
 export default function LifecycleSupportSection({ data }: { data: LifecycleSupportSectionData }) {
   return (
-    <section id={data.id} className="scroll-mt-28 py-16 md:py-20">
+    <section id={data.id} className="scroll-mt-28 py-6 md:py-8">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-red">{data.label ?? "Lifecycle support"}</p>

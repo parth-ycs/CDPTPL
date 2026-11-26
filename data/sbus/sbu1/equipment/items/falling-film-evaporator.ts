@@ -153,36 +153,6 @@ const fallingFilmEvaporator: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Falling Film Evaporator Industrial Applications",
-      intro:
-        "Evaporation solutions for industrial operations involving liquid concentration, thermal processing and product recovery.",
-      items: [
-        {
-          title: "Chemical Manufacturing",
-          description:
-            "Concentration of suitable chemical solutions and process liquids through controlled thermal evaporation.",
-        },
-        {
-          title: "Food and Ingredient Processing",
-          description:
-            "Liquid concentration applications involving suitable food ingredients and process streams.",
-        },
-        {
-          title: "Industrial Liquid Recovery",
-          description:
-            "Evaporation systems for recovering and concentrating useful liquid components from industrial process streams.",
-        },
-        {
-          title: "Heat-sensitive Liquid Processing",
-          description:
-            "Applications involving suitable heat-sensitive liquids where controlled thermal exposure is an important process consideration.",
-        },
-      ],
-    },
 
     {
       id: "technical-specifications",

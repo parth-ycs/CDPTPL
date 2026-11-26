@@ -142,31 +142,6 @@ const electrolyzers: SBUChild =     {
           ],
         },
         {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "Electrolyzer Applications",
-          intro:
-            "Potential application areas. Project feasibility depends on power supply, hydrogen demand, utilities and local conditions.",
-          items: [
-            {
-              title: "Renewable Hydrogen Projects",
-              description:
-                "Potential integration with renewable electricity where the power profile and project economics support the selected system.",
-            },
-            {
-              title: "Industrial Hydrogen Users",
-              description:
-                "Hydrogen supply concepts for suitable industrial applications with defined purity, pressure and flow requirements.",
-            },
-            {
-              title: "Energy Transition Projects",
-              description:
-                "Projects assessing electrolytic hydrogen as one element of a broader energy or industrial transition strategy.",
-            },
-          ],
-        },
-        {
           id: "technical-specifications",
           label: "Technical Specifications",
           type: "technical-specifications",

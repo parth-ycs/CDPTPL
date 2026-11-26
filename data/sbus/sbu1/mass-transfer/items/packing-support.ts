@@ -182,37 +182,7 @@ const packingSupport: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Packing Support Industrial Applications",
-      intro:
-        "Packing support systems for industrial columns requiring reliable structural support and suitable hydraulic flow passage.",
-      items: [
-        {
-          title: "Packed Distillation Columns",
-          description:
-            "Support structured or random packing arrangements while maintaining suitable vapour and liquid flow paths.",
-        },
-        {
-          title: "Gas Absorption Towers",
-          description:
-            "Provide structural support for packed sections used in industrial gas absorption processes.",
-        },
-        {
-          title: "Industrial Separation Columns",
-          description:
-            "Integrate packing support structures into columns used for industrial separation and mass transfer.",
-        },
-        {
-          title: "Large Diameter Packed Towers",
-          description:
-            "Evaluate structural arrangements and load distribution requirements for large-diameter packed column applications.",
-        },
-      ],
-    },
-
+    
     {
       id: "technical-specifications",
       label: "Technical Specifications",

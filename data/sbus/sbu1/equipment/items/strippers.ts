@@ -161,36 +161,6 @@ const strippers: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Applications of Stripping Columns",
-      intro:
-        "Stripping technology is used across industrial processes requiring the removal of volatile components from liquid streams.",
-      items: [
-        {
-          title: "Chemical Processing",
-          description:
-            "Removal and recovery of selected volatile components from liquid process streams during chemical manufacturing.",
-        },
-        {
-          title: "Industrial Wastewater Treatment",
-          description:
-            "Treatment of wastewater streams through the transfer of selected volatile contaminants into a gas phase for further handling.",
-        },
-        {
-          title: "Solvent Removal",
-          description:
-            "Removal of volatile solvents and other components from liquid mixtures through gas-liquid contacting.",
-        },
-        {
-          title: "Process Liquid Purification",
-          description:
-            "Reduction of selected volatile components in process liquids to meet downstream processing or product requirements.",
-        },
-      ],
-    },
 
     {
       id: "technical-specifications",

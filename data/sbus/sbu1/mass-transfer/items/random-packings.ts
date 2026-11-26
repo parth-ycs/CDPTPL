@@ -182,36 +182,7 @@ const randomPackings: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Random Packing Industrial Applications",
-      intro:
-        "Random packing solutions for industrial processes requiring effective vapour-liquid contacting and separation.",
-      items: [
-        {
-          title: "Gas Absorption Columns",
-          description:
-            "Provide contact surfaces for gas-liquid interaction in industrial absorption operations.",
-        },
-        {
-          title: "Chemical Stripping Operations",
-          description:
-            "Support mass transfer between liquid and gas phases in stripping applications.",
-        },
-        {
-          title: "Industrial Scrubbing Systems",
-          description:
-            "Enable gas-liquid contact within packed scrubbing columns for suitable treatment applications.",
-        },
-        {
-          title: "Distillation and Separation Columns",
-          description:
-            "Provide packing contact surfaces for vapour-liquid separation processes.",
-        },
-      ],
-    },
+    
 
     {
       id: "technical-specifications",

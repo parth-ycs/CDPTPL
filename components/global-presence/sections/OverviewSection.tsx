@@ -1,10 +1,13 @@
+"use client";
 
-import { Building2, Factory, Globe2, Layers } from "lucide-react";
+import { motion } from "framer-motion";
+import Highlight from "@/components/ui/highlight";
 import { globalPresenceLocations, globalPresencePage } from "@/data/global-presence";
-import { SectionHeading } from "../shared";
 
 export default function OverviewSection() {
   const locations = globalPresenceLocations;
+  const { overview } = globalPresencePage;
+
   const officeCount = locations.reduce((sum, l) => sum + l.offices.length, 0);
   const projectCount = locations.reduce((sum, l) => sum + l.projects.length, 0);
   const industryCount = new Set(
@@ -12,55 +15,77 @@ export default function OverviewSection() {
   ).size;
 
   const stats = [
-    { label: "Countries", value: locations.length, icon: Globe2 },
-    { label: "Offices", value: officeCount, icon: Building2 },
-    { label: "Projects", value: projectCount, icon: Factory },
-    { label: "Industries", value: industryCount, icon: Layers },
+    { label: "Countries", value: locations.length },
+    { label: "Offices", value: officeCount },
+    { label: "Projects", value: projectCount },
+    { label: "Industries", value: industryCount },
   ];
 
-  const regions = Object.entries(
-    locations.reduce<Record<string, typeof locations>>((groups, location) => {
-      (groups[location.region] ??= []).push(location);
-      return groups;
-    }, {}),
-  );
+  const { heading } = overview;
+  // No extra space before punctuation like "," or "."
+  const afterText = heading.after
+    ? /^[,.;:!?]/.test(heading.after)
+      ? heading.after
+      : ` ${heading.after}`
+    : "";
+  const [lead, ...rest] = overview.paragraphs;
 
   return (
-    <div className="space-y-8">
-      <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14">
-        <div>
-          <SectionHeading title={globalPresencePage.overview.heading} />
-          <div className="mt-4 max-w-[560px] space-y-3 text-body text-slate-600">
-            {globalPresencePage.overview.paragraphs.map((text) => (
-              <p key={text}>{text}</p>
-            ))}
-          </div>
-        </div>
+    <div>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-h2 max-w-2xl font-heading font-semibold tracking-tight text-brand-deep"
+        >
+          {heading.before}
+          {heading.highlight && (
+            <>
+              {" "}
+              <Highlight>{heading.highlight}</Highlight>
+            </>
+          )}
+          {afterText}
+        </motion.h2>
 
-        <dl className="grid grid-cols-2 gap-3">
-          {stats.map(({ label, value, icon: Icon }) => (
-            <div
-              key={label}
-              className="rounded-2xl border border-slate-200 bg-gradient-to-br from-[#F5F9FE] to-white p-4 transition hover:border-[#B8D5F3] hover:shadow-sm"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <dt className="text-small font-medium text-slate-500">
-                  {label}
-                </dt>
-                <span
-                  aria-hidden
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EAF3FC] text-[#1557A0]"
-                >
-                  <Icon size={15} />
-                </span>
-              </div>
-              <dd className="mt-3 font-heading text-h1 font-semibold tracking-tight text-slate-900">
-                {value}
-              </dd>
-            </div>
+        {/* Description */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+          className="space-y-4"
+        >
+          {lead && <p className="text-lead text-ink">{lead}</p>}
+          {rest.map((text) => (
+            <p key={text} className="max-w-[620px] text-body text-muted">
+              {text}
+            </p>
           ))}
-        </dl>
+        </motion.div>
       </div>
+
+      {/* KPIs */}
+      <dl className="mt-12 grid grid-cols-2 gap-y-8 lg:mt-16 lg:grid-cols-4">
+        {stats.map(({ label, value }, index) => (
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.08 }}
+            className="border-l border-line pl-5"
+          >
+            <dd className="font-heading text-h1 font-semibold tabular-nums tracking-tight text-brand-deep">
+              {value}
+            </dd>
+            <dt className="mt-1 text-small text-muted">{label}</dt>
+          </motion.div>
+        ))}
+      </dl>
     </div>
   );
 }

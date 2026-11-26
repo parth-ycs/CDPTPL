@@ -141,31 +141,7 @@ const greenChemicals: SBUChild = {
             },
           ],
         },
-        {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "Green Chemicals Applications",
-          intro:
-            "Potential application areas. Feedstock origin alone does not prove environmental benefit or commercial suitability.",
-          items: [
-            {
-              title: "Chemical Manufacturing",
-              description:
-                "Selected chemical production routes and process improvements based on verified technical requirements.",
-            },
-            {
-              title: "Bio-Based Industries",
-              description:
-                "Potential processes using suitable renewable feedstocks where product and process specifications can be met.",
-            },
-            {
-              title: "Specialty Chemicals",
-              description:
-                "Production and purification processes requiring tailored product composition and quality specifications.",
-            },
-          ],
-        },
+        
         {
           id: "technical-specifications",
           label: "Technical Specifications",

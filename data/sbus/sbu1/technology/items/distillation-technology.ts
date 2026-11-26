@@ -166,36 +166,6 @@ const distillationTechnology: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Distillation Technology Applications",
-      intro:
-        "Distillation solutions for industrial processes involving liquid separation, component recovery and product purification.",
-      items: [
-        {
-          title: "Chemical and Petrochemical Processing",
-          description:
-            "Separate and recover components from industrial chemical and petrochemical process streams.",
-        },
-        {
-          title: "Solvent Recovery and Purification",
-          description:
-            "Recover reusable solvents and support purification of liquid process streams.",
-        },
-        {
-          title: "Specialty Chemical Manufacturing",
-          description:
-            "Support purification and separation requirements in specialty chemical production.",
-        },
-        {
-          title: "Industrial Liquid Separation",
-          description:
-            "Separate liquid mixtures according to component volatility and defined product specifications.",
-        },
-      ],
-    },
 
     {
       id: "technical-specifications",

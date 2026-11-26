@@ -1,7 +1,6 @@
 
 "use client";
 
-import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { aboutPageData } from "@/data/about";
 import WhatWeStandForSection from "./WhatWeStandForSection";
 
@@ -12,6 +11,7 @@ type StoryItem = {
   highlight?: string;
   background: string;
 };
+import { Fragment, memo, useEffect, useMemo, useRef, useState } from "react";
 
 /* ------------------------------------------------------------------ */
 /* Timing                                                              */
@@ -31,6 +31,7 @@ const ACTIVE_TOP = 52;
 const QUEUE_START = 17;
 const QUEUE_SCALE = 0.58;
 const QUEUE_OPACITY = 0.43;
+const RISE = 14
 
 /* ------------------------------------------------------------------ */
 /* Math helpers                                                        */
@@ -136,6 +137,7 @@ const AnimatedDescription = memo(function AnimatedDescription({
     [item.description, item.highlight]
   );
 
+ 
   return (
     <p className="max-w-[620px] text-h2 font-light tracking-[-0.015em]">
       {words.map((word, index) => {
@@ -143,13 +145,19 @@ const AnimatedDescription = memo(function AnimatedDescription({
         const baseColor = highlighted.has(index) ? "96,165,250" : "255,255,255";
 
         return (
-          <span
-            key={`${word}-${index}`}
-            style={{ color: `rgba(${baseColor},${0.15 + amount * 0.85})` }}
-          >
-            {word}
+          <Fragment key={`${word}-${index}`}>
+            <span
+              style={{
+                display: "inline-block",
+                color: `rgba(${baseColor},${0.15 + amount * 0.85})`,
+                transform: `translate3d(0, ${(1 - amount) * RISE}px, 0)`,
+                willChange: "transform, color",
+              }}
+            >
+              {word}
+            </span>
             {index !== words.length - 1 ? " " : ""}
-          </span>
+          </Fragment>
         );
       })}
     </p>

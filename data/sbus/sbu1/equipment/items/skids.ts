@@ -161,36 +161,7 @@ const skids: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Applications of Skid Packages",
-      intro:
-        "Packaged process systems designed for integration into industrial facilities and process plant operations.",
-      items: [
-        {
-          title: "Chemical and Petrochemical Plants",
-          description:
-            "Integrated process packages supporting chemical handling, dosing, pumping and other plant operations.",
-        },
-        {
-          title: "Oil and Gas Facilities",
-          description:
-            "Skid-mounted equipment packages for selected process, fluid handling and utility applications.",
-        },
-        {
-          title: "Industrial Utility Systems",
-          description:
-            "Packaged thermal, pumping and utility systems configured around facility operating requirements.",
-        },
-        {
-          title: "Process Plant Expansion Projects",
-          description:
-            "Modular equipment packages that support facility upgrades, capacity expansion and integration with existing plant infrastructure.",
-        },
-      ],
-    },
+   
 
     {
       id: "technical-specifications",

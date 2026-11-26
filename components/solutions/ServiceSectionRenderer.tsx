@@ -1,7 +1,6 @@
 import OverviewSection from "./sections/OverviewSection";
 import ProductsSection from "./sections/ProductsSection";
 import ServicesSection from "./sections/ServicesSection";
-import IndustriesSection from "@/components/landing_page/industries";
 import CapabilitiesSection from "./sections/CapabilitiesSection";
 import TechnicalSpecificationsSection from "./sections/TechnicalSpecificationsSection";
 import ProcessFlowSection from "./sections/ProcessFlowSection";
@@ -37,9 +36,6 @@ export default function ServiceSectionRenderer({
               case "services":
                 return <ServicesSection data={section} />;
 
-              case "industries":
-                return <IndustriesSection />;
-
               case "capabilities":
                 return <CapabilitiesSection data={section} />;
 
@@ -65,8 +61,14 @@ export default function ServiceSectionRenderer({
                 return <FAQsSection data={section} />;
 
               default: {
-                const exhaustiveCheck: never = section;
-                return exhaustiveCheck;
+                if (process.env.NODE_ENV !== "production") {
+                  console.warn(
+                    `Unknown section type "${(section as { type: string }).type}" (id: ${
+                      (section as { id: string }).id
+                    })`
+                  );
+                }
+                return null;
               }
             }
           })()}

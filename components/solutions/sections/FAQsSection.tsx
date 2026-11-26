@@ -9,7 +9,7 @@ export default function FAQsSection({ data }: { data: FAQsSectionData }) {
   const headingId = `${data.id}-heading`;
 
   return (
-    <section id={data.id} aria-labelledby={headingId} className="scroll-mt-28 py-16 md:py-20">
+    <section id={data.id} aria-labelledby={headingId} className="scroll-mt-28 py-6 md:py-8">
       <div className="mx-auto max-w-4xl px-5 md:px-8">
         <div className="max-w-3xl">
           <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-blue">

@@ -11,7 +11,7 @@ import {
   useTransform,
   useMotionValueEvent,
 } from "framer-motion";
-
+import Container from "@/components/container";
 import { rdSectionData } from "@/data/research-development/r&d";
 
 /* ------------------------------------------------------------------ */
@@ -82,17 +82,19 @@ export default function WorkflowSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-brand-medium"
+      className="relative bg-brand-deep"
       style={{ height: `calc(${total * SCROLL_PER_STEP_VH}vh + 100svh)` }}
       aria-label={data.heading}
     >
-      {/* Pinned stage: starts below the fixed site header */}
+      {/*
+        Pinned stage. It must be a direct child of <section> so it can stick
+        for the full height of the section. Container goes INSIDE it.
+      */}
       <div
-        className="sticky flex w-full flex-col overflow-hidden"
+        className="sticky w-full overflow-hidden"
         style={{ top: HEADER_H, height: `calc(100svh - ${HEADER_H})` }}
       >
-        {/* Full-width wrapper */}
-        <div className="flex h-full min-h-0 w-full flex-col px-5 pb-5 pt-4 sm:px-8 lg:px-12 lg:pb-8 lg:pt-6 xl:px-16">
+        <Container className="flex h-full min-h-0 flex-col pb-5 pt-4 lg:pb-8 lg:pt-6">
           {/* ---------- Header row ---------- */}
           <header className="flex shrink-0 flex-col gap-2 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
             <div>
@@ -108,7 +110,7 @@ export default function WorkflowSection() {
 
           {/* ---------- Stage ---------- */}
           <div className="mt-4 grid min-h-0 flex-1 grid-cols-1 grid-rows-[28%_minmax(0,1fr)] gap-4 lg:mt-6 lg:grid-cols-12 lg:grid-rows-1 lg:gap-14">
-            {/* IMAGE — wipes in on every step change */}
+            {/* IMAGE: wipes in on every step change */}
             <div className="relative order-1 min-h-0 overflow-hidden rounded-3xl bg-white/10 lg:order-2 lg:col-span-7 lg:h-full lg:max-h-[min(480px,60svh)] lg:self-center">
               <AnimatePresence initial={false} custom={dir}>
                 <motion.div
@@ -152,7 +154,7 @@ export default function WorkflowSection() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Big outlined step number: the one memorable element */}
+              {/* Big outlined step number */}
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
                   key={active}
@@ -169,10 +171,10 @@ export default function WorkflowSection() {
               </AnimatePresence>
             </div>
 
-            {/* STEP INDEX — click any step to jump to it */}
+            {/* STEP INDEX: click any step to jump to it */}
             <nav
               aria-label="Workflow steps"
-              className="relative order-2 min-h-0 overflow-y-auto overscroll-contain lg:order-1 lg:col-span-5"
+              className="relative order-2 min-h-0 overflow-y-auto lg:order-1 lg:col-span-5"
             >
               {/* progress rail */}
               <span className="absolute bottom-1 left-0 top-1 w-px bg-white/15" />
@@ -205,7 +207,7 @@ export default function WorkflowSection() {
                         type="button"
                         onClick={() => goTo(i)}
                         aria-current={isActive ? "step" : undefined}
-                        className="group flex w-full items-baseline gap-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-medium lg:py-2"
+                        className="group flex w-full items-baseline gap-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red-light focus-visible:ring-offset-2 focus-visible:ring-offset-brand-medium"
                       >
                         <span
                           className={`text-sm tabular-nums transition-colors duration-300 ${
@@ -236,7 +238,7 @@ export default function WorkflowSection() {
                             transition={{ duration: reduce ? 0 : 0.5, ease: EASE }}
                             className="overflow-hidden"
                           >
-                            <div className="pb-3 pl-8 lg:pb-3">
+                            <div className="pb-3 pl-8">
                               <p className="text-sm leading-6 text-white/80 lg:text-base lg:leading-7">
                                 {s.description}
                               </p>
@@ -268,7 +270,7 @@ export default function WorkflowSection() {
               </ol>
             </nav>
           </div>
-        </div>
+        </Container>
       </div>
     </section>
   );

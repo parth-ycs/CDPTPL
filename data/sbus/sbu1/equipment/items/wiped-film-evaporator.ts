@@ -161,37 +161,7 @@ const wipedFilmEvaporator: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Applications of Wiped Film Evaporators",
-      intro:
-        "Wiped film evaporation supports thermal processing applications where viscosity, heat exposure, fouling behaviour and residence time are important considerations.",
-      items: [
-        {
-          title: "Viscous Chemical Processing",
-          description:
-            "Processing of suitable high-viscosity chemical streams requiring controlled liquid distribution across heated surfaces.",
-        },
-        {
-          title: "Specialty Chemical Concentration",
-          description:
-            "Concentration of specialty chemical products under process conditions selected for product characteristics.",
-        },
-        {
-          title: "Heat-Sensitive Product Processing",
-          description:
-            "Thermal processing of products where controlled film formation and residence time are important design considerations.",
-        },
-        {
-          title: "Industrial Solvent Recovery",
-          description:
-            "Evaporation and separation of volatile solvents from suitable process mixtures for downstream recovery.",
-        },
-      ],
-    },
-
+   
     {
       id: "technical-specifications",
       label: "Technical Specifications",

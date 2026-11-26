@@ -97,36 +97,20 @@ export default function CSR() {
         ctaHref="#csr-initiatives"
       />
 
-      <Container>
+      <PageOverview
+        heading={{
+          before: initiativesSection.before,
+          highlight: initiativesSection.highlight,
+          after: initiativesSection.after,
+        }}
+        description={initiativesSection.description}
+      />
+      <Container className="pt-0">
         {/* Initiatives */}
         <section
           id="csr-initiatives"
-          className="scroll-mt-24"
         >
-          <div className="mx-auto max-w-[1500px]">
-            <p className="mb-4 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
-              {initiativesSection.eyebrow}
-            </p>
-            <div className="grid grid-cols-1 gap-8 border-line lg:grid-cols-2 lg:gap-16">
-            {/* Heading */}
-            <h2 className="text-h1 max-w-2xl font-heading font-semibold tracking-tight text-brand-deep">
-              {initiativesSection.before}{" "}
-              {initiativesSection.highlight && (
-                <span className="text-brand-blue">
-                  {initiativesSection.highlight}
-                </span>
-              )}{" "}
-              {initiativesSection.after}
-            </h2>
-
-            {/* Description */}
-            <div>
-              <p className="text-lead text-ink">
-                {initiativesSection.description}
-              </p>
-            </div>
-          </div>
-
+          <div className="mx-auto max-w-[1500px]"> 
             <div>
               {csrInitiatives.map((item, index) => (
                 <InitiativeCard

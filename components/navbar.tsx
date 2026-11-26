@@ -107,9 +107,7 @@ export default function Navbar({
 
   const dark = variant === "dark";
 
-  const navText = dark ? "text-white" : "text-[#102c59]";
-  const navBorder = dark ? "border-white/40" : "border-[#102c59]/35";
-
+  const navText = dark ? "text-white" : "text-brand-medium";
   const navHoverText = "hover:text-brand-blue";
 
   // True while hovering the header, a desktop dropdown is open, or mobile menu is open.
@@ -199,17 +197,18 @@ export default function Navbar({
           })}
 
           {/* Contact CTA */}
-          <Button
-            href="/contact"
-            onClick={closeMobileMenu}
-            size="sm"
-            variant="dark"
-            fullWidth
-            className="py-1 text-sm font-heading"
-            circleClassName="h-8 w-8"
-          >
-            Contact
-          </Button>
+          {/* Contact CTA */}
+            <Button
+              href="/contact"
+              onClick={closeMobileMenu}
+              size="sm"
+              variant={variant}
+              fullWidth
+              className={`py-1 text-sm font-heading ${speed}`}
+              circleClassName={`h-8 w-8 ${speed}`}
+            >
+              Contact
+            </Button>
         </div>
 
         {/* Mobile menu toggle */}

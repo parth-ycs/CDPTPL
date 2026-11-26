@@ -161,37 +161,7 @@ const staticMixers: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Applications of Static Mixers",
-      intro:
-        "Static mixing technology supports continuous blending and fluid distribution across a range of industrial processes.",
-      items: [
-        {
-          title: "Chemical Processing",
-          description:
-            "In-line blending of process chemicals and fluid streams in chemical manufacturing operations.",
-        },
-        {
-          title: "Water Treatment Processes",
-          description:
-            "Distribution and mixing of treatment chemicals within water and wastewater processing systems.",
-        },
-        {
-          title: "Polymer Processing",
-          description:
-            "In-line blending and distribution of compatible polymer process streams.",
-        },
-        {
-          title: "Industrial Fluid Blending",
-          description:
-            "Continuous mixing of liquid streams in industrial pipelines and process systems.",
-        },
-      ],
-    },
-
+    
     {
       id: "technical-specifications",
       label: "Technical Specifications",

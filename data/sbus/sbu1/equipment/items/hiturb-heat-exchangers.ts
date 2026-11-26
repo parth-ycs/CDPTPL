@@ -153,36 +153,7 @@ const hiturbHeatExchangers: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "HiTURB™ Heat Exchanger Industrial Applications",
-      intro:
-        "Heat transfer solutions for industrial sectors involving thermal processing, cooling, heating and energy recovery.",
-      items: [
-        {
-          title: "Chemical Processing Plants",
-          description:
-            "Heat exchange applications supporting chemical production, heating, cooling and process temperature control.",
-        },
-        {
-          title: "Petrochemical Facilities",
-          description:
-            "Thermal equipment for process stream conditioning, heat recovery and temperature management across petrochemical operations.",
-        },
-        {
-          title: "Oil and Gas Processing",
-          description:
-            "Heat transfer applications involving hydrocarbon processing, process heating and cooling operations.",
-        },
-        {
-          title: "Industrial Energy Recovery",
-          description:
-            "Thermal systems designed to recover usable energy from suitable process streams and improve overall energy utilisation.",
-        },
-      ],
-    },
+    
 
     {
       id: "technical-specifications",

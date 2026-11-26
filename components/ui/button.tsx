@@ -6,34 +6,16 @@ import type {
 import { ArrowRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
-/* ------------------------------------------------------------------ */
-/* REUSABLE PILL BUTTON  (components/ui/button.tsx)                    */
-/*                                                                     */
-/*   <Button href="/contact">Contact Us</Button>                       */
-/*   <Button href="/about" variant="dark">Learn more</Button>          */
-/*                                                                     */
-/* Per-section overrides (className wins over the defaults):           */
-/*   <Button                                                           */
-/*     href="/quote"                                                   */
-/*     className="border-brand-red bg-brand-red hover:bg-white"        */
-/*     circleClassName="bg-white text-brand-red"                       */
-/*   >                                                                 */
-/*     Get a quote                                                     */
-/*   </Button>                                                         */
-/*                                                                     */
-/* Renders an <a> when `href` is passed, otherwise a <button>.         */
-/* ------------------------------------------------------------------ */
-
 const variants = {
   light: {
-    pill: "border border-brand-blue bg-white text-[#041326] hover:bg-brand-blue hover:text-white",
+    pill: "border border-brand-medium bg-white text-brand-medium hover:bg-brand-medium hover:text-white",
     circle:
-      "bg-brand-blue text-white group-hover:bg-white group-hover:text-brand-blue",
+      "bg-brand-medium text-white group-hover:bg-white group-hover:text-brand-medium",
   },
   dark: {
-    pill: "border border-brand-blue bg-brand-blue text-white hover:bg-white hover:text-brand-blue",
+    pill: "border border-brand-medium bg-brand-medium text-white hover:bg-white hover:text-brand-medium",
     circle:
-      "bg-white text-brand-blue group-hover:bg-brand-blue group-hover:text-white",
+      "bg-white text-brand-medium group-hover:bg-brand-medium group-hover:text-white",
   },
 } as const;
 

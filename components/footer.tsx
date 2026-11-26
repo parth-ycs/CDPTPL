@@ -2,21 +2,17 @@ import Container from "./container";
 import Logo from "./ui/logo";
 import Button from "./ui/button";
 import { navigationItems } from "@/data/navigation";
-
+import type { ReactElement } from "react";
 /* ------------------------------------------------------------------ */
 /* EDIT YOUR COMPANY DETAILS HERE (currently placeholder values)       */
 /* ------------------------------------------------------------------ */
 const company = {
   addressTitle: "Corporate Office Address",
   address: [
-    "Thermax Limited",
-    "Thermax House,",
-    "14 Mumbai-Pune Road, Wakdewadi,",
-    "Pune 411003, Maharashtra, India",
+    "Chemdist HQ,",
+    "Opposite Empire Estate, Old Mumbai–Pune Highway,",
+    "Pimpri Colony, Pune-411019, Maharashtra , India",
   ],
-  tollFreeTitle: "Toll Free Number",
-  tollFree: "1800-209-0115",
-  tollFreeHref: "tel:18002090115",
   socials: [
     { label: "Instagram", href: "https://www.instagram.com/chemdistgroup/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/company/chemdistgroup/" },
@@ -29,7 +25,7 @@ const heading =
   "mb-4 text-small font-semibold uppercase tracking-[0.16em] text-white";
 
 const link =
-  "mb-2.5 block w-fit text-caption leading-snug text-white/65 transition-colors duration-200 hover:text-brand-red-light";
+  "mb-2.5 block w-fit text-caption leading-snug text-white/65 transition-colors duration-200 hover:text-white";
 
 // Sub-headings / text inside the brand column
 const infoTitle = "mb-2 text-[13px] font-semibold text-white";
@@ -40,7 +36,7 @@ const infoText = "text-[12px] leading-[1.8] text-white/55";
 /* ------------------------------------------------------------------ */
 const iconClass = "h-[18px] w-[18px]";
 
-const socialIcons: Record<string, JSX.Element> = {
+const socialIcons: Record<string, ReactElement> = {
   Instagram: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={iconClass} aria-hidden="true">
       <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -75,6 +71,7 @@ export default function Footer() {
     { label: "Projects", href: "/projects" },
     { label: "Global Presence", href: "/global-presence" },
     { label: "Careers", href: "/under-development" },
+    { label: "Contact", href: "/contact" },
   ];
 
   const aboutItems = about?.type === "dropdown" ? about.items : [];
@@ -83,19 +80,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#041326] text-white">
-      {/*
-        MAIN FOOTER
-        Two independent areas:
-          LEFT  = company info (logo, address, phone, socials)
-          RIGHT = navigation columns on top + Contact/Careers buttons pinned
-                  to the bottom, level with the social icons on the left.
-      */}
       <div className="pb-10 pt-10 sm:pt-12">
         <Container className="!py-0 grid gap-10 lg:grid-cols-[1.35fr_3.9fr] lg:gap-x-10">
           {/* LEFT: BRAND + COMPANY DETAILS */}
           <div className="lg:max-w-[400px]">
-            <a href="/" aria-label="Chemdist Group home" className="block w-[200px] sm:w-[230px]">
-              <div className="[&_img]:h-auto [&_img]:w-full [&_svg]:h-auto [&_svg]:w-full">
+            <a href="/" aria-label="Chemdist Group home" className="block w-[180px] sm:w-[200px]">
+              <div className="brightness-150 [&_img]:h-auto [&_img]:w-full [&_svg]:h-auto [&_svg]:w-full">
                 <Logo light />
               </div>
             </a>
@@ -113,17 +103,6 @@ export default function Footer() {
                 </address>
               </div>
 
-              {/* Toll free number */}
-              <div>
-                <p className={infoTitle}>{company.tollFreeTitle}</p>
-                <a
-                  href={company.tollFreeHref}
-                  className="text-[20px] font-light tracking-wide text-white/90 transition-colors hover:text-brand-red-light"
-                >
-                  {company.tollFree}
-                </a>
-              </div>
-
               {/* Social links: equal-width boxes keep icons evenly spaced */}
               <div className="-ml-2 flex items-center">
                 {company.socials.map((social) => (
@@ -133,7 +112,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="flex h-9 w-9 items-center justify-center text-white/80 transition-colors duration-200 hover:text-brand-red-light"
+                    className="flex h-9 w-9 items-center justify-center text-white/80 transition-colors duration-200 hover:text-white hover:scale-120"
                   >
                     {socialIcons[social.label]}
                   </a>
@@ -196,16 +175,7 @@ export default function Footer() {
                   </a>
                 ))}
               </div>
-            </div>
 
-            {/* CONTACT + CAREERS: side by side, right-aligned, level with the social icons */}
-            <div className="flex flex-wrap items-center gap-4 lg:justify-end">
-              <Button href="/contact">
-                Contact Us
-              </Button>
-              <Button href="/under-development" variant="dark">
-                Careers
-              </Button>
             </div>
           </div>
         </Container>
@@ -225,26 +195,6 @@ export default function Footer() {
               Terms & Conditions
             </a>
           </div>
-        </Container>
-      </div>
-
-      {/* BIG BRAND WORDMARK */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none overflow-hidden"
-      >
-        <Container className="!py-0">
-          <p
-            className="
-              translate-y-[14%] text-center font-semibold uppercase
-              leading-[0.8] tracking-tight
-              text-[clamp(56px,14vw,230px)]
-              bg-gradient-to-b from-white/25 via-white/10 to-transparent
-              bg-clip-text text-transparent
-            "
-          >
-            Chemdist
-          </p>
         </Container>
       </div>
     </footer>

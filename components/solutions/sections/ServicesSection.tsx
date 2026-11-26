@@ -41,11 +41,11 @@ export default function ServicesSection({
       </motion.div>
 
       {/* SERVICES */}
-      <div className="mt-12 grid grid-cols-1 gap-x-12 sm:grid-cols-2 lg:gap-x-16">
+      <div className="mt-4 grid grid-cols-1 gap-x-12 sm:grid-cols-2 lg:gap-x-16">
         {data.items.map((item, index) => (
           <motion.article
             key={item.title}
-            className="group py-8 lg:py-10"
+            className="group py-4 lg:py-5"
             {...fadeUp((index % 2) * 0.08)}
           >
             {/* Divider: grey base, red accent grows on hover */}

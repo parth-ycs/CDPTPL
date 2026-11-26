@@ -154,37 +154,6 @@ const distillationColumns: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Distillation Column Industrial Applications",
-      intro:
-        "Distillation solutions for industries involving chemical separation, purification and component recovery.",
-      items: [
-        {
-          title: "Chemical and Petrochemical Processing",
-          description:
-            "Separation and purification of chemical mixtures across industrial production facilities.",
-        },
-        {
-          title: "Solvent Recovery and Purification",
-          description:
-            "Recovery and purification of solvents from process mixtures for reuse or further processing.",
-        },
-        {
-          title: "Specialty Chemical Manufacturing",
-          description:
-            "Separation systems supporting specialty chemical production and formulation processes.",
-        },
-        {
-          title: "Oil and Gas Processing",
-          description:
-            "Distillation and fractionation applications for processing and recovering hydrocarbon components.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

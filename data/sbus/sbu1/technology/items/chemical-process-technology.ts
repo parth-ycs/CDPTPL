@@ -166,36 +166,7 @@ const chemicalProcessTechnology: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Chemical Process Technology Applications",
-      intro:
-        "Integrated process engineering solutions for industrial manufacturing, chemical production and plant development.",
-      items: [
-        {
-          title: "Chemical and Petrochemical Manufacturing",
-          description:
-            "Support industrial chemical and petrochemical production through integrated process engineering.",
-        },
-        {
-          title: "Specialty Chemical Production",
-          description:
-            "Develop process configurations for specialty chemical manufacturing and product-specific requirements.",
-        },
-        {
-          title: "Industrial Material Processing",
-          description:
-            "Support industrial operations involving material transformation, processing and separation.",
-        },
-        {
-          title: "Plant Development and Expansion",
-          description:
-            "Support process development and equipment integration for new facilities and existing plant expansions.",
-        },
-      ],
-    },
+    
 
     {
       id: "technical-specifications",

@@ -79,7 +79,7 @@ export default function ProductsSection({
         {/* FEATURED PRODUCT */}
         <div className="min-w-0">
           {/* Images: all stacked, crossfade (no remount, no flash) */}
-          <div className="relative h-[240px] w-full overflow-hidden rounded-xl bg-pale sm:h-[320px] lg:h-[360px]">
+          <div className="relative h-[250px] w-full overflow-hidden rounded-xl bg-pale sm:h-[320px] lg:h-[280px]">
             {items.map((item, i) => {
               const isActive = i === index;
 
@@ -236,24 +236,6 @@ export default function ProductsSection({
                       }
                     />
                   )}
-
-                  {/* Red marker on the active item */}
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-y-3 left-0 w-[2px] origin-center bg-brand-red transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-                      selected ? "scale-y-100" : "scale-y-0"
-                    }`}
-                  />
-
-                  <div className="relative size-[76px] shrink-0 overflow-hidden rounded-md bg-white sm:size-[84px]">
-                    <Image
-                      src={item.image.src}
-                      alt=""
-                      fill
-                      sizes="84px"
-                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
-                    />
-                  </div>
 
                   <div className="relative min-w-0 flex-1">
                     <p

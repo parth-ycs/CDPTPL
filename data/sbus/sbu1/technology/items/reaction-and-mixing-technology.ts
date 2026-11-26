@@ -166,36 +166,6 @@ const reactionAndMixingTechnology: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Reaction and Mixing Technology Applications",
-      intro:
-        "Process solutions for industrial manufacturing operations involving chemical reactions, blending and formulation.",
-      items: [
-        {
-          title: "Chemical Manufacturing",
-          description:
-            "Support industrial chemical production through controlled reaction and mixing processes.",
-        },
-        {
-          title: "Specialty Chemical Processing",
-          description:
-            "Address application-specific reaction conditions, mixing requirements and product characteristics.",
-        },
-        {
-          title: "Polymer and Resin Production",
-          description:
-            "Support polymer and resin manufacturing processes involving controlled reactions and material mixing.",
-        },
-        {
-          title: "Industrial Blending and Formulation",
-          description:
-            "Support blending and formulation operations requiring controlled mixing of industrial materials.",
-        },
-      ],
-    },
 
     {
       id: "technical-specifications",

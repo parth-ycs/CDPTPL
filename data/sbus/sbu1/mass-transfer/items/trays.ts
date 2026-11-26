@@ -182,37 +182,7 @@ const trays: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Column Tray Industrial Applications",
-      intro:
-        "Tray solutions for industrial columns requiring controlled vapour-liquid contacting and stage-wise separation.",
-      items: [
-        {
-          title: "Distillation Columns",
-          description:
-            "Support stage-wise vapour-liquid interaction for component separation in industrial distillation processes.",
-        },
-        {
-          title: "Absorption and Stripping Columns",
-          description:
-            "Provide contacting stages for gas-liquid mass transfer operations.",
-        },
-        {
-          title: "Petrochemical Processing",
-          description:
-            "Support separation operations across petrochemical processing systems.",
-        },
-        {
-          title: "Chemical Separation Systems",
-          description:
-            "Enable controlled vapour-liquid contacting in industrial chemical separation applications.",
-        },
-      ],
-    },
-
+    
     {
       id: "technical-specifications",
       label: "Technical Specifications",

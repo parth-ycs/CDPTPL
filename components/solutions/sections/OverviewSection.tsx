@@ -10,8 +10,8 @@ export default function OverviewSection({
       className="
         flex h-[360px] w-full flex-col justify-between
         rounded-2xl bg-brand-medium p-6 text-white
-        sm:h-[380px] sm:p-8
-        lg:h-[500px] lg:p-10
+        sm:h-[300px] sm:p-8
+        lg:h-[350px] lg:p-10
       "
     >
       {/* Content */}
@@ -30,35 +30,6 @@ export default function OverviewSection({
           {data.description}
         </p>
       </div>
-
-      {/* KPIs */}
-      {data.kpis?.length > 0 && (
-        <div className="grid grid-cols-3 gap-4 border-t border-white/20 pt-5 sm:gap-8 sm:pt-6">
-          {data.kpis.slice(0, 3).map((kpi) => (
-            <div key={kpi.label} className="min-w-0">
-              <p
-                className="
-                  font-heading
-                  text-2xl leading-tight font-normal
-                  sm:text-3xl lg:text-4xl
-                "
-              >
-                {kpi.value}
-              </p>
-
-              <p
-                className="
-                  mt-2
-                  text-xs leading-4 text-white/70
-                  sm:text-sm sm:leading-5
-                "
-              >
-                {kpi.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
     </section>
   );
 }

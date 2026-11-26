@@ -6,7 +6,7 @@ export default function TechnicalSpecificationsSection({ data }: { data: Technic
   const hasImage = Boolean(data.image);
 
   return (
-    <section id={data.id} aria-labelledby={headingId} className="scroll-mt-28 py-16 md:py-20">
+    <section id={data.id} aria-labelledby={headingId} className="scroll-mt-28 py-6 md:py-5">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="max-w-3xl">
           <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-red">

@@ -154,37 +154,6 @@ const condenser: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Condenser Applications",
-      intro:
-        "Condenser solutions for industrial operations involving vapour cooling, condensation and liquid recovery.",
-      items: [
-        {
-          title: "Chemical Manufacturing",
-          description:
-            "Condensation systems for chemical production processes and associated thermal operations.",
-        },
-        {
-          title: "Petrochemical Processing",
-          description:
-            "Vapour condensation and recovery applications across petrochemical processing facilities.",
-        },
-        {
-          title: "Distillation and Evaporation",
-          description:
-            "Condensers used in vapour handling, overhead condensation and evaporation process systems.",
-        },
-        {
-          title: "Industrial Vapour Recovery",
-          description:
-            "Equipment for recovering condensable vapour streams as liquid for reuse or subsequent processing.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

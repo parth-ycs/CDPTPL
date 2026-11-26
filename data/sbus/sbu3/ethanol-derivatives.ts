@@ -141,31 +141,7 @@ const ethanolDerivatives: SBUChild = {
             },
           ],
         },
-        {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "Ethanol Derivative Applications",
-          intro:
-            "Potential application areas; specific derivative chemistry and commercial suitability must be verified.",
-          items: [
-            {
-              title: "Bio-Based Chemicals",
-              description:
-                "Potential derivative routes using ethanol from suitable biological or other feedstock pathways.",
-            },
-            {
-              title: "Chemical Manufacturing",
-              description:
-                "Process systems for producing selected chemical intermediates and derivative products.",
-            },
-            {
-              title: "Specialty Materials",
-              description:
-                "Potential applications where the derivative's verified properties meet downstream material requirements.",
-            },
-          ],
-        },
+        
         {
           id: "technical-specifications",
           label: "Technical Specifications",

@@ -167,37 +167,6 @@ const heatTransferTechnology: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Heat Transfer Technology Applications",
-      intro:
-        "Thermal engineering solutions for industrial processes requiring controlled heating, cooling and energy recovery.",
-      items: [
-        {
-          title: "Chemical and Petrochemical Plants",
-          description:
-            "Support process heating, cooling, condensation and thermal integration across chemical and petrochemical operations.",
-        },
-        {
-          title: "Industrial Utility Systems",
-          description:
-            "Address thermal requirements associated with industrial utility and supporting process systems.",
-        },
-        {
-          title: "Process Heating and Cooling",
-          description:
-            "Provide thermal system configurations for maintaining process-specific temperature requirements.",
-        },
-        {
-          title: "Energy Recovery and Integration",
-          description:
-            "Recover available process heat and evaluate opportunities for reuse across industrial operations.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

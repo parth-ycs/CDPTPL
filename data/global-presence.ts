@@ -392,7 +392,11 @@ export const globalPresencePage = {
     cta: { label: "Contact our team", href: "/contact" }, // change to your contact route
   },
   overview: {
-    heading: "One network, close to where the work happens",
+    heading: {
+    before: "One ",
+    highlight: "network,",
+    after: "close to where the work happens.",
+  },
     paragraphs: [
       "Our offices keep engineering and delivery close to our customers, while projects show the industries we work in and the places we have worked.",
       "Use the globe below to move between countries, or browse every office and project in the lists that follow.",

@@ -167,37 +167,6 @@ const oilAndGasTechnology: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Oil and Gas Technology Applications",
-      intro:
-        "Process engineering solutions for hydrocarbon handling, treatment and recovery across related industrial operations.",
-      items: [
-        {
-          title: "Oil and Gas Facilities",
-          description:
-            "Support hydrocarbon handling, separation and conditioning requirements across oil and gas processing facilities.",
-        },
-        {
-          title: "Petrochemical Operations",
-          description:
-            "Address hydrocarbon stream processing and separation requirements in petrochemical operations.",
-        },
-        {
-          title: "Gas Conditioning and Treatment",
-          description:
-            "Support gas stream conditioning and treatment according to feed characteristics and downstream requirements.",
-        },
-        {
-          title: "Hydrocarbon Recovery",
-          description:
-            "Develop process configurations for separating and recovering hydrocarbon components from industrial streams.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

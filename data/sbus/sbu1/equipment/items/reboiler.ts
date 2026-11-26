@@ -153,37 +153,7 @@ const reboiler: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Reboiler Industrial Applications",
-      intro:
-        "Thermal equipment solutions for industrial operations involving distillation, separation and liquid recovery.",
-      items: [
-        {
-          title: "Distillation Columns",
-          description:
-            "Reboiler systems supplying controlled thermal energy and vapour generation for industrial distillation operations.",
-        },
-        {
-          title: "Petrochemical Processing",
-          description:
-            "Thermal equipment supporting hydrocarbon separation and petrochemical processing operations.",
-        },
-        {
-          title: "Chemical Separation Systems",
-          description:
-            "Reboiler applications supporting chemical separation, purification and process recovery operations.",
-        },
-        {
-          title: "Industrial Solvent Recovery",
-          description:
-            "Thermal systems supporting solvent recovery and purification through controlled separation processes.",
-        },
-      ],
-    },
-
+   
     {
       id: "technical-specifications",
       label: "Technical Specifications",

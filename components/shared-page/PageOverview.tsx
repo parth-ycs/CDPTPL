@@ -2,17 +2,27 @@
 
 import { motion } from "framer-motion";
 import Container from "@/components/container";
+import Highlight from "@/components/ui/highlight";
 
 interface PageOverviewProps {
   heading: {
     before: string;
     highlight?: string;
-    after: string;
+    after?: string;
   };
   description: string;
+  /** Overrides the Highlight style for this section only */
+  highlightClassName?: string;
+  /** Use "inherit" on dark backgrounds */
+  highlightTone?: "blue" | "red" | "inherit";
 }
 
-export default function PageOverview({ heading, description }: PageOverviewProps) {
+export default function PageOverview({
+  heading,
+  description,
+  highlightClassName,
+  highlightTone = "blue",
+}: PageOverviewProps) {
   return (
     <section className="bg-white">
       <Container>
@@ -25,11 +35,16 @@ export default function PageOverview({ heading, description }: PageOverviewProps
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-h2 max-w-2xl font-heading font-semibold tracking-tight text-brand-deep"
           >
-            {heading.before}{" "}
+            {heading.before}
             {heading.highlight && (
-              <span className="text-brand-blue">{heading.highlight}</span>
-            )}{" "}
-            {heading.after}
+              <>
+                {" "}
+                <Highlight tone={highlightTone} className={highlightClassName}>
+                  {heading.highlight}
+                </Highlight>
+              </>
+            )}
+            {heading.after && ` ${heading.after}`}
           </motion.h2>
 
           {/* Description (slightly delayed for a staggered feel) */}

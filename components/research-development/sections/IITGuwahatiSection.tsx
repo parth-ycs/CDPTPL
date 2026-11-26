@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { rdSectionData } from "@/data/research-development/r&d";
-
+import Highlight from "@/components/ui/highlight";
 const EASE_OUT_POW: [number, number, number, number] = [
   0.25, 1, 0.5, 1,
 ];
@@ -63,7 +63,8 @@ export default function IITGuwahatiSection() {
           </p>
 
           <h2 className="mt-5 font-heading text-h2 font-semibold text-brand-deep">
-            {data.heading}
+            {data.heading.before}{" "}
+            <Highlight>{data.heading.highlight}</Highlight>
           </h2>
 
           <p className="mt-6 text-body text-muted">

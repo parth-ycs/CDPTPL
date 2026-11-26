@@ -167,37 +167,6 @@ const evaporationTechnology: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Evaporation Technology Applications",
-      intro:
-        "Evaporation solutions for industrial processes involving liquid concentration, solvent removal and recovery.",
-      items: [
-        {
-          title: "Chemical Concentration",
-          description:
-            "Concentrate chemical process streams to meet defined product and downstream processing requirements.",
-        },
-        {
-          title: "Industrial Wastewater Concentration",
-          description:
-            "Reduce liquid volume and concentrate suitable wastewater streams for further treatment or recovery.",
-        },
-        {
-          title: "Food and Ingredient Processing",
-          description:
-            "Support liquid concentration processes where product characteristics and thermal sensitivity influence system selection.",
-        },
-        {
-          title: "Solvent and Liquid Recovery",
-          description:
-            "Support recovery and management of process liquids through controlled evaporation and condensation.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

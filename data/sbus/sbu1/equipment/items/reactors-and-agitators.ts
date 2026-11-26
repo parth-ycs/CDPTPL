@@ -154,37 +154,6 @@ const reactorsAndAgitators: SBUChild = {
     },
 
     {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Reactors & Agitators Industrial Applications",
-      intro:
-        "Reaction and agitation solutions for industrial sectors involving chemical transformations, formulation and controlled material processing.",
-      items: [
-        {
-          title: "Chemical Manufacturing",
-          description:
-            "Reactor and agitation systems supporting chemical synthesis, reaction processing and industrial production operations.",
-        },
-        {
-          title: "Specialty Chemicals",
-          description:
-            "Controlled reaction and mixing equipment for specialty chemical manufacturing and formulation processes.",
-        },
-        {
-          title: "Resin and Polymer Processing",
-          description:
-            "Reaction and agitation applications involving suitable resin production and polymer processing operations.",
-        },
-        {
-          title: "Industrial Formulation",
-          description:
-            "Mixing and reaction systems supporting the preparation and processing of industrial formulations.",
-        },
-      ],
-    },
-
-    {
       id: "technical-specifications",
       label: "Technical Specifications",
       type: "technical-specifications",

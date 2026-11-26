@@ -166,37 +166,7 @@ const liquidCollectors: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Liquid Collector Industrial Applications",
-      intro:
-        "Liquid collection solutions for packed columns and industrial processes requiring controlled liquid handling.",
-      items: [
-        {
-          title: "Packed Distillation Columns",
-          description:
-            "Collection and routing of liquid between packed sections in industrial distillation systems.",
-        },
-        {
-          title: "Industrial Absorption Columns",
-          description:
-            "Liquid collection arrangements supporting gas absorption and associated column operations.",
-        },
-        {
-          title: "Liquid Redistribution Systems",
-          description:
-            "Collection and transfer of liquid for subsequent redistribution across packed column sections.",
-        },
-        {
-          title: "Multi-Section Packed Columns",
-          description:
-            "Integrated collection arrangements for columns containing multiple packed beds and contacting sections.",
-        },
-      ],
-    },
-
+    
     {
       id: "technical-specifications",
       label: "Technical Specifications",

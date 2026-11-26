@@ -116,7 +116,11 @@ focusAreas: {
 
 iitGuwahati: {
   eyebrow: "Academic Collaboration · 2021",
-  heading: "Centre of Excellence at IIT Guwahati",
+  heading: {
+    before: "Centre of Excellence at",
+    highlight: "IIT Guwahati",
+    after: "",
+  },
   description:
     "A dedicated Centre of Excellence advancing research in ethanol technologies, sustainable products and emerging energy solutions through scientific research and engineering innovation.",
   tagline: "Research. Innovation. Sustainability.",

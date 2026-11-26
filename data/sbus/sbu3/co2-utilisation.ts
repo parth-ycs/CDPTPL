@@ -141,31 +141,7 @@ const co2Utilisation: SBUChild = {
             },
           ],
         },
-        {
-          id: "industries",
-          label: "Industries",
-          type: "industries",
-          heading: "CO₂ Utilisation Applications",
-          intro:
-            "Potential application areas; the feasibility and carbon benefit of each route require case-specific assessment.",
-          items: [
-            {
-              title: "Industrial Gas Processing",
-              description:
-                "Conditioning and handling of suitable CO₂-rich gas streams for defined downstream uses.",
-            },
-            {
-              title: "Chemical Production",
-              description:
-                "Potential conversion pathways where the chemistry, product requirements and process economics are appropriate.",
-            },
-            {
-              title: "Low-Carbon Process Projects",
-              description:
-                "Projects assessing carbon utilisation as one element of a wider emissions-reduction strategy.",
-            },
-          ],
-        },
+        
         {
           id: "technical-specifications",
           label: "Technical Specifications",

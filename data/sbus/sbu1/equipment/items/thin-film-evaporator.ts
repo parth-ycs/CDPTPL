@@ -161,36 +161,6 @@ const thinFilmEvaporator: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Industrial Applications of Thin Film Evaporators",
-      intro:
-        "Thin film evaporation supports thermal processing applications where product viscosity, heat exposure and residence time are important considerations.",
-      items: [
-        {
-          title: "Specialty Chemical Concentration",
-          description:
-            "Concentration and processing of specialty chemical products requiring controlled thermal exposure.",
-        },
-        {
-          title: "Pharmaceutical Intermediates",
-          description:
-            "Thermal processing of suitable pharmaceutical intermediate streams where product characteristics influence equipment selection.",
-        },
-        {
-          title: "High-Viscosity Product Processing",
-          description:
-            "Processing of viscous materials using mechanically distributed liquid films across heated surfaces.",
-        },
-        {
-          title: "Solvent Recovery",
-          description:
-            "Evaporation and separation of volatile solvents from suitable process mixtures for downstream recovery.",
-        },
-      ],
-    },
 
     {
       id: "technical-specifications",

@@ -182,37 +182,7 @@ const liquidDistributors: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Liquid Distributor Industrial Applications",
-      intro:
-        "Liquid distribution solutions for industrial columns requiring controlled liquid delivery and effective vapour-liquid contacting.",
-      items: [
-        {
-          title: "Packed Distillation Columns",
-          description:
-            "Uniform liquid delivery across packed sections to support effective contacting during industrial distillation.",
-        },
-        {
-          title: "Gas Absorption Systems",
-          description:
-            "Liquid distribution arrangements supporting gas-liquid interaction in industrial absorption columns.",
-        },
-        {
-          title: "Industrial Scrubbers",
-          description:
-            "Distribution systems designed to deliver liquid across scrubbing sections for effective gas-liquid contact.",
-        },
-        {
-          title: "Liquid-Liquid Contacting Columns",
-          description:
-            "Liquid distribution arrangements for suitable liquid-liquid contacting and separation applications.",
-        },
-      ],
-    },
-
+   
     {
       id: "technical-specifications",
       label: "Technical Specifications",

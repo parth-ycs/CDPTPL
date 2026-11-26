@@ -143,36 +143,7 @@ const modularPackages: SBUChild = {
         },
       ],
     },
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Modular Package Applications",
-      intro:
-        "Potential application areas where modular delivery may be considered.",
-      image: {
-        src: `${IMG}/modular-industries.jpg`,
-        alt: "Modular process package installed at an industrial site",
-        caption: "Representative installation. Actual configuration varies by project.",
-      },
-      items: [
-        {
-          title: "Chemical Processing",
-          description:
-            "Packaged systems for defined process operations and supporting utilities.",
-        },
-        {
-          title: "Energy Projects",
-          description:
-            "Modular systems for suitable energy-related process and utility applications.",
-        },
-        {
-          title: "Remote or Constrained Sites",
-          description:
-            "Applications where site access, construction space or installation schedules favour off-site assembly.",
-        },
-      ],
-    },
+    
     {
       id: "technical-specifications",
       label: "Technical Specifications",

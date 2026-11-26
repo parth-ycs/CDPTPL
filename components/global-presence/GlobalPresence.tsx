@@ -9,7 +9,6 @@ import { globalPresenceLocations, globalPresencePage } from "@/data/global-prese
 
 import OverviewSection from "./sections/OverviewSection";
 import GlobeExplorerSection, { GlobeExplorerSkeleton } from "./sections/GlobeExplorerSection";
-import NetworkSection from "./sections/NetworkSection";
 import Footer from "@/components/footer";
 import Enquiry from "@/components/enquiry";
 
@@ -28,11 +27,6 @@ const sections: PageSectionItem[] = [
         <GlobeExplorerSection />
       </Suspense>
     ),
-  },
-  {
-    id: "network",
-    label: "Offices & Projects",
-    content: <NetworkSection />,
   },
 ];
 

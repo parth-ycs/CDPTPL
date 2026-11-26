@@ -166,37 +166,7 @@ const structuredPackings: SBUChild = {
       ],
     },
 
-    {
-      id: "industries",
-      label: "Industries",
-      type: "industries",
-      heading: "Structured Packing Industrial Applications",
-      intro:
-        "Structured packing solutions for industrial processes requiring efficient vapour-liquid contacting and separation.",
-      items: [
-        {
-          title: "Chemical Processing Columns",
-          description:
-            "Support vapour-liquid separation and mass transfer operations across chemical processing applications.",
-        },
-        {
-          title: "Petrochemical Separation Systems",
-          description:
-            "Provide structured contact surfaces for industrial separation processes in petrochemical facilities.",
-        },
-        {
-          title: "Gas Absorption and Stripping",
-          description:
-            "Facilitate gas-liquid interaction in packed absorption and stripping columns.",
-        },
-        {
-          title: "Solvent Recovery Operations",
-          description:
-            "Support solvent recovery and separation processes through structured vapour-liquid contacting.",
-        },
-      ],
-    },
-
+   
     {
       id: "technical-specifications",
       label: "Technical Specifications",

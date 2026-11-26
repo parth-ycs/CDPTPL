@@ -1,5 +1,5 @@
-
 import type { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
 export default function Container({
   className = "",
@@ -7,13 +7,12 @@ export default function Container({
 }: ComponentProps<"div">) {
   return (
     <div
-      className={[
-        "mx-auto w-full",
-        "max-w-[1440px]",
-        "px-5 sm:px-8 lg:px-12 xl:px-16",
-        "py-10 sm:py-12 lg:py-14 xl:py-16",
+      className={twMerge(
+        "mx-auto w-full max-w-[1440px]",
+        // fluid padding (20px on mobile -> 64px on large screens), no breakpoints
+        "px-[clamp(1.25rem,5vw,4rem)] py-[clamp(2.5rem,5vw,4rem)]",
         className,
-      ].join(" ")}
+      )}
       {...props}
     />
   );

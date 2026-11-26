@@ -44,13 +44,6 @@ export type ServicesSectionData = SectionBase & {
   items: ServiceItem[];
 };
 
-export type IndustriesSectionData = SectionBase & {
-  type: "industries";
-  heading: string;
-  intro?: string;
-  image?: SectionImage;
-  items: { title: string; description: string }[];
-};
 
 export type CapabilitiesSectionData = SectionBase & {
   type: "capabilities";
@@ -168,7 +161,6 @@ export type ServiceSection =
   | OverviewSectionData
   | ProductsSectionData
   | ServicesSectionData
-  | IndustriesSectionData
   | CapabilitiesSectionData
   | TechnicalSpecificationsSectionData
   | ProcessFlowSectionData

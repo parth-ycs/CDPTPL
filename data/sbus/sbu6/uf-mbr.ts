@@ -1,16 +1,13 @@
-import type { SBUChild } from "./types";
+import type { SBUChild } from "../types";
 
 const ufMbr: SBUChild = {
   slug: "uf-mbr",
-  name: "UF / MBR",
-  tagline: "Water & Wastewater Treatment",
-  description:
-    "Explore ultrafiltration and membrane bioreactor approaches for suitable water and wastewater treatment duties, guided by influent quality, treated-water targets and site operating conditions.",
   hero: {
     name: "UF / MBR",
     tagline: "Water & Wastewater Treatment",
     description:
       "Ultrafiltration and membrane bioreactor systems can support solids separation and biological wastewater treatment when selected for the specific influent, treatment objectives and operating conditions.",
+    image: "/images/services/uf-membrane-modules.jpg",
     imageAlt: "Ultrafiltration and membrane bioreactor water treatment systems",
     ctaLabel: "Discuss a Water Treatment Project",
     ctaHref: "/contact",
@@ -150,36 +147,6 @@ const ufMbr: SBUChild = {
           title: "Plant Integration Support",
           description:
             "Coordinate treatment equipment with utilities, controls and discharge or reuse interfaces.",
-        },
-      ],
-    },
-    {
-      type: "industries",
-      id: "industries",
-      label: "Applications",
-      heading: "Potential application areas",
-      intro:
-        "The suitability of a UF or MBR solution must be established from the influent profile, treatment goals and applicable local requirements.",
-      items: [
-        {
-          title: "Industrial Manufacturing",
-          description:
-            "Treatment of suitable process-water, wash-water and utility-water streams.",
-        },
-        {
-          title: "Municipal Wastewater",
-          description:
-            "Potential wastewater treatment applications where the process configuration meets the specified requirements.",
-        },
-        {
-          title: "Water Reuse Projects",
-          description:
-            "Treatment stages that may form part of a broader scheme designed to meet defined reuse objectives.",
-        },
-        {
-          title: "Commercial and Institutional Sites",
-          description:
-            "Evaluation of suitable wastewater flows where site constraints and effluent targets support membrane-based treatment.",
         },
       ],
     },

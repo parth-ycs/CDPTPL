@@ -16,7 +16,7 @@ export default function Enquiry() {
               className="text-display font-heading mb-6"
             >
               Stuck on a process {" "}
-              <Highlight className="text-brand-red">
+              <Highlight className="text-brand-red-light">
                 problem?
               </Highlight> 
             </h2>

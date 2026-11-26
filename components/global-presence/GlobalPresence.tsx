@@ -1,40 +1,17 @@
 import { Suspense } from "react";
-import { Building2, Factory, Globe2 } from "lucide-react";
 
 import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
+import PageOverview from "@/components/shared-page/PageOverview";
 import type { PageSectionItem } from "@/components/shared-page/types";
 
-import { globalPresenceLocations, globalPresencePage } from "@/data/global-presence";
-
-import OverviewSection from "./sections/OverviewSection";
+import { globalPresencePage } from "@/data/global-presence";
 import GlobeExplorerSection, { GlobeExplorerSkeleton } from "./sections/GlobeExplorerSection";
 import Footer from "@/components/footer";
 import Enquiry from "@/components/enquiry";
 
-const sections: PageSectionItem[] = [
-  {
-    id: "overview",
-    label: "Overview",
-    content: <OverviewSection />,
-  },
-  {
-    id: "explore",
-    label: "Explore the Globe",
-    // useSearchParams needs a Suspense boundary
-    content: (
-      <Suspense fallback={<GlobeExplorerSkeleton />}>
-        <GlobeExplorerSection />
-      </Suspense>
-    ),
-  },
-];
-
 export default function GlobalPresence() {
-  const { hero } = globalPresencePage;
-
-  const officeCount = globalPresenceLocations.reduce((sum, l) => sum + l.offices.length, 0);
-  const projectCount = globalPresenceLocations.reduce((sum, l) => sum + l.projects.length, 0);
+  const { hero, overview } = globalPresencePage;
 
   return (
     <main>
@@ -52,7 +29,11 @@ export default function GlobalPresence() {
         ctaHref={hero.cta.href}
       />
 
-      <PageLayout sections={sections} />
+      <PageOverview
+        heading={overview.heading}
+        description={overview.description}
+      />
+      <GlobeExplorerSection />
       <Enquiry />
       <Footer />
     </main>

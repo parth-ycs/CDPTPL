@@ -10,10 +10,8 @@ interface PageOverviewProps {
     highlight?: string;
     after?: string;
   };
-  description: string;
-  /** Overrides the Highlight style for this section only */
+  description: string | readonly string[];
   highlightClassName?: string;
-  /** Use "inherit" on dark backgrounds */
   highlightTone?: "blue" | "red" | "inherit";
 }
 
@@ -23,6 +21,8 @@ export default function PageOverview({
   highlightClassName,
   highlightTone = "blue",
 }: PageOverviewProps) {
+  const paragraphs: readonly string[] = typeof description === "string" ? [description] : description;
+  
   return (
     <section className="bg-white">
       <Container>
@@ -53,8 +53,13 @@ export default function PageOverview({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            className="space-y-4"
           >
-            <p className="text-lead text-ink">{description}</p>
+            {paragraphs.map((text, i) => (
+              <p key={i} className="text-lead text-ink">
+                {text}
+              </p>
+            ))}
           </motion.div>
         </div>
       </Container>

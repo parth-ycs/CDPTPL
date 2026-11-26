@@ -1,4 +1,3 @@
-
 export type GlobalPoint = {
   id: string;
   name: string;
@@ -12,38 +11,43 @@ export type GlobalOffice = GlobalPoint & {
   capabilities: string[];
 };
 
+export type GlobalFacility = GlobalPoint & {
+  type: "facility";
+  capabilities: string[];
+};
+
 export type GlobalProject = GlobalPoint & {
   type: "project";
   industry: string;
   status: "completed" | "ongoing";
 };
 
+/** The three filters of the Global Presence explorer. Keys match GlobalLocation. */
+export type GlobalCategory = "offices" | "facilities" | "projects";
+export type GlobalEntry = GlobalOffice | GlobalFacility | GlobalProject;
+
 export type GlobalLocation = {
   id: string;
   country: string;
   countryCode: string;
+  /** ISO 3166-1 numeric code; matches the map geometry for highlight and zoom. */
+  isoNumeric: string;
   region: string;
   city: string;
   summary: string;
   capabilities: string[];
   coordinates: [number, number];
   offices: GlobalOffice[];
+  facilities: GlobalFacility[];
   projects: GlobalProject[];
 };
 
-/**
- * Global Presence content.
- * Project and office entries below are mock data for UI development.
- * Replace mock entries with verified Chemdist information before launch.
- *
- * Coordinates use [longitude, latitude].
- * Country codes follow ISO 3166-1 alpha-2.
- */
 export const globalPresenceLocations: GlobalLocation[] = [
   {
     id: "india",
     country: "India",
     countryCode: "IN",
+    isoNumeric: "356",
     region: "Asia Pacific",
     city: "Pune · Mundra",
     summary: "Corporate, R&D, engineering and manufacturing.",
@@ -60,16 +64,18 @@ export const globalPresenceLocations: GlobalLocation[] = [
         capabilities: ["Corporate", "R&D", "Engineering"],
         coordinates: [73.8567, 18.5204],
       },
-      {
-        id: "india-mundra-facility",
-        type: "office",
-        name: "Mundra Manufacturing Facility",
-        city: "Mundra",
-        summary: "Manufacturing and industrial operations.",
-        capabilities: ["Manufacturing", "Industrial Operations"],
-        coordinates: [69.7197, 22.8394],
-      },
+      // {
+      //   id: "india-mundra-facility",
+      //   type: "office",
+      //   name: "Mundra Manufacturing Facility",
+      //   city: "Mundra",
+      //   summary: "Manufacturing and industrial operations.",
+      //   capabilities: ["Manufacturing", "Industrial Operations"],
+      //   coordinates: [69.7197, 22.8394],
+      // },
     ],
+
+    facilities: [],
 
     projects: [
       {
@@ -109,6 +115,7 @@ export const globalPresenceLocations: GlobalLocation[] = [
     id: "united-states",
     country: "United States",
     countryCode: "US",
+    isoNumeric: "840",
     region: "North America",
     city: "New Jersey",
     summary: "Business development, customer interface and support.",
@@ -134,6 +141,8 @@ export const globalPresenceLocations: GlobalLocation[] = [
         coordinates: [-74.4057, 40.0583],
       },
     ],
+
+    facilities: [],
 
     projects: [
       {
@@ -163,6 +172,7 @@ export const globalPresenceLocations: GlobalLocation[] = [
   //   id: "saudi-arabia",
   //   country: "Saudi Arabia",
   //   countryCode: "SA",
+  //   isoNumeric: "682",
   //   region: "Middle East",
   //   city: "Saudi Arabia",
   //   summary: "Regional business development and customer support.",
@@ -184,6 +194,8 @@ export const globalPresenceLocations: GlobalLocation[] = [
   //       coordinates: [46.6753, 24.7136],
   //     },
   //   ],
+
+  //   facilities: [],
 
   //   projects: [
   //     {
@@ -223,6 +235,7 @@ export const globalPresenceLocations: GlobalLocation[] = [
     id: "germany",
     country: "Germany",
     countryCode: "DE",
+    isoNumeric: "276",
     region: "Europe",
     city: "Germany",
     summary: "Technology partnerships, hydrogen and new energy.",
@@ -248,6 +261,8 @@ export const globalPresenceLocations: GlobalLocation[] = [
         coordinates: [11.582, 48.1351],
       },
     ],
+
+    facilities: [],
 
     projects: [
       {
@@ -277,6 +292,7 @@ export const globalPresenceLocations: GlobalLocation[] = [
     id: "south-korea",
     country: "South Korea",
     countryCode: "KR",
+    isoNumeric: "410",
     region: "East Asia",
     city: "South Korea",
     summary: "Global network and international EPC capabilities.",
@@ -298,6 +314,8 @@ export const globalPresenceLocations: GlobalLocation[] = [
         coordinates: [126.978, 37.5665],
       },
     ],
+
+    facilities: [],
 
     projects: [
       {
@@ -327,6 +345,7 @@ export const globalPresenceLocations: GlobalLocation[] = [
     id: "japan",
     country: "Japan",
     countryCode: "JP",
+    isoNumeric: "392",
     region: "East Asia",
     city: "Japan",
     summary: "Business development, customer interface and support.",
@@ -338,20 +357,22 @@ export const globalPresenceLocations: GlobalLocation[] = [
     coordinates: [138.2529, 36.2048],
 
     offices: [
-      {
-        id: "japan-tokyo-office",
-        type: "office",
-        name: "Japan Business Office",
-        city: "Tokyo",
-        summary: "Customer engagement and regional business development.",
-        capabilities: [
-          "Business development",
-          "Customer interface",
-          "Customer support",
-        ],
-        coordinates: [139.6917, 35.6895],
-      },
+      // {
+      //   id: "japan-tokyo-office",
+      //   type: "office",
+      //   name: "Japan Business Office",
+      //   city: "Tokyo",
+      //   summary: "Customer engagement and regional business development.",
+      //   capabilities: [
+      //     "Business development",
+      //     "Customer interface",
+      //     "Customer support",
+      //   ],
+      //   coordinates: [139.6917, 35.6895],
+      // },
     ],
+
+    facilities: [],
 
     projects: [
       {
@@ -378,8 +399,6 @@ export const globalPresenceLocations: GlobalLocation[] = [
   },
 ];
 
-
-
 export const globalPresencePage = {
   hero: {
     eyebrow: "Global presence",
@@ -393,11 +412,11 @@ export const globalPresencePage = {
   },
   overview: {
     heading: {
-    before: "One ",
-    highlight: "network,",
-    after: "close to where the work happens.",
-  },
-    paragraphs: [
+      before: "One ",
+      highlight: "network,",
+      after: "close to where the work happens.",
+    },
+    description: [
       "Our offices keep engineering and delivery close to our customers, while projects show the industries we work in and the places we have worked.",
       "Use the globe below to move between countries, or browse every office and project in the lists that follow.",
     ],
@@ -416,4 +435,3 @@ export const globalPresencePage = {
     description: "Recent and ongoing work, by industry.",
   },
 } as const;
- 

@@ -1,418 +1,311 @@
-
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { Building2, Factory, Globe2, MapPin } from "lucide-react";
-import { globalPresenceLocations, globalPresencePage } from "@/data/global-presence";
-import type { GlobalLocation } from "@/data/global-presence";
-import GlobalPresenceGlobe from "@/components/landing_page/global_presence/global-presence-globe";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  findLocationByPoint,
-  getCountryFlag,
-  getPoint,
-  SectionHeading,
-  StatusBadge,
-} from "../shared";
+  Building2,
+  ChevronLeft,
+  ChevronRight,
+  Factory,
+  FolderKanban,
+  Globe2,
+  type LucideIcon,
+} from "lucide-react";
+import {
+  globalPresenceLocations,
+  type GlobalCategory,
+} from "@/data/global-presence";
+import GlobalPresenceMap, {
+  categoryStyles,
+  flagUrl,
+  type MapMarker,
+} from "./global-presence-map";
+import GlobalPresenceDetails from "./global-presence-details";
+import Container from "@/components/container";
+const categories: { id: GlobalCategory; icon: LucideIcon }[] = [
+  { id: "offices", icon: Building2 },
+  { id: "facilities", icon: Factory },
+  { id: "projects", icon: FolderKanban },
+];
 
-type ViewMode = "global" | "country";
-type Tab = "offices" | "projects";
+const DEFAULT_COUNTRY = "india";
 
-/** Works out the starting selection from ?country=<id>&point=<id>. */
-function resolveFromParams(countryParam: string | null, pointParam: string | null) {
-  const byCountry = countryParam
-    ? globalPresenceLocations.find((location) => location.id === countryParam)
-    : undefined;
+export function GlobeExplorerSection() {
+  const [category, setCategory] = useState<GlobalCategory>("offices");
+  const [countryId, setCountryId] = useState(DEFAULT_COUNTRY);
+  const [viewAll, setViewAll] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const location =
-    byCountry ?? (pointParam ? findLocationByPoint(pointParam) : undefined);
+  const navRef = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ start: true, end: true });
 
-  if (!location) return null;
-
-  const pointId =
-    pointParam && getPoint(location, pointParam) ? pointParam : null;
-
-  const tab: Tab =
-    pointId && location.projects.some((project) => project.id === pointId)
-      ? "projects"
-      : "offices";
-
-  return { location, pointId, tab };
-}
-
-export function GlobeExplorerSkeleton() {
-  return (
-    <div
-      aria-hidden
-      className="h-[640px] animate-pulse rounded-3xl border border-slate-200 bg-slate-50"
-    />
-  );
-}
-
-export default function GlobeExplorerSection() {
-  const searchParams = useSearchParams();
-  const countryParam = searchParams.get("country");
-  const pointParam = searchParams.get("point");
-
-  // Read the URL once for the very first render.
-  const initial = useMemo(
-    () => resolveFromParams(countryParam, pointParam),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+  // Only countries that have entries in the active category.
+  const countries = useMemo(
+    () => globalPresenceLocations.filter((l) => l[category].length > 0),
+    [category],
   );
 
-  const rootRef = useRef<HTMLDivElement | null>(null);
+  // Retained country -> India -> first available -> none.
+  const activeCountry = viewAll
+    ? null
+    : (countries.find((c) => c.id === countryId) ??
+      countries.find((c) => c.id === DEFAULT_COUNTRY) ??
+      countries[0] ??
+      null);
 
-  const [activeLocationId, setActiveLocationId] = useState(
-    initial?.location.id ?? "india",
-  );
+  const groups = viewAll ? countries : activeCountry ? [activeCountry] : [];
 
-  const [viewMode, setViewMode] = useState<ViewMode>(
-    initial ? "country" : "global",
-  );
-
-  const [selectedPointId, setSelectedPointId] = useState<string | null>(
-    initial?.pointId ?? null,
-  );
-
-  const [tab, setTab] = useState<Tab>(initial?.tab ?? "offices");
-
-  const activeLocation = useMemo(
+  const markers = useMemo<MapMarker[]>(
     () =>
-      globalPresenceLocations.find(
-        (location) => location.id === activeLocationId,
-      ) ?? globalPresenceLocations[0],
-    [activeLocationId],
+      groups.flatMap((g) =>
+        g[category].map((entry) => ({ entry, countryId: g.id })),
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [category, viewAll, activeCountry?.id, countries],
   );
 
-  // Globe callbacks must stay stable, otherwise the globe is rebuilt.
-  const selectCountryFromGlobe = useCallback((location: GlobalLocation) => {
-    setActiveLocationId(location.id);
-    setSelectedPointId((previous) =>
-      previous && getPoint(location, previous) ? previous : null,
-    );
-    setViewMode("country");
-  }, []);
+  function selectCategory(next: GlobalCategory) {
+    if (next === category) return;
+    const available = globalPresenceLocations.filter((l) => l[next].length > 0);
+    const keep =
+      available.find((c) => c.id === countryId) ??
+      available.find((c) => c.id === DEFAULT_COUNTRY) ??
+      available[0];
+    if (keep) setCountryId(keep.id);
+    setCategory(next);
+    setSelectedId(null);
+  }
 
-  const selectPoint = useCallback(
-    (location: GlobalLocation, pointId: string) => {
-      if (!getPoint(location, pointId)) return;
+  function selectCountry(id: string) {
+    setCountryId(id);
+    setViewAll(false);
+    setSelectedId(null);
+  }
 
-      setActiveLocationId(location.id);
-      setSelectedPointId(pointId);
-      setViewMode("country");
-      setTab(
-        location.projects.some((project) => project.id === pointId)
-          ? "projects"
-          : "offices",
-      );
-    },
-    [],
-  );
+  function toggleViewAll() {
+    setViewAll((v) => !v);
+    setSelectedId(null);
+  }
 
-  const chooseCountry = useCallback((location: GlobalLocation) => {
-    setActiveLocationId(location.id);
-    setSelectedPointId(null);
-    setViewMode("country");
-    setTab(location.offices.length > 0 ? "offices" : "projects");
-  }, []);
+  function selectEntry(id: string) {
+    setSelectedId((cur) => (cur === id ? null : id));
+  }
 
-  const showGlobal = useCallback(() => {
-    setViewMode("global");
-    setSelectedPointId(null);
-  }, []);
-
-  // Links from other sections or the landing page change the URL.
-  const firstRun = useRef(true);
+  /* ---- Country bar scrolling ---- */
+  function updateEdges() {
+    const el = navRef.current;
+    if (!el) return;
+    setEdge({
+      start: el.scrollLeft <= 2,
+      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2,
+    });
+  }
 
   useEffect(() => {
-    const target = resolveFromParams(countryParam, pointParam);
-    if (!target) return;
+    updateEdges();
+    window.addEventListener("resize", updateEdges);
+    return () => window.removeEventListener("resize", updateEdges);
+  }, [countries]);
 
-    if (!firstRun.current) {
-      setActiveLocationId(target.location.id);
-      setSelectedPointId(target.pointId);
-      setViewMode("country");
-      setTab(target.tab);
-    }
-
-    firstRun.current = false;
-
-    const timer = window.setTimeout(() => {
-      rootRef.current?.scrollIntoView({
+  useEffect(() => {
+    const el = navRef.current;
+    const btn = el?.querySelector<HTMLElement>("[data-active='true']");
+    if (el && btn) {
+      el.scrollTo({
+        left: btn.offsetLeft - el.clientWidth / 2 + btn.clientWidth / 2,
         behavior: "smooth",
-        block: "center",
       });
-    }, 300);
+    }
+  }, [activeCountry?.id, category]);
 
-    return () => window.clearTimeout(timer);
-  }, [countryParam, pointParam]);
+  const scrollNav = (dir: 1 | -1) =>
+    navRef.current?.scrollBy({ left: dir * 240, behavior: "smooth" });
 
-  const officeCount = activeLocation.offices.length;
-  const projectCount = activeLocation.projects.length;
+  const arrowClass =
+    "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-line bg-white text-brand-blue transition-colors hover:border-brand-blue hover:bg-brand-light/40 disabled:pointer-events-none disabled:opacity-40";
 
-  const totalOffices = globalPresenceLocations.reduce(
-    (sum, l) => sum + l.offices.length,
-    0,
-  );
-
-  const totalProjects = globalPresenceLocations.reduce(
-    (sum, l) => sum + l.projects.length,
-    0,
-  );
-
-  const rows =
-    tab === "offices"
-      ? activeLocation.offices.map((office) => ({
-          id: office.id,
-          title: office.name,
-          subtitle: office.city,
-          summary: office.summary,
-          status: undefined as string | undefined,
-          kind: "office" as const,
-        }))
-      : activeLocation.projects.map((project) => ({
-          id: project.id,
-          title: project.name,
-          subtitle: `${project.city}, ${project.industry}`,
-          summary: project.summary,
-          status: project.status as string | undefined,
-          kind: "project" as const,
-        }));
-
-  return (
-    <div ref={rootRef} className="scroll-mt-40">
-      <SectionHeading
-        title={globalPresencePage.explorer.heading}
-        description={globalPresencePage.explorer.description}
-      />
-
-      <div className="mt-8 grid overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(26,76,126,0.10)] lg:h-[640px] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-        {/* Left: country picker and details */}
-        <div className="flex min-h-0 flex-col border-b border-slate-100 lg:border-b-0 lg:border-r">
-          <div className="border-b border-slate-100 px-5 pb-3 pt-4">
-            <div className="mb-2 flex items-center justify-between">
-              <p className="text-small font-medium text-slate-500">
-                Countries
-              </p>
-
-              {viewMode === "country" && (
-                <button
-                  type="button"
-                  onClick={showGlobal}
-                  className="inline-flex items-center gap-1 text-small font-semibold text-[#1557A0] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0]"
-                >
-                  <Globe2 size={12} /> Show all
-                </button>
-              )}
-            </div>
-
-            {/* Scrolls sideways, so any number of countries fits */}
-            <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
-              {globalPresenceLocations.map((location) => {
-                const active =
-                  viewMode === "country" &&
-                  location.id === activeLocation.id;
-
+    return (
+    <section aria-label="Global presence explorer" className="bg-white">
+      <Container>
+        <div className="flex flex-col gap-4 lg:h-[calc(100svh-var(--gp-offset,5.5rem))] lg:min-h-[600px]">
+          {/* Top row: category selectors + View All */}
+          <div className="flex shrink-0 items-center justify-between gap-4">
+            <div className="flex items-start gap-5 sm:gap-8" role="group" aria-label="Category">
+              {categories.map(({ id, icon: Icon }) => {
+                const active = id === category;
+                const count = globalPresenceLocations.reduce(
+                  (n, l) => n + l[id].length,
+                  0,
+                );
                 return (
                   <button
-                    key={location.id}
+                    key={id}
                     type="button"
-                    onClick={() => chooseCountry(location)}
                     aria-pressed={active}
-                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-small font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] focus-visible:ring-offset-2 ${
-                      active
-                        ? "border-[#1557A0] bg-[#EAF3FC] text-[#1557A0]"
-                        : "border-slate-200 text-slate-600 hover:border-[#B8D5F3] hover:text-[#1557A0]"
-                    }`}
+                    onClick={() => selectCategory(id)}
+                    className="group flex flex-col items-center gap-1.5"
                   >
-                    <span aria-hidden>
-                      {getCountryFlag(location.countryCode)}
+                    <span
+                      className={`relative flex h-18 w-18 items-center justify-center rounded-full border transition-all duration-200 ${
+                        active
+                          ? "border-brand-blue bg-brand-blue text-white shadow-md shadow-brand-blue/25"
+                          : "border-line bg-white text-brand-blue group-hover:border-brand-blue/50 group-hover:bg-brand-light/40"
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" strokeWidth={1.75} />
+                      <span
+                        className={`absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-[10px] font-semibold ring-1 ${
+                          active
+                            ? "bg-white text-brand-blue ring-brand-blue"
+                            : "bg-pale text-muted ring-line"
+                        }`}
+                      >
+                        {count}
+                      </span>
                     </span>
-                    {location.country}
+                    <span
+                      className={`text-caption font-semibold transition-colors ${
+                        active ? "text-brand-blue" : "text-muted"
+                      }`}
+                    >
+                      {categoryStyles[id].label}
+                    </span>
                   </button>
                 );
               })}
             </div>
+
+            <button
+              type="button"
+              onClick={toggleViewAll}
+              aria-pressed={viewAll}
+              disabled={countries.length === 0}
+              className={`flex items-center gap-2 rounded-full border px-5 py-2.5 text-small font-semibold transition-colors disabled:pointer-events-none disabled:opacity-40 ${
+                viewAll
+                  ? "border-brand-blue bg-brand-blue text-white"
+                  : "border-brand-blue bg-white text-brand-blue hover:bg-brand-blue hover:text-white"
+              }`}
+            >
+              <Globe2 className="h-4 w-4" />
+              View All
+            </button>
           </div>
 
-          {viewMode === "global" ? (
-            <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
-              <Globe2 size={26} className="text-slate-300" />
+          {/* Country navigation */}
+          <div className="flex shrink-0 items-center gap-2 rounded-2xl border border-line bg-pale p-1.5">
+            <button
+              type="button"
+              aria-label="Scroll countries left"
+              disabled={edge.start}
+              onClick={() => scrollNav(-1)}
+              className={arrowClass}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
 
-              <p className="mt-3 text-body font-semibold text-slate-800">
-                {totalOffices} offices and {totalProjects} projects in{" "}
-                {globalPresenceLocations.length} countries
-              </p>
-
-              <p className="mt-1 max-w-[260px] text-small text-slate-500">
-                Select a country to see its offices and projects.
-              </p>
-            </div>
-          ) : (
-            <div className="flex min-h-0 flex-1 flex-col">
-              <div className="px-5 pt-4">
-                <div className="flex items-center gap-3">
-                  <span
-                    aria-hidden
-                    className="inline-flex h-10 w-12 shrink-0 items-center justify-center rounded-lg bg-[#F2F7FC] text-xl"
-                  >
-                    {getCountryFlag(activeLocation.countryCode)}
-                  </span>
-
-                  <div className="min-w-0">
-                    <h3 className="font-heading text-h3 font-semibold text-slate-900">
-                      {activeLocation.country}
-                    </h3>
-
-                    <p className="text-small text-slate-500">
-                      {activeLocation.city} ({activeLocation.region})
-                    </p>
-                  </div>
-                </div>
-
-                <p className="mt-3 text-body text-slate-600">
-                  {activeLocation.summary}
+            <div
+              ref={navRef}
+              onScroll={updateEdges}
+              className="relative flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {countries.length === 0 ? (
+                <p className="px-3 py-2 text-small text-muted">
+                  No {categoryStyles[category].label.toLowerCase()} listed yet.
                 </p>
-
-                <div
-                  role="tablist"
-                  aria-label="Offices and projects"
-                  className="mt-4 inline-flex rounded-full bg-slate-100 p-1"
-                >
-                  {(
-                    [
-                      { id: "offices", label: "Offices", count: officeCount },
-                      {
-                        id: "projects",
-                        label: "Projects",
-                        count: projectCount,
-                      },
-                    ] as const
-                  ).map((item) => (
+              ) : (
+                countries.map((c) => {
+                  const active = !viewAll && activeCountry?.id === c.id;
+                  return (
                     <button
-                      key={item.id}
+                      key={c.id}
                       type="button"
-                      role="tab"
-                      aria-selected={tab === item.id}
-                      onClick={() => setTab(item.id)}
-                      className={`rounded-full px-3.5 py-1 text-small font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] ${
-                        tab === item.id
-                          ? "bg-white text-slate-900 shadow-sm"
-                          : "text-slate-500 hover:text-slate-800"
+                      data-active={active}
+                      aria-pressed={active}
+                      onClick={() => selectCountry(c.id)}
+                      className={`flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-xl border px-4 py-2 text-small font-semibold transition-all duration-200 ${
+                        active
+                          ? "border-brand-blue/20 bg-brand-light shadow-sm"
+                          : "border-line bg-white text-ink hover:border-brand-blue/40 hover:text-brand-blue"
                       }`}
                     >
-                      {item.label}{" "}
-                      <span className="text-slate-400">{item.count}</span>
+                      <img
+                        src={flagUrl(c.countryCode)}
+                        alt=""
+                        className="h-4 w-6 rounded-[2px] object-cover"
+                      />
+                      {c.country}
                     </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* This list scrolls, so it keeps working as more offices and projects are added */}
-              <ul className="mt-3 max-h-[360px] min-h-0 flex-1 space-y-0.5 overflow-y-auto px-3 pb-4 lg:max-h-none">
-                {rows.length === 0 && (
-                  <li className="px-3 py-8 text-center text-small text-slate-500">
-                    No {tab} added for {activeLocation.country} yet.
-                  </li>
-                )}
-
-                {rows.map((row) => {
-                  const selected = selectedPointId === row.id;
-                  const isOffice = row.kind === "office";
-                  const Icon = isOffice ? Building2 : Factory;
-
-                  return (
-                    <li key={row.id}>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          selected
-                            ? setSelectedPointId(null)
-                            : selectPoint(activeLocation, row.id)
-                        }
-                        aria-pressed={selected}
-                        className={`flex w-full items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1557A0] ${
-                          selected
-                            ? isOffice
-                              ? "bg-[#EAF3FC]"
-                              : "bg-orange-50"
-                            : "hover:bg-slate-50"
-                        }`}
-                      >
-                        <span
-                          className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                            isOffice
-                              ? "bg-[#EAF3FC] text-[#1557A0]"
-                              : "bg-orange-50 text-[#C45A28]"
-                          }`}
-                        >
-                          <Icon size={15} />
-                        </span>
-
-                        <span className="min-w-0 flex-1">
-                          <span className="flex items-center gap-2">
-                            <span className="truncate text-small font-semibold text-slate-900">
-                              {row.title}
-                            </span>
-
-                            {row.status && (
-                              <StatusBadge status={row.status} />
-                            )}
-                          </span>
-
-                          <span className="mt-0.5 block text-small text-slate-500">
-                            {row.subtitle}
-                          </span>
-
-                          {selected && row.summary && (
-                            <span className="mt-2 block text-small text-slate-600">
-                              {row.summary}
-                            </span>
-                          )}
-                        </span>
-
-                        <MapPin
-                          size={14}
-                          className={`mt-1 shrink-0 ${
-                            selected
-                              ? isOffice
-                                ? "text-[#1557A0]"
-                                : "text-[#C45A28]"
-                              : "text-slate-300"
-                          }`}
-                        />
-                      </button>
-                    </li>
                   );
-                })}
-              </ul>
+                })
+              )}
             </div>
-          )}
-        </div>
 
-        {/* Right: the globe */}
-        <div className="relative min-h-[420px] overflow-hidden bg-gradient-to-br from-[#F0F6FF] via-white to-[#EAF3FC]">
-          <div className="pointer-events-none absolute left-4 top-4 z-10 flex items-center gap-3 rounded-full bg-white/90 px-3 py-1.5 text-caption text-slate-600 shadow-sm backdrop-blur">
-            <span className="inline-flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-[#1557A0]" /> Office
-            </span>
-
-            <span className="inline-flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-[#C45A28]" /> Project
-            </span>
+            <button
+              type="button"
+              aria-label="Scroll countries right"
+              disabled={edge.end}
+              onClick={() => scrollNav(1)}
+              className={arrowClass}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
 
-          <GlobalPresenceGlobe
-            variant="page"
-            activeLocation={activeLocation}
-            viewMode={viewMode}
-            selectedPointId={selectedPointId}
-            onSelectCountry={selectCountryFromGlobe}
-            onSelectPoint={selectPoint}
-          />
+          {/* Details (left) + map (right) */}
+          <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+            <div className="h-[420px] min-h-0 lg:h-auto">
+              <GlobalPresenceDetails
+                category={category}
+                groups={groups}
+                isGlobal={viewAll}
+                selectedId={selectedId}
+                onSelect={selectEntry}
+              />
+            </div>
+            <div className="aspect-[960/563] min-h-0 lg:aspect-auto lg:h-auto">
+              <GlobalPresenceMap
+                category={category}
+                countries={countries}
+                activeCountry={activeCountry}
+                markers={markers}
+                selectedId={selectedId}
+                onSelect={selectEntry}
+                onCountrySelect={selectCountry}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 }
+
+/** Suspense fallback: same footprint as the real section so nothing jumps. */
+export function GlobeExplorerSkeleton() {
+  return (
+    <section aria-hidden="true" className="bg-white">
+      <Container>
+        <div className="flex animate-pulse flex-col gap-4 lg:h-[calc(100svh-var(--gp-offset,5.5rem))] lg:min-h-[600px]">
+          <div className="flex shrink-0 items-center justify-between">
+            <div className="flex gap-6 sm:gap-8">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="flex flex-col items-center gap-1.5">
+                  <div className="h-12 w-12 rounded-full bg-pale" />
+                  <div className="h-3 w-12 rounded bg-pale" />
+                </div>
+              ))}
+            </div>
+            <div className="h-10 w-28 rounded-full bg-pale" />
+          </div>
+          <div className="h-[54px] shrink-0 rounded-2xl bg-pale" />
+          <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+            <div className="h-[420px] rounded-2xl bg-pale lg:h-auto" />
+            <div className="aspect-[960/563] rounded-2xl bg-brand-light/25 lg:aspect-auto" />
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export default GlobeExplorerSection;

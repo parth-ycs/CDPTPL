@@ -9,9 +9,10 @@ const NAV_ITEMS = [
   { label: "Blogs", href: "/admin/blogs" },
   { label: "Projects", href: "/admin/projects" },
   { label: "Solutions", href: "/admin/solutions"},
-  // { label: "Media", href: "/admin/media" },
-  // { label: "Events", href: "/admin/events" },
-  // { label: "Patents", href: "/admin/patents" },
+  { label: "CSR", href: "/admin/csr"},
+  { label: "Media", href: "/admin/media" },
+  { label: "Events", href: "/admin/events" },
+  { label: "Patents", href: "/admin/patents" },
   // { label: "Careers", href: "/admin/careers" },
   // { label: "Enquiries", href: "/admin/enquiries" },
 ];

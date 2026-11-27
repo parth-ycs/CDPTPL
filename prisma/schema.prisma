@@ -22,50 +22,6 @@ model Blog {
   @@map("blogs")
 }
 
-model Project {
-  id       String @id
-  category String
-
-  location         String?
-  plant            String?
-  capacity         String?
-  yearOfAward      String? @map("year_of_award")
-  yearOfCompletion String? @map("year_of_completion")
-  contractValue    String? @map("contract_value")
-  executionScope   String? @map("execution_scope")
-
-  heroEyebrow     String @map("hero_eyebrow")
-  heroHeading     String @map("hero_heading")
-  heroDescription String @map("hero_description")
-  heroImage       String @map("hero_image")
-  heroImageAlt    String @map("hero_image_alt")
-
-  overviewHeadingBefore    String  @map("overview_heading_before")
-  overviewHeadingHighlight String? @map("overview_heading_highlight")
-  overviewHeadingAfter     String  @default("") @map("overview_heading_after")
-  overviewDescription      String  @map("overview_description")
-  overviewImage            String? @map("overview_image")
-  overviewImageAlt         String? @map("overview_image_alt")
-
-  problemHeading     String? @map("problem_heading")
-  problemDescription String? @map("problem_description")
-  problemImage       String? @map("problem_image")
-  problemImageAlt    String? @map("problem_image_alt")
-
-  solutionHeading     String  @map("solution_heading")
-  solutionDescription String  @map("solution_description")
-  solutionImage       String? @map("solution_image")
-  solutionImageAlt    String? @map("solution_image_alt")
-  solutionPoints      String  @default("[]") @map("solution_points")
-
-  resultHeading     String? @map("result_heading")
-  resultDescription String? @map("result_description")
-  resultPoints      String? @map("result_points")
-
-  @@index([category], map: "idx_projects_category")
-  @@map("projects")
-}
-
 model Sbu {
   slug         String @id
   number       String
@@ -122,4 +78,200 @@ model Solution {
   @@index([sbuSlug, displayOrder], map: "idx_solutions_sbu_order")
   @@index([groupSlug, displayOrder], map: "idx_solutions_group_order")
   @@map("solutions")
+}
+
+model Event {
+  id           String  @id
+  title        String
+  category     String
+  date         String
+  location     String
+  venue        String
+  stand        String?
+  description  String
+  image        String
+  imageAlt     String  @map("image_alt")
+  url          String?
+  displayOrder Int     @default(0) @map("display_order")
+
+  @@index([displayOrder], map: "idx_events_display_order")
+  @@map("events")
+}
+
+model CsrInitiative {
+  id           String @id
+  title        String
+  category     String
+  location     String
+  description  String
+  image        String
+  imageAlt     String @map("image_alt")
+  displayOrder Int    @default(0) @map("display_order")
+
+  @@index([displayOrder], map: "idx_csr_initiatives_display_order")
+  @@map("csr_initiatives")
+}
+model MediaItem {
+  id           String @id
+  category     String
+  date         String
+  title        String
+  location     String
+  description  String
+  image        String
+  href         String @default("#enquiry")
+  displayOrder Int    @default(0) @map("display_order")
+
+  @@index([displayOrder], map: "idx_media_items_display_order")
+  @@map("media_items")
+}
+model Patent {
+  id                String  @id
+  title             String
+  referenceLabel    String  @map("reference_label")
+  applicationNumber String  @map("application_number")
+  date              String?
+  image             String
+  imageAlt          String  @map("image_alt")
+  displayOrder      Int     @default(0) @map("display_order")
+
+  @@index([displayOrder], map: "idx_patents_display_order")
+  @@map("patents")
+}
+
+model Project {
+  id       String @id
+  category String
+
+  location         String?
+  plant            String?
+  capacity         String?
+  yearOfAward      String? @map("year_of_award")
+  yearOfCompletion String? @map("year_of_completion")
+  contractValue    String? @map("contract_value")
+  executionScope   String? @map("execution_scope")
+
+  heroEyebrow     String @map("hero_eyebrow")
+  heroHeading     String @map("hero_heading")
+  heroDescription String @map("hero_description")
+  heroImage       String @map("hero_image")
+  heroImageAlt    String @map("hero_image_alt")
+
+  overviewHeadingBefore    String  @map("overview_heading_before")
+  overviewHeadingHighlight String? @map("overview_heading_highlight")
+  overviewHeadingAfter     String  @default("") @map("overview_heading_after")
+  overviewDescription      String  @map("overview_description")
+  overviewImage            String? @map("overview_image")
+  overviewImageAlt         String? @map("overview_image_alt")
+
+  problemHeading     String? @map("problem_heading")
+  problemDescription String? @map("problem_description")
+  problemImage       String? @map("problem_image")
+  problemImageAlt    String? @map("problem_image_alt")
+
+  solutionHeading     String  @map("solution_heading")
+  solutionDescription String  @map("solution_description")
+  solutionImage       String? @map("solution_image")
+  solutionImageAlt    String? @map("solution_image_alt")
+  solutionPoints      String  @default("[]") @map("solution_points")
+
+  resultHeading     String? @map("result_heading")
+  resultDescription String? @map("result_description")
+  resultPoints      String? @map("result_points")
+
+  // Global Presence integration
+  countryId      String? @map("country_id")
+  city           String?
+  longitude      Float?
+  latitude       Float?
+  globalIndustry String? @map("global_industry")
+  globalStatus   String? @default("completed") @map("global_status")
+  showOnGlobal   Boolean @default(false) @map("show_on_global")
+
+  country GlobalCountry? @relation(fields: [countryId], references: [id], onDelete: SetNull)
+
+  @@index([category], map: "idx_projects_category")
+  @@index([countryId], map: "idx_projects_country_id")
+  @@map("projects")
+}
+
+model GlobalCountry {
+  id           String  @id
+  country      String
+  countryCode  String  @map("country_code")
+  isoNumeric   String  @map("iso_numeric")
+  region       String
+  city         String
+  summary      String
+  capabilities String  @default("[]")
+  longitude    Float
+  latitude     Float
+  displayOrder Int     @default(0) @map("display_order")
+
+  offices    Office[]
+  facilities Facility[]
+  projects   Project[]
+
+  @@index([displayOrder], map: "idx_global_countries_display_order")
+  @@map("global_countries")
+}
+
+model Office {
+  id            String  @id
+  countryId     String  @map("country_id")
+  name          String
+  title         String
+  company       String  @default("Chemdist Group")
+  city          String
+  summary       String  @default("")
+  capabilities  String  @default("[]")
+  longitude     Float?
+  latitude      Float?
+  addressLines  String  @default("[]") @map("address_lines")
+  phones        String  @default("[]")
+  email         String?
+  note          String?
+  mapUrl        String? @map("map_url")
+  showOnContact Boolean @default(true) @map("show_on_contact")
+  showOnGlobal  Boolean @default(true) @map("show_on_global")
+  displayOrder  Int     @default(0) @map("display_order")
+
+  country GlobalCountry @relation(fields: [countryId], references: [id], onDelete: Restrict)
+
+  @@index([countryId], map: "idx_offices_country_id")
+  @@index([displayOrder], map: "idx_offices_display_order")
+  @@map("offices")
+}
+
+model Facility {
+  id           String @id
+  countryId    String @map("country_id")
+  name         String
+  city         String
+  summary      String
+  capabilities String @default("[]")
+  longitude    Float
+  latitude     Float
+  displayOrder Int    @default(0) @map("display_order")
+
+  country GlobalCountry @relation(fields: [countryId], references: [id], onDelete: Restrict)
+
+  @@index([countryId], map: "idx_facilities_country_id")
+  @@index([displayOrder], map: "idx_facilities_display_order")
+  @@map("facilities")
+}
+
+model ContactSetting {
+  id                  String @id @default("default")
+  hqHeading           String @map("hq_heading")
+  hqCompany           String @map("hq_company")
+  hqAddressLines      String @default("[]") @map("hq_address_lines")
+  hqImage             String @map("hq_image")
+  hqImageAlt          String @map("hq_image_alt")
+  supportHeading      String @map("support_heading")
+  supportTollFree     String @map("support_toll_free")
+  supportTollFreeHref String @map("support_toll_free_href")
+  supportEmail        String @map("support_email")
+
+  @@map("contact_settings")
 }

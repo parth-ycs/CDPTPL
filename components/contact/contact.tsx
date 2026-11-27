@@ -1,14 +1,20 @@
 import PageHero from "@/components/shared-page/PageHero";
-
-import { contactPageData } from "@/data/contact";
-
+import {
+  contactPageData,
+  type ContactOffice,
+  type ContactSettingsData,
+} from "@/data/contact";
 import ContactFormSection from "@/components/contact/sections/ContactFormSection";
 import HeadquartersSection from "@/components/contact/sections/HeadquartersSection";
 import OfficesSection from "@/components/contact/sections/OfficesSection";
-
 import Footer from "@/components/footer";
 
-export default function Contact() {
+type Props = {
+  settings: ContactSettingsData;
+  offices: ContactOffice[];
+};
+
+export default function Contact({ settings, offices }: Props) {
   const { hero } = contactPageData;
 
   return (
@@ -26,8 +32,8 @@ export default function Contact() {
       />
 
       <ContactFormSection />
-      <HeadquartersSection />
-      <OfficesSection />
+      <HeadquartersSection settings={settings} />
+      <OfficesSection offices={offices} />
 
       <Footer />
     </main>

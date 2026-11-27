@@ -11,10 +11,7 @@ import {
   Globe2,
   type LucideIcon,
 } from "lucide-react";
-import {
-  globalPresenceLocations,
-  type GlobalCategory,
-} from "@/data/global-presence";
+import type { GlobalCategory, GlobalLocation } from "@/data/global-presence";
 import GlobalPresenceMap, {
   categoryStyles,
   flagUrl,
@@ -22,6 +19,7 @@ import GlobalPresenceMap, {
 } from "./global-presence-map";
 import GlobalPresenceDetails from "./global-presence-details";
 import Container from "@/components/container";
+
 const categories: { id: GlobalCategory; icon: LucideIcon }[] = [
   { id: "offices", icon: Building2 },
   { id: "facilities", icon: Factory },
@@ -30,7 +28,11 @@ const categories: { id: GlobalCategory; icon: LucideIcon }[] = [
 
 const DEFAULT_COUNTRY = "india";
 
-export function GlobeExplorerSection() {
+export function GlobeExplorerSection({
+  locations,
+}: {
+  locations: GlobalLocation[];
+}) {
   const [category, setCategory] = useState<GlobalCategory>("offices");
   const [countryId, setCountryId] = useState(DEFAULT_COUNTRY);
   const [viewAll, setViewAll] = useState(false);
@@ -41,8 +43,8 @@ export function GlobeExplorerSection() {
 
   // Only countries that have entries in the active category.
   const countries = useMemo(
-    () => globalPresenceLocations.filter((l) => l[category].length > 0),
-    [category],
+    () => locations.filter((l) => l[category].length > 0),
+    [locations, category],
   );
 
   // Retained country -> India -> first available -> none.
@@ -66,7 +68,7 @@ export function GlobeExplorerSection() {
 
   function selectCategory(next: GlobalCategory) {
     if (next === category) return;
-    const available = globalPresenceLocations.filter((l) => l[next].length > 0);
+    const available = locations.filter((l) => l[next].length > 0);
     const keep =
       available.find((c) => c.id === countryId) ??
       available.find((c) => c.id === DEFAULT_COUNTRY) ??
@@ -124,16 +126,20 @@ export function GlobeExplorerSection() {
   const arrowClass =
     "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-line bg-white text-brand-blue transition-colors hover:border-brand-blue hover:bg-brand-light/40 disabled:pointer-events-none disabled:opacity-40";
 
-    return (
+  return (
     <section aria-label="Global presence explorer" className="bg-white">
       <Container>
         <div className="flex flex-col gap-4 lg:h-[calc(100svh-var(--gp-offset,5.5rem))] lg:min-h-[600px]">
           {/* Top row: category selectors + View All */}
           <div className="flex shrink-0 items-center justify-between gap-4">
-            <div className="flex items-start gap-5 sm:gap-8" role="group" aria-label="Category">
+            <div
+              className="flex items-start gap-5 sm:gap-8"
+              role="group"
+              aria-label="Category"
+            >
               {categories.map(({ id, icon: Icon }) => {
                 const active = id === category;
-                const count = globalPresenceLocations.reduce(
+                const count = locations.reduce(
                   (n, l) => n + l[id].length,
                   0,
                 );

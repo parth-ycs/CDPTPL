@@ -48,11 +48,23 @@ export async function POST(request: Request) {
     );
   }
 
-  const project = createProject(parsed.data);
+  const { globalPresence, ...projectData } = parsed.data;
+
+  const project = createProject({
+    ...projectData,
+    countryId: globalPresence?.countryId ?? null,
+    city: globalPresence?.city ?? null,
+    longitude: globalPresence?.longitude ?? null,
+    latitude: globalPresence?.latitude ?? null,
+    globalIndustry: globalPresence?.globalIndustry ?? null,
+    globalStatus: globalPresence?.globalStatus ?? "completed",
+    showOnGlobal: globalPresence?.showOnGlobal ?? false,
+  });
 
   revalidatePath("/projects");
   revalidatePath(`/projects/${project.id}`);
   revalidatePath("/research-development");
+  revalidatePath("/global-presence");
 
   return NextResponse.json({ project }, { status: 201 });
 }

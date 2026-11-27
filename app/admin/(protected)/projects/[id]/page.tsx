@@ -6,6 +6,7 @@ import {
   getProjectById,
   getProjectCategories,
 } from "@/lib/db/queries/projects";
+import { getCountries } from "@/lib/db/queries/global-presence";
 import ProjectForm from "@/components/admin/ProjectForm";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +22,7 @@ export default async function EditProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const categories = getProjectCategories();
+  const countries = getCountries();
 
   return (
     <div className="space-y-6">
@@ -38,7 +40,12 @@ export default async function EditProjectPage({ params }: Props) {
         <p className="mt-0.5 text-sm text-stone-500">{project.hero.heading}</p>
       </div>
 
-      <ProjectForm mode="edit" initialData={project} categories={categories} />
+      <ProjectForm
+        mode="edit"
+        initialData={project}
+        categories={categories}
+        countries={countries}
+      />
     </div>
   );
 }

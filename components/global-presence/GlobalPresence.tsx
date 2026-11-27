@@ -1,16 +1,15 @@
-import { Suspense } from "react";
-
 import PageHero from "@/components/shared-page/PageHero";
-import PageLayout from "@/components/shared-page/PageLayout";
 import PageOverview from "@/components/shared-page/PageOverview";
-import type { PageSectionItem } from "@/components/shared-page/types";
-
-import { globalPresencePage } from "@/data/global-presence";
-import GlobeExplorerSection, { GlobeExplorerSkeleton } from "./sections/GlobeExplorerSection";
+import { globalPresencePage, type GlobalLocation } from "@/data/global-presence";
+import GlobeExplorerSection from "./sections/GlobeExplorerSection";
 import Footer from "@/components/footer";
 import Enquiry from "@/components/enquiry";
 
-export default function GlobalPresence() {
+export default function GlobalPresence({
+  locations,
+}: {
+  locations: GlobalLocation[];
+}) {
   const { hero, overview } = globalPresencePage;
 
   return (
@@ -33,7 +32,7 @@ export default function GlobalPresence() {
         heading={overview.heading}
         description={overview.description}
       />
-      <GlobeExplorerSection />
+      <GlobeExplorerSection locations={locations} />
       <Enquiry />
       <Footer />
     </main>

@@ -1,8 +1,7 @@
-
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { newsItems } from "@/data/news";
+import type { NewsItem } from "@/data/media";
 
 const CARD_HEIGHT = "h-[490px]";
 
@@ -31,11 +30,7 @@ function ArrowIcon({
   );
 }
 
-function NewsCard({
-  item,
-}: {
-  item: (typeof newsItems)[number];
-}) {
+function NewsCard({ item }: { item: NewsItem }) {
   return (
     <article
       className={`group flex ${CARD_HEIGHT} w-full flex-col overflow-hidden rounded-[12px] border border-[#e2dfd7] bg-white transition-[border-color,box-shadow] duration-300 hover:border-[#b7b2a7] hover:shadow-[0_12px_35px_rgba(20,25,35,0.07)] focus-within:border-[#b7b2a7]`}
@@ -45,6 +40,7 @@ function NewsCard({
         aria-label={`Read more: ${item.title}`}
         className="block shrink-0 overflow-hidden"
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={item.image}
           alt=""
@@ -97,23 +93,19 @@ function NewsCard({
   );
 }
 
-export default function News() {
+export default function News({ items = [] }: { items?: NewsItem[] }) {
   const railRef = useRef<HTMLDivElement>(null);
   const settleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
+    null,
   );
   const renderedIndexRef = useRef(0);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const totalSlides = newsItems.length;
+  const totalSlides = items.length;
 
   // Three copies let the carousel loop without a visible jump.
-  const slides = [
-    ...newsItems,
-    ...newsItems,
-    ...newsItems,
-  ];
+  const slides = [...items, ...items, ...items];
 
   // Scroll to a rendered card, including cloned cards.
   const scrollToCard = useCallback(
@@ -131,7 +123,7 @@ export default function News() {
 
       rail.scrollTo({ left, behavior });
     },
-    []
+    [],
   );
 
   // Begin in the middle copy, not at the physical start.
@@ -160,7 +152,7 @@ export default function News() {
 
     cards.forEach((card, index) => {
       const distance = Math.abs(
-        card.getBoundingClientRect().left - railLeft
+        card.getBoundingClientRect().left - railLeft,
       );
 
       if (distance < closestDistance) {
@@ -219,7 +211,7 @@ export default function News() {
       next,
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "instant"
-        : "smooth"
+        : "smooth",
     );
   };
 
@@ -287,7 +279,6 @@ export default function News() {
                 />
               </div>
             </div>
-
           </div>
         </div>
 
@@ -302,9 +293,7 @@ export default function News() {
             <div
               key={`${index}-${item.id}`}
               className="w-[88%] shrink-0 snap-start sm:w-[40%] md:w-[40%] lg:w-[45%] xl:w-[32%]"
-              aria-hidden={
-                index % totalSlides !== activeIndex
-              }
+              aria-hidden={index % totalSlides !== activeIndex}
             >
               <NewsCard item={item} />
             </div>

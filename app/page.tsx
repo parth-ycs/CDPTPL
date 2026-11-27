@@ -10,11 +10,13 @@ import ProjectsShowcase from "@/components/landing_page/ProjectsShowcase";
 import ResearchDevelopment from "@/components/landing_page/research-development";
 import GlobalPresenceSection from "@/components/landing_page/global_presence/global-presence";
 import { getProjects } from "@/lib/db/queries/projects";
+import { getGlobalLocations } from "@/lib/db/queries/global-presence";
 
 export const dynamic = "force-dynamic";
 
 export default function Page() {
   const projects = getProjects();
+  const locations = getGlobalLocations();
 
   return (
     <main>
@@ -23,7 +25,7 @@ export default function Page() {
       <CoreCapabilitiesSection />
       <FeaturedTechnologies />
       <ProjectsShowcase projects={projects} />
-      <GlobalPresenceSection />
+      <GlobalPresenceSection locations={locations} />
       <ResearchDevelopment />
       <Industries />
       <News />

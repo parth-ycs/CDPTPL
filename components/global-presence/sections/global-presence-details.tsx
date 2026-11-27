@@ -2,7 +2,8 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useRef } from "react";
-import { Globe2, MapPin } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Globe2, MapPin } from "lucide-react";
 import type {
   GlobalCategory,
   GlobalEntry,
@@ -31,12 +32,19 @@ function EntryCard({
   onSelect: () => void;
 }) {
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       data-entry-id={entry.id}
       aria-pressed={selected}
       onClick={onSelect}
-      className={`w-full rounded-xl border p-3.5 text-left transition-all duration-200 ${
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      className={`w-full cursor-pointer rounded-xl border p-3.5 text-left transition-all duration-200 ${
         selected
           ? "border-brand-blue bg-brand-light/30 shadow-sm ring-1 ring-brand-blue"
           : "border-line bg-white hover:border-brand-blue/40 hover:shadow-sm"
@@ -57,19 +65,30 @@ function EntryCard({
           <p className="mt-2 text-small text-muted">{entry.summary}</p>
 
           {entry.type === "project" ? (
-            <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-              <span className="rounded-full bg-pale px-2.5 py-0.5 text-caption font-medium text-ink">
-                {entry.industry}
-              </span>
-              <span
-                className={`rounded-full px-2.5 py-0.5 text-caption font-semibold capitalize ${
-                  entry.status === "ongoing"
-                    ? "bg-brand-light text-brand-blue"
-                    : "border border-line bg-white text-muted"
-                }`}
+            <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="rounded-full bg-pale px-2.5 py-0.5 text-caption font-medium text-ink">
+                  {entry.industry}
+                </span>
+                <span
+                  className={`rounded-full px-2.5 py-0.5 text-caption font-semibold capitalize ${
+                    entry.status === "ongoing"
+                      ? "bg-brand-light text-brand-blue"
+                      : "border border-line bg-white text-muted"
+                  }`}
+                >
+                  {entry.status}
+                </span>
+              </div>
+
+              <Link
+                href={entry.href}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1 text-caption font-semibold text-brand-blue underline-offset-4 hover:underline"
               >
-                {entry.status}
-              </span>
+                View project
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
             </div>
           ) : (
             entry.capabilities.length > 0 && (
@@ -87,7 +106,7 @@ function EntryCard({
           )}
         </div>
       </div>
-    </button>
+    </div>
   );
 }
 

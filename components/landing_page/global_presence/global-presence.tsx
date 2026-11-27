@@ -3,17 +3,20 @@
 import { useCallback, useMemo, useState } from "react";
 import GlobalPresenceLeft from "./global-presence-left";
 import GlobalPresenceGlobe from "./global-presence-globe";
-import { globalPresenceLocations } from "@/data/global-presence";
 import type { GlobalLocation, GlobalPoint } from "@/data/global-presence";
 import Container from "@/components/container";
 
 type Props = {
+  locations: GlobalLocation[];
   exploreHref?: string;
 };
 
 type ViewMode = "global" | "country";
 
-function getPoint(location: GlobalLocation, pointId: string): GlobalPoint | undefined {
+function getPoint(
+  location: GlobalLocation,
+  pointId: string,
+): GlobalPoint | undefined {
   return (
     location.offices.find((office) => office.id === pointId) ??
     location.projects.find((project) => project.id === pointId)
@@ -21,6 +24,7 @@ function getPoint(location: GlobalLocation, pointId: string): GlobalPoint | unde
 }
 
 export default function GlobalPresenceSection({
+  locations,
   exploreHref = "/global-presence",
 }: Props) {
   const [activeLocationId, setActiveLocationId] = useState("india");
@@ -29,13 +33,16 @@ export default function GlobalPresenceSection({
 
   const activeLocation = useMemo(
     () =>
-      globalPresenceLocations.find((location) => location.id === activeLocationId) ??
-      globalPresenceLocations[0],
-    [activeLocationId],
+      locations.find((location) => location.id === activeLocationId) ??
+      locations[0],
+    [locations, activeLocationId],
   );
 
   const selectedPoint = useMemo(
-    () => (selectedPointId ? getPoint(activeLocation, selectedPointId) : undefined),
+    () =>
+      activeLocation && selectedPointId
+        ? getPoint(activeLocation, selectedPointId)
+        : undefined,
     [activeLocation, selectedPointId],
   );
 
@@ -45,26 +52,33 @@ export default function GlobalPresenceSection({
     setViewMode("country");
   }, []);
 
-  const selectPoint = useCallback((location: GlobalLocation, pointId: string) => {
-    const point = getPoint(location, pointId);
-    if (!point) return;
+  const selectPoint = useCallback(
+    (location: GlobalLocation, pointId: string) => {
+      const point = getPoint(location, pointId);
+      if (!point) return;
 
-    setActiveLocationId(location.id);
-    setSelectedPointId(pointId);
-    setViewMode("country");
-  }, []);
+      setActiveLocationId(location.id);
+      setSelectedPointId(pointId);
+      setViewMode("country");
+    },
+    [],
+  );
 
   const showGlobalView = useCallback(() => {
     setViewMode("global");
     setSelectedPointId(null);
   }, []);
 
+  if (!activeLocation) {
+    return null;
+  }
+
   return (
     <section className="relative isolate overflow-hidden bg-white text-slate-900">
-      {/* Keep the existing grid and globe placement unchanged. */}
       <Container>
         <div className="mx-auto grid min-h-[620px] grid-cols-1 items-center py-12 lg:min-h-[680px] lg:grid-cols-[1.05fr_1.15fr] lg:gap-4 lg:py-10">
           <GlobalPresenceLeft
+            locations={locations}
             activeLocation={activeLocation}
             viewMode={viewMode}
             selectedPointId={selectedPointId}
@@ -76,6 +90,7 @@ export default function GlobalPresenceSection({
           />
 
           <GlobalPresenceGlobe
+            locations={locations}
             activeLocation={activeLocation}
             viewMode={viewMode}
             selectedPointId={selectedPointId}

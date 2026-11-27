@@ -9,6 +9,18 @@ export interface ContactOffice {
   mapUrl?: string;
 }
 
+export interface ContactSettingsData {
+  hqHeading: string;
+  hqCompany: string;
+  hqAddressLines: string[];
+  hqImage: string;
+  hqImageAlt: string;
+  supportHeading: string;
+  supportTollFree: string;
+  supportTollFreeHref: string;
+  supportEmail: string;
+}
+
 export interface SelectOption {
   value: string;
   label: string;
@@ -38,7 +50,8 @@ export const contactPageData = {
     ],
     submitLabel: "Submit enquiry",
     endpoint: "/api/contact",
-    successMessage: "Thank you. We have received your enquiry and will contact you shortly.",
+    successMessage:
+      "Thank you. We have received your enquiry and will contact you shortly.",
     countryCodes: [
       { value: "+91", label: "+91 (IN)" },
       { value: "+1", label: "+1 (US)" },
@@ -65,59 +78,9 @@ export const contactPageData = {
     ] as SelectOption[],
   },
 
-  headquarters: {
-    heading: "Headquarters",
-    company: "Chemdist Group",
-    addressLines: [
-      "Chemdist House,",
-      "00 Sample Road, Wakdewadi,",
-      "Pune 411003, Maharashtra, India",
-    ],
-    image: "/images/contact/headquarters.png",
-    imageAlt: "Chemdist Group headquarters building in Pune",
-    support: {
-      heading: "For customer support & general enquiries",
-      tollFree: { label: "Toll free", value: "1800-000-0000", href: "tel:18000000000" },
-      email: {
-        label: "Email",
-        value: "customer.support@chemdist.com",
-        href: "mailto:customer.support@chemdist.com",
-      },
-    },
-  },
-
   offices: {
     eyebrow: "OUR OFFICES",
     heading: "Find us close to you",
     description: "Visit or write to the office nearest to you.",
-    items: [
-      {
-        id: "india-hq",
-        title: "India (Headquarters)",
-        company: "Chemdist Group",
-        addressLines: ["Chemdist House", "00 Sample Road, Wakdewadi", "Pune 411003, Maharashtra", "India"],
-        phones: ["+91 20 0000 0000", "+91 20 0000 0001"],
-        email: "enquiry@chemdist.com",
-        mapUrl: "https://maps.google.com",
-      },
-      {
-        id: "india-registered",
-        title: "India (Registered Office)",
-        company: "Chemdist Group",
-        addressLines: ["Plot No. 00, MIDC Industrial Area", "Chinchwad, Pune 411019", "Maharashtra, India"],
-        phones: ["+91 20 0000 0002"],
-        email: "enquiry@chemdist.com",
-        mapUrl: "https://maps.google.com",
-      },
-      {
-        id: "west-india",
-        title: "West India (Mumbai)",
-        company: "Chemdist Group",
-        addressLines: ["Unit 000, Sample Business Park", "Andheri East, Mumbai 400059", "Maharashtra, India"],
-        phones: ["+91 22 0000 0000"],
-        email: "enquiry@chemdist.com",
-        note: "Sales and regional support",
-      },
-    ] as ContactOffice[],
   },
 };

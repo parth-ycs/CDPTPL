@@ -2,12 +2,14 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { getProjectCategories } from "@/lib/db/queries/projects";
+import { getCountries } from "@/lib/db/queries/global-presence";
 import ProjectForm from "@/components/admin/ProjectForm";
 
 export const dynamic = "force-dynamic";
 
 export default function NewProjectPage() {
   const categories = getProjectCategories();
+  const countries = getCountries();
 
   return (
     <div className="space-y-6">
@@ -24,7 +26,7 @@ export default function NewProjectPage() {
         </h1>
       </div>
 
-      <ProjectForm mode="create" categories={categories} />
+      <ProjectForm mode="create" categories={categories} countries={countries} />
     </div>
   );
 }

@@ -8,6 +8,10 @@ export interface CSRInitiative {
   imageAlt: string;
 }
 
+export type CSRInitiativeRecord = CSRInitiative & {
+  displayOrder: number;
+};
+
 export const csrPageData = {
   hero: {
     heading: "Corporate Social Responsibility",
@@ -41,45 +45,9 @@ export const csrPageData = {
     eyebrow: "OUR COMMITMENT",
     heading: "Building a more responsible tomorrow.",
     description:
-        "We believe lasting progress comes from balancing industrial development with environmental and social responsibility. Through collective efforts and meaningful initiatives, we continue to work towards a better future.",
+      "We believe lasting progress comes from balancing industrial development with environmental and social responsibility. Through collective efforts and meaningful initiatives, we continue to work towards a better future.",
     image: "/images/csr/csr-commitment.png",
     imageAlt: "Environmental conservation and green initiatives",
     imageLabel: "A commitment to a greener future",
-    },
+  },
 };
-
-export const csrInitiatives: CSRInitiative[] = [
-  {
-    id: "world-environment-day",
-    title: "Team Chemdist Celebrates World Environment Day!",
-    category: "Environmental Initiative",
-    location: "ARAI Hills, Pune, India",
-    description:
-      "In a spirited celebration of World Environment Day, Team Chemdist came together at ARAI Hills, Pune, for a meaningful tree-planting and conservation activity. Through teamwork and dedication, the initiative contributed to environmental awareness and the conservation of green spaces for future generations.",
-    image: "/images/csr/world-environment-day.jpg",
-    imageAlt:
-      "Team Chemdist participating in a tree planting and conservation activity at ARAI Hills",
-  },
-  {
-    id: "world-environment-day",
-    title: "Team Chemdist Celebrates World Environment Day!",
-    category: "Environmental Initiative",
-    location: "ARAI Hills, Pune, India",
-    description:
-      "In a spirited celebration of World Environment Day, Team Chemdist came together at ARAI Hills, Pune, for a meaningful tree-planting and conservation activity. Through teamwork and dedication, the initiative contributed to environmental awareness and the conservation of green spaces for future generations.",
-    image: "/images/csr/world-environment-day.jpg",
-    imageAlt:
-      "Team Chemdist participating in a tree planting and conservation activity at ARAI Hills",
-  },
-  {
-    id: "world-environment-day",
-    title: "Team Chemdist Celebrates World Environment Day!",
-    category: "Environmental Initiative",
-    location: "ARAI Hills, Pune, India",
-    description:
-      "In a spirited celebration of World Environment Day, Team Chemdist came together at ARAI Hills, Pune, for a meaningful tree-planting and conservation activity. Through teamwork and dedication, the initiative contributed to environmental awareness and the conservation of green spaces for future generations.",
-    image: "/images/csr/world-environment-day.jpg",
-    imageAlt:
-      "Team Chemdist participating in a tree planting and conservation activity at ARAI Hills",
-  },
-];

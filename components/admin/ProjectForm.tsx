@@ -4,15 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2, Upload } from "lucide-react";
 
-import {
-  INNOVATION_SHOWCASE_CATEGORY,
-  type ProjectData,
-} from "@/data/projects/projects";
+import { INNOVATION_SHOWCASE_CATEGORY } from "@/data/projects/projects";
+import type { ProjectRecord } from "@/lib/db/queries/projects";
+import type { GlobalCountryRecord } from "@/lib/db/queries/global-presence";
 
 type Props = {
   mode: "create" | "edit";
-  initialData?: ProjectData;
+  initialData?: ProjectRecord;
   categories: string[];
+  countries: GlobalCountryRecord[];
 };
 
 function slugify(value: string): string {
@@ -159,6 +159,7 @@ export default function ProjectForm({
   mode,
   initialData,
   categories,
+  countries,
 }: Props) {
   const router = useRouter();
 
@@ -200,6 +201,25 @@ export default function ProjectForm({
   );
   const [executionScope, setExecutionScope] = useState(
     initialData?.details?.executionScope ?? "",
+  );
+
+  // Global Presence
+  const [showOnGlobal, setShowOnGlobal] = useState(
+    initialData?.showOnGlobal ?? false,
+  );
+  const [countryId, setCountryId] = useState(initialData?.countryId ?? "");
+  const [city, setCity] = useState(initialData?.city ?? "");
+  const [longitude, setLongitude] = useState(
+    initialData?.longitude != null ? String(initialData.longitude) : "",
+  );
+  const [latitude, setLatitude] = useState(
+    initialData?.latitude != null ? String(initialData.latitude) : "",
+  );
+  const [globalIndustry, setGlobalIndustry] = useState(
+    initialData?.globalIndustry ?? "",
+  );
+  const [globalStatus, setGlobalStatus] = useState<"completed" | "ongoing">(
+    initialData?.globalStatus ?? "completed",
   );
 
   // Overview
@@ -304,6 +324,15 @@ export default function ProjectForm({
         yearOfCompletion,
         contractValue,
         executionScope,
+      },
+      globalPresence: {
+        countryId: countryId.trim() || null,
+        city: city.trim() || null,
+        longitude: longitude.trim() ? Number(longitude) : null,
+        latitude: latitude.trim() ? Number(latitude) : null,
+        globalIndustry: globalIndustry.trim() || null,
+        globalStatus,
+        showOnGlobal,
       },
       hero: {
         eyebrow: heroEyebrow,
@@ -600,6 +629,120 @@ export default function ProjectForm({
             placeholder="Engineering, Procurement, Fabrication and Site Construction"
             className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
           />
+        </div>
+      </section>
+
+      {/* Global Presence Map Placement */}
+      <section className="space-y-4 rounded-xl border border-stone-200 bg-white p-6">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 className="text-base font-semibold text-stone-900">
+              Global presence map placement
+            </h2>
+            <p className="text-xs text-stone-500">
+              Pin this project on the interactive map at{" "}
+              <code>/global-presence</code>.
+            </p>
+          </div>
+          <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-stone-700">
+            <input
+              type="checkbox"
+              checked={showOnGlobal}
+              onChange={(e) => setShowOnGlobal(e.target.checked)}
+              className="h-4 w-4 rounded border-stone-300 text-stone-900"
+            />
+            Show on Global Presence map
+          </label>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div>
+            <label className="block text-sm font-medium text-stone-700">
+              Country
+            </label>
+            <select
+              value={countryId}
+              onChange={(e) => setCountryId(e.target.value)}
+              className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
+            >
+              <option value="">— Select country —</option>
+              {countries.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.country} ({c.countryCode})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-stone-700">
+              City (map label)
+            </label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="Mundra"
+              className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-stone-700">
+              Project status
+            </label>
+            <select
+              value={globalStatus}
+              onChange={(e) =>
+                setGlobalStatus(e.target.value as "completed" | "ongoing")
+              }
+              className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
+            >
+              <option value="completed">Completed</option>
+              <option value="ongoing">Ongoing</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-stone-700">
+              Longitude (X)
+            </label>
+            <input
+              type="number"
+              step="any"
+              value={longitude}
+              onChange={(e) => setLongitude(e.target.value)}
+              placeholder="69.721"
+              className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-stone-700">
+              Latitude (Y)
+            </label>
+            <input
+              type="number"
+              step="any"
+              value={latitude}
+              onChange={(e) => setLatitude(e.target.value)}
+              placeholder="22.842"
+              className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-stone-700">
+              Map industry tag
+            </label>
+            <input
+              type="text"
+              value={globalIndustry}
+              onChange={(e) => setGlobalIndustry(e.target.value)}
+              placeholder="Hydrogen & New Energy"
+              className="mt-1.5 w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-900 focus:outline-none"
+            />
+          </div>
         </div>
       </section>
 

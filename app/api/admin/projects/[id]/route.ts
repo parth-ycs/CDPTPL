@@ -53,7 +53,23 @@ export async function PATCH(request: Request, { params }: Context) {
     );
   }
 
-  const updated = updateProject(id, parsed.data);
+  const { globalPresence, ...projectData } = parsed.data;
+
+  const updated = updateProject(id, {
+    ...projectData,
+    ...(globalPresence
+      ? {
+          countryId: globalPresence.countryId ?? null,
+          city: globalPresence.city ?? null,
+          longitude: globalPresence.longitude ?? null,
+          latitude: globalPresence.latitude ?? null,
+          globalIndustry: globalPresence.globalIndustry ?? null,
+          globalStatus: globalPresence.globalStatus,
+          showOnGlobal: globalPresence.showOnGlobal,
+        }
+      : {}),
+  });
+
   if (!updated) {
     return NextResponse.json({ error: "Project not found" }, { status: 404 });
   }
@@ -61,6 +77,7 @@ export async function PATCH(request: Request, { params }: Context) {
   revalidatePath("/projects");
   revalidatePath(`/projects/${id}`);
   revalidatePath("/research-development");
+  revalidatePath("/global-presence");
 
   return NextResponse.json({ project: updated });
 }
@@ -79,6 +96,7 @@ export async function DELETE(_request: Request, { params }: Context) {
   revalidatePath("/projects");
   revalidatePath(`/projects/${id}`);
   revalidatePath("/research-development");
+  revalidatePath("/global-presence");
 
   return NextResponse.json({ ok: true });
 }

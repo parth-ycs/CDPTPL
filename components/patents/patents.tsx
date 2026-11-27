@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -11,16 +10,12 @@ import PageOverview from "@/components/shared-page/PageOverview";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 
-import { patentsPageData } from "@/data/patents";
+import { patentsPageData, type PatentItem } from "@/data/patents";
 
-const pad = (n: number) => String(n).padStart(2, "0");
+export default function PatentsPage({ patents }: { patents: PatentItem[] }) {
+  const { hero, overview } = patentsPageData;
 
-export default function PatentsPage() {
-  const { hero, overview, patents } = patentsPageData;
-
-  const [activeId, setActiveId] = useState<
-    (typeof patents)[number]["id"] | null
-  >(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const active = patents.find((patent) => patent.id === activeId) ?? null;
 
@@ -77,63 +72,75 @@ export default function PatentsPage() {
           </div>
 
           {/* Patent List */}
-          <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-            {patents.map((patent) => (
-              <article
-                key={patent.id}
-                className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(16,44,89,0.25)] sm:flex-row"
-              >
-                {/* Document Panel */}
-                <div className="flex shrink-0 items-center justify-center bg-pale px-8 py-8 sm:w-[210px]">
-                  <button
-                    type="button"
-                    onClick={() => setActiveId(patent.id)}
-                    aria-label={`View ${patent.title} document`}
-                    className="relative h-[220px] w-[156px] cursor-zoom-in overflow-hidden bg-white shadow-[0_10px_30px_-10px_rgba(16,44,89,0.35)] ring-1 ring-black/5 transition-transform duration-500 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue"
-                  >
-                    <Image
-                      src={patent.image}
-                      alt={patent.imageAlt}
-                      fill
-                      sizes="160px"
-                      className="object-contain p-1"
-                    />
-                  </button>
-                </div>
+          {patents.length > 0 ? (
+            <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+              {patents.map((patent) => (
+                <article
+                  key={patent.id}
+                  className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(16,44,89,0.25)] sm:flex-row"
+                >
+                  {/* Document Panel */}
+                  <div className="flex shrink-0 items-center justify-center bg-pale px-8 py-8 sm:w-[210px]">
+                    <button
+                      type="button"
+                      onClick={() => setActiveId(patent.id)}
+                      aria-label={`View ${patent.title} document`}
+                      className="relative h-[220px] w-[156px] cursor-zoom-in overflow-hidden bg-white shadow-[0_10px_30px_-10px_rgba(16,44,89,0.35)] ring-1 ring-black/5 transition-transform duration-500 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue"
+                    >
+                      <Image
+                        src={patent.image}
+                        alt={patent.imageAlt}
+                        fill
+                        sizes="160px"
+                        className="object-contain p-1"
+                      />
+                    </button>
+                  </div>
 
-                {/* Patent Details */}
-                <div className="flex flex-1 flex-col p-6 sm:p-8">
-                  <h3 className="mt-4 font-heading text-h3 font-semibold text-brand-deep">
-                    {patent.title}
-                  </h3>
+                  {/* Patent Details */}
+                  <div className="flex flex-1 flex-col p-6 sm:p-8">
+                    <h3 className="mt-4 font-heading text-h3 font-semibold text-brand-deep">
+                      {patent.title}
+                    </h3>
 
-                  <dl className="mt-auto space-y-3 border-t border-line pt-5">
-                    <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                      <dt className="text-caption font-semibold uppercase tracking-widest text-muted">
-                        {patent.referenceLabel}
-                      </dt>
-
-                      <dd className="text-small font-semibold tabular-nums text-brand-blue">
-                        {patent.applicationNumber}
-                      </dd>
-                    </div>
-
-                    {patent.date && (
-                      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <dl className="mt-auto space-y-3 border-t border-line pt-5">
+                      <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                         <dt className="text-caption font-semibold uppercase tracking-widest text-muted">
-                          Date
+                          {patent.referenceLabel}
                         </dt>
 
-                        <dd className="text-small text-ink">
-                          {patent.date}
+                        <dd className="text-small font-semibold tabular-nums text-brand-blue">
+                          {patent.applicationNumber}
                         </dd>
                       </div>
-                    )}
-                  </dl>
-                </div>
-              </article>
-            ))}
-          </div>
+
+                      {patent.date && (
+                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                          <dt className="text-caption font-semibold uppercase tracking-widest text-muted">
+                            Date
+                          </dt>
+
+                          <dd className="text-small text-ink">
+                            {patent.date}
+                          </dd>
+                        </div>
+                      )}
+                    </dl>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 border-y border-line py-16 text-center">
+              <p className="font-heading text-h3 font-semibold text-brand-deep">
+                No patents listed at the moment.
+              </p>
+              <p className="mt-2 text-small text-muted">
+                Check back soon for updates on our intellectual property
+                portfolio.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

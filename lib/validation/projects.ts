@@ -8,6 +8,20 @@ const optionalTrimmed = z
   .optional()
   .transform((v) => (v && v.length > 0 ? v : undefined));
 
+const nullableTrimmed = z
+  .string()
+  .trim()
+  .nullable()
+  .optional()
+  .transform((v) => (v && v.length > 0 ? v : null));
+
+const nullableNumber = z
+  .number()
+  .finite()
+  .nullable()
+  .optional()
+  .transform((v) => (typeof v === "number" && Number.isFinite(v) ? v : null));
+
 const detailsSchema = z
   .object({
     location: optionalTrimmed,
@@ -35,7 +49,10 @@ const overviewSchema = z
   .object({
     heading: z
       .object({
-        before: z.string().trim().min(1, "Overview heading (before) is required"),
+        before: z
+          .string()
+          .trim()
+          .min(1, "Overview heading (before) is required"),
         highlight: optionalTrimmed,
         after: z
           .string()
@@ -68,9 +85,7 @@ const solutionSchema = z
     description: z.string().trim().min(1, "Solution description is required"),
     image: optionalTrimmed,
     imageAlt: optionalTrimmed,
-    points: z
-      .array(z.string().trim().min(1))
-      .default([]),
+    points: z.array(z.string().trim().min(1)).default([]),
   })
   .strict();
 
@@ -78,14 +93,25 @@ const resultSchema = z
   .object({
     heading: z.string().trim().min(1, "Results heading is required"),
     description: z.string().trim().min(1, "Results description is required"),
-    points: z
-      .array(z.string().trim().min(1))
-      .default([]),
+    points: z.array(z.string().trim().min(1)).default([]),
   })
   .strict()
   .nullable()
   .optional()
   .transform((v) => v ?? undefined);
+
+const globalPresenceSchema = z
+  .object({
+    countryId: nullableTrimmed,
+    city: nullableTrimmed,
+    longitude: nullableNumber,
+    latitude: nullableNumber,
+    globalIndustry: nullableTrimmed,
+    globalStatus: z.enum(["completed", "ongoing"]).default("completed"),
+    showOnGlobal: z.boolean().default(false),
+  })
+  .strict()
+  .optional();
 
 const baseProjectSchema = z.object({
   category: z.string().trim().min(1, "Category is required"),
@@ -95,6 +121,7 @@ const baseProjectSchema = z.object({
   problem: problemSchema,
   solution: solutionSchema,
   result: resultSchema,
+  globalPresence: globalPresenceSchema,
 });
 
 export const createProjectSchema = baseProjectSchema

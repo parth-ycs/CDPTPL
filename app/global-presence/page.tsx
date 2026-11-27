@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import GlobalPresence from "@/components/global-presence/GlobalPresence";
+import { getGlobalLocations } from "@/lib/db/queries/global-presence";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Global Presence",
@@ -8,5 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default function GlobalPresencePage() {
-  return <GlobalPresence />;
+  const locations = getGlobalLocations();
+  return <GlobalPresence locations={locations} />;
 }

@@ -1,20 +1,14 @@
-
 "use client";
 
 import { useMemo, useState } from "react";
 
 import PageHero from "@/components/shared-page/PageHero";
-import PageOverview from "@/components/shared-page/PageOverview";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
-import { newsItems, newsPageData } from "@/data/news";
+import { newsPageData, type NewsItem } from "@/data/media";
 
-function NewsCard({
-  item,
-}: {
-  item: (typeof newsItems)[number];
-}) {
+function NewsCard({ item }: { item: NewsItem }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -25,6 +19,7 @@ function NewsCard({
         aria-label={item.title}
         className="mb-4 block aspect-[4/3] overflow-hidden bg-pale"
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={item.image}
           alt=""
@@ -94,15 +89,15 @@ function NewsCard({
   );
 }
 
-export default function News() {
+export default function News({ items }: { items: NewsItem[] }) {
   const { hero, listing } = newsPageData;
 
   const categories = useMemo(
     () => [
       listing.allCategoriesLabel,
-      ...Array.from(new Set(newsItems.map((item) => item.category))),
+      ...Array.from(new Set(items.map((item) => item.category))),
     ],
-    [listing.allCategoriesLabel],
+    [items, listing.allCategoriesLabel],
   );
 
   const [activeCategory, setActiveCategory] = useState(
@@ -111,13 +106,11 @@ export default function News() {
 
   const filteredNews = useMemo(() => {
     if (activeCategory === listing.allCategoriesLabel) {
-      return newsItems;
+      return items;
     }
 
-    return newsItems.filter(
-      (item) => item.category === activeCategory,
-    );
-  }, [activeCategory, listing.allCategoriesLabel]);
+    return items.filter((item) => item.category === activeCategory);
+  }, [activeCategory, items, listing.allCategoriesLabel]);
 
   return (
     <main className="bg-white text-ink">
@@ -127,73 +120,67 @@ export default function News() {
         description={hero.description}
         image={hero.image}
         imageAlt={hero.imageAlt}
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Media" },
-        ]}
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Media" }]}
         ctaLabel="Explore News"
         ctaHref="#news-listing"
       />
       <Container>
-      <section
-        id="news-listing"
-        className="scroll-mt-24"
-      >
-        <div className="mx-auto max-w-[1500px]">
-          {/* Heading */}
-          <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-            <div>
-              <p className="mb-3 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
-                {listing.eyebrow}
-              </p>
+        <section id="news-listing" className="scroll-mt-24">
+          <div className="mx-auto max-w-[1500px]">
+            {/* Heading */}
+            <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div>
+                <p className="mb-3 text-caption font-semibold uppercase tracking-[0.18em] text-brand-blue">
+                  {listing.eyebrow}
+                </p>
 
-              <h2 className="font-heading text-h1 font-bold tracking-tight text-brand-deep">
-                {listing.heading}
-              </h2>
+                <h2 className="font-heading text-h1 font-bold tracking-tight text-brand-deep">
+                  {listing.heading}
+                </h2>
 
-              <p className="mt-3 max-w-xl text-body text-muted">
-                {listing.description}
+                <p className="mt-3 max-w-xl text-body text-muted">
+                  {listing.description}
+                </p>
+              </div>
+
+              <p className="text-caption font-medium uppercase tracking-wider text-muted">
+                {String(filteredNews.length).padStart(2, "0")} Articles
               </p>
             </div>
 
-            <p className="text-caption font-medium uppercase tracking-wider text-muted">
-              {String(filteredNews.length).padStart(2, "0")} Articles
-            </p>
-          </div>
-
-          {/* Category filters */}
-          <div className="mb-10 flex flex-wrap gap-x-6 gap-y-3 border-b border-line pb-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                onClick={() => setActiveCategory(category)}
-                aria-pressed={activeCategory === category}
-                className={`text-small transition-colors ${
-                  activeCategory === category
-                    ? "font-semibold text-brand-blue"
-                    : "text-muted hover:text-brand-deep"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* News grid */}
-          {filteredNews.length > 0 ? (
-            <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredNews.map((item) => (
-                <NewsCard key={item.id} item={item} />
+            {/* Category filters */}
+            <div className="mb-10 flex flex-wrap gap-x-6 gap-y-3 border-b border-line pb-4">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setActiveCategory(category)}
+                  aria-pressed={activeCategory === category}
+                  className={`text-small transition-colors ${
+                    activeCategory === category
+                      ? "font-semibold text-brand-blue"
+                      : "text-muted hover:text-brand-deep"
+                  }`}
+                >
+                  {category}
+                </button>
               ))}
             </div>
-          ) : (
-            <div className="py-20 text-center text-small text-muted">
-              {listing.emptyMessage}
-            </div>
-          )}
-        </div>
-      </section>
+
+            {/* News grid */}
+            {filteredNews.length > 0 ? (
+              <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {filteredNews.map((item) => (
+                  <NewsCard key={item.id} item={item} />
+                ))}
+              </div>
+            ) : (
+              <div className="py-20 text-center text-small text-muted">
+                {listing.emptyMessage}
+              </div>
+            )}
+          </div>
+        </section>
       </Container>
       <Enquiry />
       <Footer />

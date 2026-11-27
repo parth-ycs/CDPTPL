@@ -1,17 +1,16 @@
-
 import Image from "next/image";
 
 import PageHero from "@/components/shared-page/PageHero";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
-import { eventsPageData, eventItems } from "@/data/events";
+import { eventsPageData, type EventItem } from "@/data/events";
 
 function EventCard({
   item,
   priority = false,
 }: {
-  item: (typeof eventItems)[number];
+  item: EventItem;
   priority?: boolean;
 }) {
   const hasLink = Boolean(item.url && item.url.trim());
@@ -108,10 +107,9 @@ function EventCard({
   return <article className="group flex h-full flex-col">{content}</article>;
 }
 
-
-export default function Events() {
+export default function Events({ items }: { items: EventItem[] }) {
   const { hero, listing } = eventsPageData;
-  const hasEvents = eventItems.length > 0;
+  const hasEvents = items.length > 0;
 
   return (
     <main className="bg-white text-ink">
@@ -148,8 +146,7 @@ export default function Events() {
 
             {hasEvents && (
               <p className="shrink-0 text-small tabular-nums text-muted">
-                {eventItems.length}{" "}
-                {eventItems.length === 1 ? "event" : "events"}
+                {items.length} {items.length === 1 ? "event" : "events"}
               </p>
             )}
           </div>
@@ -157,7 +154,7 @@ export default function Events() {
           {/* Event Grid */}
           {hasEvents ? (
             <ul className="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-10 lg:gap-y-16">
-              {eventItems.map((item, index) => (
+              {items.map((item, index) => (
                 <li key={item.id}>
                   <EventCard item={item} priority={index < 2} />
                 </li>

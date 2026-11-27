@@ -1,6 +1,9 @@
-
 import type { Metadata } from "next";
+
+import { getPatents } from "@/lib/db/queries/patents";
 import PatentsPage from "@/components/patents/patents";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Patents | Chemdist Group",
@@ -9,5 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function PatentsRoute() {
-  return <PatentsPage />;
+  const patents = getPatents();
+  return <PatentsPage patents={patents} />;
 }

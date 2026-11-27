@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 
 import PageHero from "@/components/shared-page/PageHero";
@@ -7,16 +6,13 @@ import PageOverview from "@/components/shared-page/PageOverview";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
-import {
-  csrPageData,
-  csrInitiatives,
-} from "@/data/csr";
+import { csrPageData, type CSRInitiative } from "@/data/csr";
 
 function InitiativeCard({
   item,
   index,
 }: {
-  item: (typeof csrInitiatives)[number];
+  item: CSRInitiative;
   index: number;
 }) {
   const isReversed = index % 2 !== 0;
@@ -55,9 +51,7 @@ function InitiativeCard({
 
           <span className="h-1 w-1 rounded-full bg-muted" />
 
-          <span className="text-small text-muted">
-            {item.location}
-          </span>
+          <span className="text-small text-muted">{item.location}</span>
         </div>
 
         <h3 className="mt-5 max-w-xl font-heading text-h2 font-bold tracking-tight text-brand-deep">
@@ -72,13 +66,12 @@ function InitiativeCard({
   );
 }
 
-export default function CSR() {
-  const {
-    hero,
-    overview,
-    initiativesSection,
-    commitment,
-  } = csrPageData;
+export default function CSR({
+  initiatives,
+}: {
+  initiatives: CSRInitiative[];
+}) {
+  const { hero, initiativesSection, commitment } = csrPageData;
 
   return (
     <main className="bg-white text-ink">
@@ -105,21 +98,28 @@ export default function CSR() {
         }}
         description={initiativesSection.description}
       />
+
       <Container className="pt-0">
         {/* Initiatives */}
-        <section
-          id="csr-initiatives"
-        >
-          <div className="mx-auto max-w-[1500px]"> 
-            <div>
-              {csrInitiatives.map((item, index) => (
-                <InitiativeCard
-                  key={item.id}
-                  item={item}
-                  index={index}
-                />
-              ))}
-            </div>
+        <section id="csr-initiatives">
+          <div className="mx-auto max-w-[1500px]">
+            {initiatives.length > 0 ? (
+              <div>
+                {initiatives.map((item, index) => (
+                  <InitiativeCard key={item.id} item={item} index={index} />
+                ))}
+              </div>
+            ) : (
+              <div className="border-y border-line py-16 text-center">
+                <p className="font-heading text-h3 font-semibold text-brand-deep">
+                  No initiatives available at the moment.
+                </p>
+                <p className="mt-2 text-small text-muted">
+                  Check back soon for updates on our community and
+                  environmental programs.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 

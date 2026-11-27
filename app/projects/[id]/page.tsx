@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { projects, getProjectById } from "@/data/projects/projects";
+import { getProjectById, getRelatedProjects } from "@/lib/db/queries/projects";
 import ProjectPage from "@/components/projects/project/ProjectPage";
+
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
-
-export function generateStaticParams() {
-  return projects.map((project) => ({ id: project.id }));
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -32,7 +30,7 @@ export default async function ProjectRoute({ params }: Props) {
 
   if (!project) notFound();
 
-  const related = projects.filter((p) => p.id !== project.id).slice(0, 3);
+  const related = getRelatedProjects(project.id, 3);
 
   return <ProjectPage project={project} related={related} />;
 }

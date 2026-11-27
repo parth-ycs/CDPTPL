@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import type { PageSectionItem } from "@/components/shared-page/types";
+import type { ProjectData } from "@/data/projects/types";
 
 import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
@@ -10,15 +11,18 @@ import PageOverview from "@/components/shared-page/PageOverview";
 import Footer from "@/components/footer";
 import Enquiry from "@/components/enquiry";
 import {
-  projects,
-  projectCategories,
   projectsPageData,
   getProjectCategory,
 } from "@/data/projects/projects";
 import ProjectDirectory from "./listing/ProjectDirectory";
 
-export default function ProjectsPage() {
-  const [category, setCategory] = useState("ALL PROJECTS");
+type Props = {
+  projects: ProjectData[];
+  categories: string[];
+};
+
+export default function ProjectsPage({ projects, categories }: Props) {
+  const [category, setCategory] = useState(categories[0] ?? "ALL PROJECTS");
   const [query, setQuery] = useState("");
 
   const { hero, overview } = projectsPageData;
@@ -43,7 +47,7 @@ export default function ProjectsPage() {
 
       return matchesCategory && searchableText.includes(normalizedQuery);
     });
-  }, [category, query]);
+  }, [projects, category, query]);
 
   const sections: PageSectionItem[] = [
     {
@@ -52,13 +56,13 @@ export default function ProjectsPage() {
       content: (
         <ProjectDirectory
           projects={filteredProjects}
-          categories={projectCategories}
+          categories={categories}
           selectedCategory={category}
           searchQuery={query}
           onCategoryChange={setCategory}
           onSearchChange={setQuery}
           onReset={() => {
-            setCategory("ALL PROJECTS");
+            setCategory(categories[0] ?? "ALL PROJECTS");
             setQuery("");
           }}
         />

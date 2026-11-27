@@ -2,6 +2,7 @@ import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
 import PageOverview from "@/components/shared-page/PageOverview";
 import type { PageSectionItem } from "@/components/shared-page/types";
+import type { ProjectData } from "@/data/projects/types";
 
 import { rdSectionData } from "@/data/research-development/r&d";
 
@@ -25,7 +26,11 @@ const sections: PageSectionItem[] = [
   },
 ];
 
-export default function ResearchDevelopment() {
+export default function ResearchDevelopment({
+  showcaseProjects,
+}: {
+  showcaseProjects: ProjectData[];
+}) {
   const { hero, overview } = rdSectionData;
 
   return (
@@ -52,7 +57,7 @@ export default function ResearchDevelopment() {
       <PageLayout sections={sections} />
       <WorkflowSection />
       <Container>
-        <ProjectShowcaseSection />
+        <ProjectShowcaseSection projects={showcaseProjects} />
       </Container>
       <SustainabilitySection />
     </main>

@@ -9,14 +9,20 @@ import FeaturedTechnologies from "@/components/landing_page/featured-technology"
 import ProjectsShowcase from "@/components/landing_page/ProjectsShowcase";
 import ResearchDevelopment from "@/components/landing_page/research-development";
 import GlobalPresenceSection from "@/components/landing_page/global_presence/global-presence";
+import { getProjects } from "@/lib/db/queries/projects";
+
+export const dynamic = "force-dynamic";
+
 export default function Page() {
+  const projects = getProjects();
+
   return (
     <main>
       <Hero />
       <AboutUsSection />
       <CoreCapabilitiesSection />
       <FeaturedTechnologies />
-      <ProjectsShowcase />
+      <ProjectsShowcase projects={projects} />
       <GlobalPresenceSection />
       <ResearchDevelopment />
       <Industries />

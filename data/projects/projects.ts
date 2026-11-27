@@ -1,7 +1,8 @@
-import { projectList } from "./project";
 import type { ProjectData } from "./types";
 
-export type { ProjectData };
+export type { ProjectData, ProjectDetails } from "./types";
+
+export const INNOVATION_SHOWCASE_CATEGORY = "Innovation Showcase";
 
 export const projectsPageData = {
   hero: {
@@ -23,19 +24,8 @@ export const projectsPageData = {
   },
 };
 
-export const projects: ProjectData[] = projectList;
-
 export function getProjectCategory(project: ProjectData) {
-  return project.category ?? project.hero.eyebrow;
-}
-
-export const projectCategories = [
-  "ALL PROJECTS",
-  ...Array.from(new Set(projects.map(getProjectCategory))),
-];
-
-export function getProjectById(id: string) {
-  return projects.find((project) => project.id === id);
+  return project.category || project.hero.eyebrow;
 }
 
 export function getProjectHref(id: string) {

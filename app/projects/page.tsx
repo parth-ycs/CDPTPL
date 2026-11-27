@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 
+import { getProjectCategories, getProjects } from "@/lib/db/queries/projects";
 import ProjectsPage from "@/components/projects/projects";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Projects & Case Studies | Chemdist Group",
@@ -9,9 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsRoute() {
-  return (
-    <>
-      <ProjectsPage />
-    </>
-  );
+  const projects = getProjects();
+  const categories = ["ALL PROJECTS", ...getProjectCategories()];
+
+  return <ProjectsPage projects={projects} categories={categories} />;
 }

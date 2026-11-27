@@ -1,9 +1,11 @@
-
 import type { Metadata } from "next";
 
+import { getInnovationShowcaseProjects } from "@/lib/db/queries/projects";
 import ResearchDevelopment from "@/components/research-development/r&d";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Research and Development | Chemdist Group",
@@ -12,9 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default function ResearchDevelopmentPage() {
+  const showcaseProjects = getInnovationShowcaseProjects();
+
   return (
     <>
-      <ResearchDevelopment />
+      <ResearchDevelopment showcaseProjects={showcaseProjects} />
 
       <div id="enquiry" className="scroll-mt-24">
         <Enquiry />

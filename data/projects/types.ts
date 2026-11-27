@@ -32,8 +32,7 @@ export interface ProjectData {
     imageAlt?: string;
   };
 
-  problem: {
-    eyebrow: string;
+  problem?: {
     heading: string;
     description: string;
     image?: string;
@@ -41,7 +40,6 @@ export interface ProjectData {
   };
 
   solution: {
-    eyebrow: string;
     heading: string;
     description: string;
     image?: string;
@@ -49,8 +47,7 @@ export interface ProjectData {
     points: string[];
   };
 
-  result: {
-    eyebrow: string;
+  result?: {
     heading: string;
     description: string;
     points: string[];

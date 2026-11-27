@@ -7,26 +7,32 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { rdSectionData } from "@/data/research-development/r&d";
-import { projects, getProjectHref } from "@/data/projects/projects";
+import { getProjectHref } from "@/data/projects/projects";
+import type { ProjectData } from "@/data/projects/types";
 
 const EASE_OUT_POW: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const items = projects.map((project) => ({
-  id: project.id,
-  title: project.hero.heading,
-  description: project.hero.description,
-  image: project.hero.image,
-  imageAlt: project.hero.imageAlt,
-}));
-
-export default function ProjectShowcaseSection() {
+export default function ProjectShowcaseSection({
+  projects,
+}: {
+  projects: ProjectData[];
+}) {
   const { heading } = rdSectionData.projectShowcase;
   const [activeIndex, setActiveIndex] = useState(0);
   const reduce = useReducedMotion() ?? false;
 
-  const active = items[activeIndex];
+  const items = projects.map((project) => ({
+    id: project.id,
+    title: project.hero.heading,
+    description: project.hero.description,
+    image: project.hero.image,
+    imageAlt: project.hero.imageAlt,
+  }));
+
+  const safeIndex = items.length > 0 ? activeIndex % items.length : 0;
+  const active = items[safeIndex];
 
   const changeSlide = (direction: number) => {
     setActiveIndex(
@@ -118,7 +124,7 @@ export default function ProjectShowcaseSection() {
           <div className="mt-8 flex items-center justify-between border-t border-line pt-6">
             <div className="flex items-center gap-3">
               <span className="font-heading text-h2 font-semibold tabular-nums text-brand-deep">
-                {pad(activeIndex + 1)}
+                {pad(safeIndex + 1)}
               </span>
 
               <span className="text-small text-muted">

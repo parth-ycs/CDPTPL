@@ -4,13 +4,17 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  projects,
   getProjectCategory,
   getProjectHref,
+  type ProjectData,
 } from "@/data/projects/projects";
 import BrandCarouselButtons from "@/components/ui/BrandCarouselButtons";
 
-export default function ProjectsShowcase() {
+export default function ProjectsShowcase({
+  projects,
+}: {
+  projects: ProjectData[];
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 

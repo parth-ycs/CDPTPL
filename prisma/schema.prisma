@@ -21,3 +21,47 @@ model Blog {
 
   @@map("blogs")
 }
+
+model Project {
+  id       String @id
+  category String
+
+  location         String?
+  plant            String?
+  capacity         String?
+  yearOfAward      String? @map("year_of_award")
+  yearOfCompletion String? @map("year_of_completion")
+  contractValue    String? @map("contract_value")
+  executionScope   String? @map("execution_scope")
+
+  heroEyebrow     String @map("hero_eyebrow")
+  heroHeading     String @map("hero_heading")
+  heroDescription String @map("hero_description")
+  heroImage       String @map("hero_image")
+  heroImageAlt    String @map("hero_image_alt")
+
+  overviewHeadingBefore    String  @map("overview_heading_before")
+  overviewHeadingHighlight String? @map("overview_heading_highlight")
+  overviewHeadingAfter     String  @default("") @map("overview_heading_after")
+  overviewDescription      String  @map("overview_description")
+  overviewImage            String? @map("overview_image")
+  overviewImageAlt         String? @map("overview_image_alt")
+
+  problemHeading     String? @map("problem_heading")
+  problemDescription String? @map("problem_description")
+  problemImage       String? @map("problem_image")
+  problemImageAlt    String? @map("problem_image_alt")
+
+  solutionHeading     String  @map("solution_heading")
+  solutionDescription String  @map("solution_description")
+  solutionImage       String? @map("solution_image")
+  solutionImageAlt    String? @map("solution_image_alt")
+  solutionPoints      String  @default("[]") @map("solution_points")
+
+  resultHeading     String? @map("result_heading")
+  resultDescription String? @map("result_description")
+  resultPoints      String? @map("result_points")
+
+  @@index([category], map: "idx_projects_category")
+  @@map("projects")
+}

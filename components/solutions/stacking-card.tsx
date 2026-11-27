@@ -9,20 +9,13 @@ import {
   type MotionValue,
 } from "framer-motion";
 
+import type { SBUListItem } from "@/data/sbus";
 
-import { sbuPageData } from "@/data/sbus";
-
-type Sbu = (typeof sbuPageData.sbus)[number];
-
-/* ==========================================
-   TUNING KNOBS: change these to taste
-========================================== */
-const ENTER_SCALE = 1.15; // incoming card starts this big
-const ENTER_IMAGE_SCALE = 1.25; // image inside the incoming card
-const BURIED_SCALE = 0.92; // card scale once the next card covers it
-const BURIED_SHIFT = -24; // px the buried card drifts upward
-const BURIED_DIM = 0.45; // max darkness of the buried card
-
+const ENTER_SCALE = 1.15;
+const ENTER_IMAGE_SCALE = 1.25;
+const BURIED_SCALE = 0.92;
+const BURIED_SHIFT = -24;
+const BURIED_DIM = 0.45;
 
 export default function StackCard({
   sbu,
@@ -31,7 +24,7 @@ export default function StackCard({
   progress,
   reduce,
 }: {
-  sbu: Sbu;
+  sbu: SBUListItem;
   index: number;
   total: number;
   progress: MotionValue<number>;
@@ -145,7 +138,7 @@ export default function StackCard({
           </div>
         </div>
 
-        {/* DIM OVERLAY (darkens as the next card covers this one) */}
+        {/* DIM OVERLAY */}
         {!reduce && (
           <motion.div
             style={{ opacity: dim }}

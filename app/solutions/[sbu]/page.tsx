@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,42 +9,19 @@ import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
 
-import sbus, {
-  getSBUGroup,
-  solutionHref,
-} from "@/data/sbus";
+import { getSBU, getSBUGroup } from "@/lib/db/queries/solutions";
+import { solutionHref } from "@/data/sbus";
+
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ sbu: string }>;
 };
 
-function getSBU(slug: string) {
-  return sbus.find((item) => item.slug === slug);
-}
-
-// Generate both normal SBU routes and group routes.
-export function generateStaticParams() {
-  const sbuParams = sbus.map((item) => ({
-    sbu: item.slug,
-  }));
-
-  const groupParams = sbus.flatMap((sbu) =>
-    (sbu.navigationGroups ?? []).map((group) => ({
-      sbu: group.slug,
-    }))
-  );
-
-  return [...sbuParams, ...groupParams];
-}
-
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { sbu: slug } = await params;
 
-  // First check whether this is a group page.
   const groupPage = getSBUGroup(slug);
-
   if (groupPage) {
     return {
       title: `${groupPage.group.title} | Chemdist Group`,
@@ -53,9 +29,7 @@ export async function generateMetadata({
     };
   }
 
-  // Otherwise, resolve it as a normal SBU page.
   const sbu = getSBU(slug);
-
   if (!sbu) {
     return { title: "Page Not Found" };
   }
@@ -68,10 +42,6 @@ export async function generateMetadata({
 
 export default async function SBUPage({ params }: Props) {
   const { sbu: slug } = await params;
-
-  // =============================================
-  // GROUP PAGE: SBU 1 ONLY
-  // =============================================
 
   const groupPage = getSBUGroup(slug);
 
@@ -100,10 +70,7 @@ export default async function SBUPage({ params }: Props) {
             ctaHref="#our-services"
           />
 
-          <section
-            id="our-services"
-            className="bg-pale py-16 sm:py-20"
-          >
+          <section id="our-services" className="bg-pale py-16 sm:py-20">
             <Container>
               <div className="mb-10 max-w-3xl">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
@@ -171,12 +138,7 @@ export default async function SBUPage({ params }: Props) {
     );
   }
 
-  // =============================================
-  // NORMAL SBU LANDING PAGE
-  // =============================================
-
   const sbu = getSBU(slug);
-
   if (!sbu) notFound();
 
   return (
@@ -197,10 +159,7 @@ export default async function SBUPage({ params }: Props) {
           ctaHref="#our-services"
         />
 
-        <section
-          id="our-services"
-          className="bg-pale py-16 sm:py-20"
-        >
+        <section id="our-services" className="bg-pale py-16 sm:py-20">
           <Container>
             <div className="mb-10">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">

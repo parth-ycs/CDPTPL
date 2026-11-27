@@ -1,5 +1,4 @@
-
-import sbus, { solutionHref } from "@/data/sbus";
+import { solutionHref, type SBU } from "@/data/sbus";
 
 export type NavigationChild = {
   label: string;
@@ -33,149 +32,145 @@ export type NavigationItem =
   | NavigationLinkItem
   | NavigationDropdownConfig;
 
-// ---------------------------------------------
-// SOLUTIONS NAVIGATION
-// ---------------------------------------------
-
 const SBU_ONE_SLUG = "process-equipment-separation";
 
-const solutionItems: NavigationDropdownItem[] = sbus.map((sbu) => ({
-  label: sbu.name,
-  href: sbu.href,
-
-  children:
-    sbu.slug === SBU_ONE_SLUG
-      ? (sbu.navigationGroups ?? []).map((group) => ({
-          label: group.title,
-          href: `/solutions/${group.slug}`,
-        }))
-      : sbu.navigationGroups?.length
-        ? sbu.navigationGroups.map((group) => ({
+export function buildSolutionNavItems(sbus: SBU[]): NavigationDropdownItem[] {
+  return sbus.map((sbu) => ({
+    label: sbu.name,
+    href: sbu.href,
+    children:
+      sbu.slug === SBU_ONE_SLUG
+        ? (sbu.navigationGroups ?? []).map((group) => ({
             label: group.title,
-            href: `/solutions/${sbu.slug}/${group.slug}`,
+            href: `/solutions/${group.slug}`,
           }))
-        : sbu.children.map((child) => ({
-            label: child.hero.name,
-            href: solutionHref(sbu.slug, child.slug),
-          })),
-}));
+        : sbu.navigationGroups?.length
+          ? sbu.navigationGroups.map((group) => ({
+              label: group.title,
+              href: `/solutions/${sbu.slug}/${group.slug}`,
+            }))
+          : sbu.children.map((child) => ({
+              label: child.hero.name,
+              href: solutionHref(sbu.slug, child.slug),
+            })),
+  }));
+}
 
-// ---------------------------------------------
-// MAIN NAVIGATION
-// ---------------------------------------------
+export function buildNavigationItems(sbus: SBU[]): NavigationItem[] {
+  return [
+    // ABOUT US
+    {
+      type: "dropdown",
+      label: "About",
+      visualSrc: "/images/navigations/about_us.png",
+      visualHref: "/about-us",
+      visualAlt: "About Chemdist Group",
+      panelTitle: "Who We Are",
+      panelDescription:
+        "Discover Chemdist Group, our businesses, journey, achievements, research capabilities, and commitment to a sustainable future.",
 
-export const navigationItems: NavigationItem[] = [
+      items: [
+        {
+          label: "Company Overview",
+          href: "/about-us",
+          children: [],
+        },
+        {
+          label: "Our Groups",
+          href: "/under-development",
+          children: [],
+        },
+        {
+          label: "Our Journey",
+          href: "/under-development",
+          children: [],
+        },
+        {
+          label: "Awards and Recognition",
+          href: "/awards",
+          children: [],
+        },
+        {
+          label: "Research and Development",
+          href: "/research-development",
+          children: [],
+        },
+        {
+          label: "Corporate Social Responsibility ",
+          href: "/csr",
+          children: [],
+        },
+      ],
+    },
 
-  // ABOUT US
-  {
-    type: "dropdown",
-    label: "About",
-    visualSrc: "/images/navigations/about_us.png",
-    visualHref: "/about-us",
-    visualAlt: "About Chemdist Group",
-    panelTitle: "Who We Are",
-    panelDescription:
-      "Discover Chemdist Group, our businesses, journey, achievements, research capabilities, and commitment to a sustainable future.",
+    // SOLUTIONS
+    {
+      type: "dropdown",
+      label: "Solutions",
+      visualSrc: "/images/navigations/solutions.png",
+      visualHref: "/solutions",
+      visualAlt: "Chemdist Group business units",
+      panelTitle: "Business Portfolio",
+      panelDescription:
+        "Spanning across our business segments, our solutions, products, and services improve resource productivity and strengthen the bottom line while maintaining a cleaner environment.",
 
-    items: [
-      {
-        label: "Company Overview",
-        href: "/about-us",
-        children: [],
-      },
-      {
-        label: "Our Groups",
-        href: "/under-development",
-        children: [],
-      },
-      {
-        label: "Our Journey",
-        href: "/under-development",
-        children: [],
-      },
-      {
-        label: "Awards and Recognition",
-        href: "/awards",
-        children: [],
-      },
-      {
-        label: "Research and Development",
-        href: "/research-development",
-        children: [],
-      },
-      {
-        label: "Corporate Social Responsibility ",
-        href: "/csr",
-        children: [],
-      },
-    ],
-  },
+      items: buildSolutionNavItems(sbus),
+    },
 
-  // SOLUTIONS
-  {
-    type: "dropdown",
-    label: "Solutions",
-    visualSrc: "/images/navigations/solutions.png",
-    visualHref: "/solutions",
-    visualAlt: "Chemdist Group business units",
-    panelTitle: "Business Portfolio",
-    panelDescription:
-      "Spanning across our business segments, our solutions, products, and services improve resource productivity and strengthen the bottom line while maintaining a cleaner environment.",
+    // PROJECTS
+    {
+      type: "link",
+      label: "Projects",
+      href: "/projects",
+    },
 
-    items: solutionItems,
-  },
+    // GLOBAL PRESENCE
+    {
+      type: "link",
+      label: "Global Presence",
+      href: "/global-presence",
+    },
 
-  // PROJECTS
-  {
-    type: "link",
-    label: "Projects",
-    href: "/projects",
-  },
+    // RESOURCES
+    {
+      type: "dropdown",
+      label: "Resources",
+      visualSrc: "/images/navigations/resources.png",
+      visualHref: "/resources",
+      visualAlt: "Chemdist Group resources and publications",
+      panelTitle: "Resources and Insights",
+      panelDescription:
+        "Explore our innovations, technical knowledge, publications, industry insights, events, and corporate information.",
 
-  // GLOBAL PRESENCE
-  {
-    type: "link",
-    label: "Global Presence",
-    href: "/global-presence",
-  },
+      items: [
+        {
+          label: "Blogs",
+          href: "/blogs",
+          children: [],
+        },
+        {
+          label: "Media",
+          href: "/media",
+          children: [],
+        },
+        {
+          label: "Events",
+          href: "/events",
+          children: [],
+        },
+        {
+          label: "Patents",
+          href: "/patents",
+          children: [],
+        },
+        {
+          label: "Investor Relations",
+          href: "/under-development",
+          children: [],
+        },
+      ],
+    },
+  ];
+}
 
-  // RESOURCES
-  {
-    type: "dropdown",
-    label: "Resources",
-    visualSrc: "/images/navigations/resources.png",
-    visualHref: "/resources",
-    visualAlt: "Chemdist Group resources and publications",
-    panelTitle: "Resources and Insights",
-    panelDescription:
-      "Explore our innovations, technical knowledge, publications, industry insights, events, and corporate information.",
-
-    items: [
-      {
-        label: "Blogs",
-        href: "/blogs",
-        children: [],
-      },
-      {
-        label: "Media",
-        href: "/media",
-        children: [],
-      },
-      {
-        label: "Events",
-        href: "/events",
-        children: [],
-      },
-      {
-        label: "Patents",
-        href: "/patents",
-        children: [],
-      },
-      {
-        label: "Investor Relations",
-        href: "/under-development",
-        children: [],
-      },
-    ],
-  },
-];
+export const navigationItems: NavigationItem[] = buildNavigationItems([]);

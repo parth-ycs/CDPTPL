@@ -65,3 +65,61 @@ model Project {
   @@index([category], map: "idx_projects_category")
   @@map("projects")
 }
+
+model Sbu {
+  slug         String @id
+  number       String
+  name         String
+  eyebrow      String
+  offerings    String
+  image        String
+  imageAlt     String @map("image_alt")
+  capabilities String @default("[]")
+  displayOrder Int    @default(0) @map("display_order")
+
+  navigationGroups SbuNavigationGroup[]
+  solutions        Solution[]
+
+  @@index([displayOrder], map: "idx_sbus_display_order")
+  @@map("sbus")
+}
+
+model SbuNavigationGroup {
+  slug         String @id
+  sbuSlug      String @map("sbu_slug")
+  title        String
+  eyebrow      String
+  tagline      String
+  description  String
+  overview     String
+  image        String
+  displayOrder Int    @default(0) @map("display_order")
+
+  sbu       Sbu        @relation(fields: [sbuSlug], references: [slug], onDelete: Cascade)
+  solutions Solution[]
+
+  @@index([sbuSlug, displayOrder], map: "idx_sbu_groups_sbu_order")
+  @@map("sbu_navigation_groups")
+}
+
+model Solution {
+  id              String  @id
+  sbuSlug         String  @map("sbu_slug")
+  groupSlug       String? @map("group_slug")
+  slug            String
+  heroName        String  @map("hero_name")
+  heroTagline     String  @map("hero_tagline")
+  heroDescription String  @map("hero_description")
+  heroImage       String? @map("hero_image")
+  heroImageAlt    String? @map("hero_image_alt")
+  sections        String  @default("[]")
+  displayOrder    Int     @default(0) @map("display_order")
+
+  sbu   Sbu                 @relation(fields: [sbuSlug], references: [slug], onDelete: Cascade)
+  group SbuNavigationGroup? @relation(fields: [groupSlug], references: [slug], onDelete: SetNull)
+
+  @@unique([sbuSlug, slug], map: "uq_solutions_sbu_slug")
+  @@index([sbuSlug, displayOrder], map: "idx_solutions_sbu_order")
+  @@index([groupSlug, displayOrder], map: "idx_solutions_group_order")
+  @@map("solutions")
+}

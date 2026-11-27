@@ -6,28 +6,20 @@ import ServiceLayout from "@/components/solutions/ServiceLayout";
 import Enquiry from "@/components/enquiry";
 import Footer from "@/components/footer";
 
-import sbus, {
-  getSolution,
-  solutions,
-  solutionHref,
-} from "@/data/sbus";
+import { getSBU, getSolution } from "@/lib/db/queries/solutions";
+import { solutionHref } from "@/data/sbus";
+
+export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ sbu: string; slug: string }>;
 };
 
-export function generateStaticParams() {
-  return solutions.map(({ sbuSlug, slug }) => ({
-    sbu: sbuSlug,
-    slug,
-  }));
-}
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
- const { sbu, slug } = await params;
-const solution = getSolution(sbu, slug);
+  const { sbu, slug } = await params;
+  const solution = getSolution(sbu, slug);
   if (!solution) return {};
 
   return {
@@ -39,33 +31,25 @@ const solution = getSolution(sbu, slug);
 export default async function SolutionPage({ params }: PageProps) {
   const { sbu, slug } = await params;
   const solution = getSolution(sbu, slug);
-
   if (!solution) notFound();
 
-  const currentSBU = sbus.find((sbu) =>
-    sbu.children.some((child) => child.slug === slug)
-  );
-
+  const currentSBU = getSBU(sbu);
   if (!currentSBU) notFound();
 
   const currentChild = currentSBU.children.find(
-    (child) => child.slug === slug
+    (child) => child.slug === slug,
   );
-
   if (!currentChild) notFound();
 
   const currentCategory = currentSBU.navigationGroups?.find(
-    (category) => category.slug === currentChild.groupSlug
+    (category) => category.slug === currentChild.groupSlug,
   );
 
   const relatedSolutions = currentCategory
     ? currentSBU.children.filter(
-        (child) => child.groupSlug === currentCategory.slug
+        (child) => child.groupSlug === currentCategory.slug,
       )
     : currentSBU.children;
-
-  if (!currentSBU) notFound();
-
 
   const breadcrumbs = [
     { label: "Home", href: "/" },
@@ -78,7 +62,7 @@ export default async function SolutionPage({ params }: PageProps) {
       ? [
           {
             label: currentCategory.title,
-            href: `/solutions/${currentSBU.slug}/${currentCategory.slug}`,
+            href: `/solutions/${currentCategory.slug}`,
           },
         ]
       : []),
@@ -92,7 +76,7 @@ export default async function SolutionPage({ params }: PageProps) {
         tagline={solution.hero.tagline}
         description={solution.hero.description}
         image={solution.hero.image ?? "/images/Hero_BG.png"}
-        imageAlt={solution.hero.name}
+        imageAlt={solution.hero.imageAlt ?? solution.hero.name}
       />
 
       <ServiceLayout
@@ -104,7 +88,8 @@ export default async function SolutionPage({ params }: PageProps) {
           items: relatedSolutions.map((child) => ({
             slug: child.slug,
             label: child.hero.name,
-            href: solutionHref(currentSBU.slug, child.slug),          })),
+            href: solutionHref(currentSBU.slug, child.slug),
+          })),
         }}
       />
 

@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -11,10 +10,11 @@ import {
   Search,
 } from "lucide-react";
 
-import { getProjectHref, type Project } from "@/data/projects";
+import { getProjectCategory, getProjectHref } from "@/data/projects/projects";
+import type { ProjectData } from "@/data/projects/types";
 
 type ProjectDirectoryProps = {
-  projects: Project[];
+  projects: ProjectData[];
   categories: string[];
   selectedCategory: string;
   searchQuery: string;
@@ -47,7 +47,6 @@ export default function ProjectDirectory({
             <h2 className="font-heading text-h1 font-bold tracking-normal text-[#0b1f3f]">
               Explore our projects
             </h2>
-
           </div>
 
           {/* Search */}
@@ -62,7 +61,7 @@ export default function ProjectDirectory({
               type="search"
               value={searchQuery}
               onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Search projects, plants, locations"
+              placeholder="Search projects"
               aria-label="Search projects"
               className="h-12 w-full rounded-full border border-slate-200 bg-white pl-11 pr-5 text-small text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-[#102c59]"
             />
@@ -116,115 +115,124 @@ export default function ProjectDirectory({
         {/* Project cards */}
         {projects.length > 0 ? (
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
-              <article
-                key={project.id}
-                className="group relative isolate aspect-[4/4.6] overflow-hidden rounded-xl bg-[#0b1f3f] text-white sm:aspect-[4/5]"
-              >
-                {/* Image */}
-                <Image
-                  src={project.image}
-                  alt={project.plant}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                  className="-z-20 object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105 group-focus-within:scale-105 motion-reduce:transition-none"
-                />
+            {projects.map((project) => {
+              const { details, hero, solution } = project;
 
-                {/* Overlays */}
-                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#07162d]/90 via-[#07162d]/20 to-[#07162d]/10" />
+              return (
+                <article
+                  key={project.id}
+                  className="group relative isolate aspect-[4/4.6] overflow-hidden rounded-xl bg-[#0b1f3f] text-white sm:aspect-[4/5]"
+                >
+                  {/* Image */}
+                  <Image
+                    src={hero.image}
+                    alt={hero.imageAlt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    className="-z-20 object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105 group-focus-within:scale-105 motion-reduce:transition-none"
+                  />
 
-                <div className="absolute inset-0 -z-10 bg-[#07162d]/0 transition-colors duration-500 group-hover:bg-[#07162d]/55 group-focus-within:bg-[#07162d]/55 motion-reduce:transition-none" />
+                  {/* Overlays */}
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#07162d]/90 via-[#07162d]/20 to-[#07162d]/10" />
 
-                {/* Full-card link */}
-                <Link
-                  href={getProjectHref(project)}
-                  aria-label={`View ${project.title}`}
-                  className="absolute inset-0 z-10 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
-                />
+                  <div className="absolute inset-0 -z-10 bg-[#07162d]/0 transition-colors duration-500 group-hover:bg-[#07162d]/55 group-focus-within:bg-[#07162d]/55 motion-reduce:transition-none" />
 
-                {/* Category */}
-                <span className="absolute left-4 top-4 max-w-[80%] truncate rounded-full bg-white/90 px-3 py-1.5 text-caption font-medium text-[#102c59] backdrop-blur-sm">
-                  {project.category}
-                </span>
+                  {/* Full-card link */}
+                  <Link
+                    href={getProjectHref(project.id)}
+                    aria-label={`View ${hero.heading}`}
+                    className="absolute inset-0 z-10 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
+                  />
 
-                {/* Arrow */}
-                <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#102c59] transition-colors duration-300 group-hover:bg-red-600 group-hover:text-white group-focus-within:bg-red-600 group-focus-within:text-white">
-                  <ArrowUpRight size={18} aria-hidden="true" />
-                </span>
+                  {/* Category */}
+                  <span className="absolute left-4 top-4 max-w-[80%] truncate rounded-full bg-white/90 px-3 py-1.5 text-caption font-medium text-[#102c59] backdrop-blur-sm">
+                    {getProjectCategory(project)}
+                  </span>
 
-                {/* Bottom content */}
-                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                  <p className="text-caption font-medium text-white/70">
-                    {project.year}
-                  </p>
+                  {/* Arrow */}
+                  <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#102c59] transition-colors duration-300 group-hover:bg-red-600 group-hover:text-white group-focus-within:bg-red-600 group-focus-within:text-white">
+                    <ArrowUpRight size={18} aria-hidden="true" />
+                  </span>
 
-                  <h3 className="mt-1.5 line-clamp-2 font-heading text-h3 font-semibold text-white">
-                    {project.title}
-                  </h3>
+                  {/* Bottom content */}
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                    <h3 className="line-clamp-2 font-heading text-h3 font-semibold text-white">
+                      {hero.heading}
+                    </h3>
 
-                  <p className="mt-2 flex items-start gap-1.5 text-small text-white/75">
-                    <MapPin
-                      size={15}
-                      className="mt-0.5 shrink-0 text-red-400"
-                      aria-hidden="true"
-                    />
-                    <span className="line-clamp-1">{project.location}</span>
-                  </p>
+                    {details?.location && (
+                      <p className="mt-2 flex items-start gap-1.5 text-small text-white/75">
+                        <MapPin
+                          size={15}
+                          className="mt-0.5 shrink-0 text-red-400"
+                          aria-hidden="true"
+                        />
+                        <span className="line-clamp-1">{details.location}</span>
+                      </p>
+                    )}
 
-                  {/* Expandable details */}
-                  <div className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100 motion-reduce:transition-none">
-                    <div className="min-h-0 overflow-hidden">
-                      <div className="mt-4 border-t border-white/20 pt-4">
-                        <p className="text-small font-medium text-white">
-                          {project.plant}
-                        </p>
-
-                        <p className="mt-2 line-clamp-3 text-body text-white/75">
-                          {project.description}
-                        </p>
-
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          {project.capacity && (
-                            <span className="rounded-full border border-white/25 px-3 py-1 text-caption text-white/90">
-                              {project.capacity}
-                            </span>
+                    {/* Expandable details */}
+                    <div className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100 motion-reduce:transition-none">
+                      <div className="min-h-0 overflow-hidden">
+                        <div className="mt-4 border-t border-white/20 pt-4">
+                          {details?.plant && (
+                            <p className="mb-2 text-small font-medium text-white">
+                              {details.plant}
+                            </p>
                           )}
 
-                          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-3 py-1 text-caption text-white/90">
-                            <CalendarDays size={12} aria-hidden="true" />
-                            {project.yearOfCompletion}
-                          </span>
+                          <p className="line-clamp-3 text-body text-white/75">
+                            {hero.description}
+                          </p>
+
+                          {(details?.capacity ||
+                            details?.yearOfCompletion) && (
+                            <div className="mt-4 flex flex-wrap gap-2">
+                              {details?.capacity && (
+                                <span className="rounded-full border border-white/25 px-3 py-1 text-caption text-white/90">
+                                  {details.capacity}
+                                </span>
+                              )}
+
+                              {details?.yearOfCompletion && (
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-3 py-1 text-caption text-white/90">
+                                  <CalendarDays size={12} aria-hidden="true" />
+                                  {details.yearOfCompletion}
+                                </span>
+                              )}
+                            </div>
+                          )}
+
+                          {solution.points.length > 0 && (
+                            <ul className="mt-4 space-y-1.5">
+                              {solution.points.slice(0, 2).map((point) => (
+                                <li
+                                  key={point}
+                                  className="flex items-start gap-2 text-caption text-white/80"
+                                >
+                                  <Check
+                                    size={13}
+                                    className="mt-1 shrink-0 text-red-400"
+                                    aria-hidden="true"
+                                  />
+                                  <span className="line-clamp-1">{point}</span>
+                                </li>
+                              ))}
+
+                              {solution.points.length > 2 && (
+                                <li className="pl-5 text-caption text-white/50">
+                                  +{solution.points.length - 2} more
+                                </li>
+                              )}
+                            </ul>
+                          )}
                         </div>
-
-                        {project.keyScope && project.keyScope.length > 0 && (
-                          <ul className="mt-4 space-y-1.5">
-                            {project.keyScope.slice(0, 2).map((scope) => (
-                              <li
-                                key={scope}
-                                className="flex items-start gap-2 text-caption text-white/80"
-                              >
-                                <Check
-                                  size={13}
-                                  className="mt-1 shrink-0 text-red-400"
-                                  aria-hidden="true"
-                                />
-                                <span className="line-clamp-1">{scope}</span>
-                              </li>
-                            ))}
-
-                            {project.keyScope.length > 2 && (
-                              <li className="pl-5 text-caption text-white/50">
-                                +{project.keyScope.length - 2} more
-                              </li>
-                            )}
-                          </ul>
-                        )}
                       </div>
                     </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="mt-8 flex min-h-[260px] flex-col items-center justify-center border border-dashed border-slate-300 bg-white px-6 text-center">

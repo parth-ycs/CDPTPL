@@ -6,11 +6,16 @@ import type { PageSectionItem } from "@/components/shared-page/types";
 
 import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
-import Footer from "@/components/footer";
-import Enquiry from "@/components/enquiry"; 
-import { projects, projectCategories, projectsPageData } from "@/data/projects";
-import ProjectDirectory from "./listing/ProjectDirectory";
 import PageOverview from "@/components/shared-page/PageOverview";
+import Footer from "@/components/footer";
+import Enquiry from "@/components/enquiry";
+import {
+  projects,
+  projectCategories,
+  projectsPageData,
+  getProjectCategory,
+} from "@/data/projects/projects";
+import ProjectDirectory from "./listing/ProjectDirectory";
 
 export default function ProjectsPage() {
   const [category, setCategory] = useState("ALL PROJECTS");
@@ -23,24 +28,20 @@ export default function ProjectsPage() {
 
     return projects.filter((project) => {
       const matchesCategory =
-        category === "ALL PROJECTS" ||
-        project.category === category;
+        category === "ALL PROJECTS" || getProjectCategory(project) === category;
 
       const searchableText = [
-        project.title,
-        project.category,
-        project.location,
-        project.plant,
-        project.description,
-        project.capacity ?? "",
+        project.hero.heading,
+        getProjectCategory(project),
+        project.hero.description,
+        project.details?.location ?? "",
+        project.details?.plant ?? "",
+        ...project.solution.points,
       ]
         .join(" ")
         .toLowerCase();
 
-      return (
-        matchesCategory &&
-        searchableText.includes(normalizedQuery)
-      );
+      return matchesCategory && searchableText.includes(normalizedQuery);
     });
   }, [category, query]);
 
@@ -73,10 +74,7 @@ export default function ProjectsPage() {
         description={hero.description}
         image={hero.image}
         imageAlt={hero.imageAlt}
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Projects" },
-        ]}
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
         ctaLabel="Explore Our Projects"
         ctaHref="#project-directory"
       />

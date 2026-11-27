@@ -1,10 +1,11 @@
 import BlogCard from "@/components/blogs/sections/BlogCard";
 
-import { blogsPageData, getRelatedBlogs, type BlogPost } from "@/data/blogs";
+import { blogsPageData, type BlogPost } from "@/data/blogs";
+import { getRelatedBlogs } from "@/lib/db/queries/blogs";
 
 export default function RelatedBlogs({ blog }: { blog: BlogPost }) {
   const { detail } = blogsPageData;
-  const related = getRelatedBlogs(blog, 3);
+  const related = getRelatedBlogs(blog.id, blog.category, 3);
 
   if (related.length === 0) return null;
 

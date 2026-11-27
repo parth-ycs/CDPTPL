@@ -1,34 +1,28 @@
 
 import "server-only";
 
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import Database from "better-sqlite3";
+import path from "node:path";
+import fs from "node:fs";
 
-let pool: Pool | null = null;
+const dbPath = path.join(process.cwd(), "data", "cdptpl.db");
 
-export function getPool(): Pool {
-  if (!pool) {
-    const connectionString = process.env.DATABASE_URL;
+fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
-    if (!connectionString) {
-      throw new Error("DATABASE_URL is not configured");
-    }
+const globalForDb = globalThis as typeof globalThis & {
+  sqlite?: Database.Database;
+};
 
-    pool = new Pool({
-      connectionString,
-      max: 5,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000,
-    });
+const db =
+  globalForDb.sqlite ??
+  new Database(dbPath);
 
-    pool.on("error", (error) => {
-      console.error("Unexpected PostgreSQL pool error:", error);
-    });
-  }
-
-  return pool;
+if (process.env.NODE_ENV !== "production") {
+  globalForDb.sqlite = db;
 }
 
-export function getDb() {
-  return drizzle(getPool());
-}
+db.pragma("journal_mode = WAL");
+db.pragma("foreign_keys = ON");
+db.pragma("busy_timeout = 5000");
+
+export default db;

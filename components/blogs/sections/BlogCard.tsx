@@ -74,12 +74,7 @@ export default function BlogCard({ blog, variant = "row" }: BlogCardProps) {
         </div>
 
         <div>
-          <p className="mb-3 text-caption text-muted">
-            <span className="font-semibold text-brand-deep">
-              {blog.author.name}
-            </span>{" "}
-            · {date}
-          </p>
+          <p className="mb-3 text-caption text-muted">{date}</p>
 
           <h3 className="mb-4 font-heading text-h2 font-bold leading-tight text-brand-deep transition-colors group-hover:text-brand-blue">
             {blog.title}
@@ -141,12 +136,7 @@ export default function BlogCard({ blog, variant = "row" }: BlogCardProps) {
       className="group flex items-start justify-between gap-6 border-b border-line py-8 first:pt-0 sm:gap-10"
     >
       <div className="min-w-0 flex-1">
-        <p className="mb-2 text-caption text-muted">
-          <span className="font-semibold text-brand-deep">
-            {blog.author.name}
-          </span>{" "}
-          · {date}
-        </p>
+        <p className="mb-2 text-caption text-muted">{date}</p>
 
         <h3 className="mb-2 font-heading text-h3 font-bold leading-snug text-brand-deep transition-colors group-hover:text-brand-blue">
           {blog.title}

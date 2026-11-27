@@ -1,10 +1,13 @@
-
 "use client";
 
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { projects, getProjectHref } from "@/data/projects";
+import {
+  projects,
+  getProjectCategory,
+  getProjectHref,
+} from "@/data/projects/projects";
 import BrandCarouselButtons from "@/components/ui/BrandCarouselButtons";
 
 export default function ProjectsShowcase() {
@@ -40,7 +43,6 @@ export default function ProjectsShowcase() {
   return (
     <section className="overflow-hidden bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12 xl:px-16">
-
         {/* Heading and navigation */}
         <div className="mb-8 flex items-center justify-between gap-6">
           <div>
@@ -48,14 +50,14 @@ export default function ProjectsShowcase() {
               Our work
             </p>
 
-            <h2 id="rd-heading" className="section-heading max-w-[620px]">
+            <h2 id="projects-heading" className="section-heading max-w-[620px]">
               Projects &amp; <br />
-              Case <span className="text-brand-blue">Studies</span>
+              <span className="text-brand-blue">Innovations</span>
             </h2>
 
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
-              Verified installations, major references, project outcomes,
-              execution strength.
+              Engineering challenges, process solutions and the outcomes they
+              deliver.
             </p>
           </div>
 
@@ -72,6 +74,8 @@ export default function ProjectsShowcase() {
         <div className="flex items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-6 pt-3">
           {projects.map((project, index) => {
             const expanded = hoveredIndex === index;
+            const category = getProjectCategory(project);
+            const { details } = project;
 
             return (
               <article
@@ -105,8 +109,8 @@ export default function ProjectsShowcase() {
               >
                 {/* Background photograph */}
                 <Image
-                  src={project.image}
-                  alt=""
+                  src={project.hero.image}
+                  alt={project.hero.imageAlt}
                   fill
                   sizes="(max-width: 640px) 320px, (max-width: 1024px) 460px, 560px"
                   className={`object-cover transition-transform duration-700 ease-out ${
@@ -134,19 +138,21 @@ export default function ProjectsShowcase() {
                   aria-hidden={expanded}
                 >
                   <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
-                    {project.category}
+                    {category}
                   </p>
 
                   <h3 className="line-clamp-2 text-xl font-semibold leading-snug md:text-2xl">
-                    {project.title}
+                    {project.hero.heading}
                   </h3>
 
-                  <p className="mt-2 text-xs text-white/70">
-                    {project.location}
-                  </p>
+                  {details?.location && (
+                    <p className="mt-2 text-xs text-white/70">
+                      {details.location}
+                    </p>
+                  )}
                 </div>
 
-                {/* Expanded case study */}
+                {/* Expanded project details */}
                 <div
                   aria-hidden={!expanded}
                   className={`absolute inset-0 z-20 flex flex-col overflow-hidden
@@ -164,26 +170,26 @@ export default function ProjectsShowcase() {
                 >
                   {/* Scrollable information */}
                   <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-5 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.4)_transparent]">
-
                     {/* Heading enters first */}
                     <div key={`${project.id}-${expanded}`} style={headingStyle}>
                       <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-red-300 md:text-xs">
-                        {project.category}
+                        {category}
                       </p>
 
                       <h3 className="mb-3 break-words text-xl font-semibold leading-snug sm:text-2xl">
-                        {project.title}
+                        {project.hero.heading}
                       </h3>
 
-                      <p className="mb-5 text-xs text-white/70">
-                        {project.location}
-                      </p>
+                      {details?.location && (
+                        <p className="mb-5 text-xs text-white/70">
+                          {details.location}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-5 text-sm leading-5 text-white/90">
-
                       {/* Plant */}
-                      {project.plant && (
+                      {details?.plant && (
                         <div
                           key={`${project.id}-plant-${expanded}`}
                           style={detailStyle(180)}
@@ -191,7 +197,7 @@ export default function ProjectsShowcase() {
                           <p className="mb-1 font-semibold text-sky-300">
                             Plant
                           </p>
-                          <p>{project.plant}</p>
+                          <p>{details.plant}</p>
                         </div>
                       )}
 
@@ -203,11 +209,11 @@ export default function ProjectsShowcase() {
                         <p className="mb-1 font-semibold text-sky-300">
                           Project Description
                         </p>
-                        <p>{project.description}</p>
+                        <p>{project.hero.description}</p>
                       </div>
 
                       {/* Contract value */}
-                      {project.contractValue && (
+                      {details?.contractValue && (
                         <div
                           key={`${project.id}-contract-${expanded}`}
                           style={detailStyle(420)}
@@ -216,33 +222,33 @@ export default function ProjectsShowcase() {
                             Overall Contract Value
                           </p>
                           <p className="font-semibold">
-                            {project.contractValue}
+                            {details.contractValue}
                           </p>
                         </div>
                       )}
 
                       {/* Project timeline */}
-                      {(project.yearOfAward || project.yearOfCompletion) && (
+                      {(details?.yearOfAward || details?.yearOfCompletion) && (
                         <div
                           key={`${project.id}-years-${expanded}`}
                           className="grid grid-cols-2 gap-3 border-t border-white/15 pt-4"
                           style={detailStyle(520)}
                         >
-                          {project.yearOfAward && (
+                          {details?.yearOfAward && (
                             <div>
                               <p className="mb-1 font-semibold text-sky-300">
                                 Year of Award
                               </p>
-                              <p>{project.yearOfAward}</p>
+                              <p>{details.yearOfAward}</p>
                             </div>
                           )}
 
-                          {project.yearOfCompletion && (
+                          {details?.yearOfCompletion && (
                             <div>
                               <p className="mb-1 font-semibold text-sky-300">
                                 Year of Completion
                               </p>
-                              <p>{project.yearOfCompletion}</p>
+                              <p>{details.yearOfCompletion}</p>
                             </div>
                           )}
                         </div>
@@ -253,12 +259,12 @@ export default function ProjectsShowcase() {
                   {/* Fixed footer */}
                   <div className="shrink-0 border-t border-white/20 bg-slate-950/95 px-4 py-3 md:px-5">
                     <Link
-                      href={getProjectHref(project)}
+                      href={getProjectHref(project.id)}
                       tabIndex={expanded ? 0 : -1}
                       className="inline-flex items-center gap-2 font-semibold text-white transition-colors duration-200 hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-300"
                       style={detailStyle(620)}
                     >
-                      View case study
+                      View project
                       <span aria-hidden="true">↗</span>
                     </Link>
                   </div>
@@ -299,13 +305,6 @@ export default function ProjectsShowcase() {
           to {
             opacity: 1;
             transform: translateY(0);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .project-heading-enter,
-          .project-detail-enter {
-            animation: none !important;
           }
         }
       `}</style>

@@ -7,15 +7,6 @@ import {
   type BlogPost,
 } from "@/data/blogs";
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
 export default function BlogHeader({ blog }: { blog: BlogPost }) {
   return (
     <header className="mb-8">
@@ -36,24 +27,9 @@ export default function BlogHeader({ blog }: { blog: BlogPost }) {
 
       <p className="mt-5 text-lead text-muted">{blog.excerpt}</p>
 
-      <div className="mt-8 flex items-center gap-4">
-        <span
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-deep text-small font-semibold text-white"
-          aria-hidden="true"
-        >
-          {initials(blog.author.name)}
-        </span>
-
-        <div>
-          <p className="text-small font-semibold text-brand-deep">
-            {blog.author.name}
-          </p>
-          <p className="text-caption text-muted">
-            {blog.author.role} · {formatBlogDate(blog.publishedAt)} ·{" "}
-            {getReadTime(blog.content)}
-          </p>
-        </div>
-      </div>
+      <p className="mt-6 text-caption text-muted">
+        {formatBlogDate(blog.publishedAt)} · {getReadTime(blog.content)}
+      </p>
     </header>
   );
 }

@@ -1,0 +1,23 @@
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id          String @id
+  title       String
+  excerpt     String
+  category    String
+  authorName  String @map("author_name")
+  publishedAt String @map("published_at")
+  image       String
+  imageAlt    String @map("image_alt")
+  likes       Int    @default(0)
+  content     String
+
+  @@index([publishedAt], map: "idx_blogs_published_at")
+  @@index([category], map: "idx_blogs_category")
+
+  @@map("blogs")
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ShareMenu from "@/components/blogs/sections/ShareMenu";
 
@@ -13,6 +13,8 @@ interface BlogActionsProps {
   menuDirection?: "down" | "up";
 }
 
+type LikeChange = { blogId: string; liked: boolean; likes: number };
+
 const buttonClass =
   "inline-flex items-center gap-2 rounded-full px-3 py-2 text-small text-muted transition-colors hover:text-brand-deep";
 
@@ -23,14 +25,68 @@ export default function BlogActions({
   commentCount,
   menuDirection = "down",
 }: BlogActionsProps) {
+  const storageKey = `blog-liked:${blogId}`;
+
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
+  const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const toggleLike = () => {
-    // TODO(backend): POST/DELETE /blogs/:id/like, then reconcile the count
-    setLiked((value) => !value);
-    setLikeCount((count) => (liked ? count - 1 : count + 1));
+  // Restore this browser's like, and keep the top and bottom bars in sync
+  useEffect(() => {
+    try {
+      setLiked(localStorage.getItem(storageKey) === "1");
+    } catch {
+      /* storage unavailable */
+    }
+
+    const onChange = (event: Event) => {
+      const detail = (event as CustomEvent<LikeChange>).detail;
+      if (detail.blogId !== blogId) return;
+      setLiked(detail.liked);
+      setLikeCount(detail.likes);
+    };
+
+    window.addEventListener("blog-like-change", onChange);
+    return () => window.removeEventListener("blog-like-change", onChange);
+  }, [blogId, storageKey]);
+
+  const toggleLike = async () => {
+    if (pending) return;
+    const next = !liked;
+    setPending(true);
+
+    // Optimistic update, rolled back if the request fails
+    setLiked(next);
+    setLikeCount((count) => count + (next ? 1 : -1));
+
+    try {
+      const res = await fetch(`/api/blogs/${blogId}/like`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ liked: next }),
+      });
+      if (!res.ok) throw new Error("Like request failed");
+      const data = (await res.json()) as { likes: number };
+
+      try {
+        if (next) localStorage.setItem(storageKey, "1");
+        else localStorage.removeItem(storageKey);
+      } catch {
+        /* storage unavailable */
+      }
+
+      window.dispatchEvent(
+        new CustomEvent<LikeChange>("blog-like-change", {
+          detail: { blogId, liked: next, likes: data.likes },
+        }),
+      );
+    } catch {
+      setLiked(!next);
+      setLikeCount((count) => count + (next ? -1 : 1));
+    } finally {
+      setPending(false);
+    }
   };
 
   const toggleSave = () => {

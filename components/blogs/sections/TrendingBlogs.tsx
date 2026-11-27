@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import { blogsPageData, formatBlogDate, getTrendingBlogs } from "@/data/blogs";
+import { blogsPageData, formatBlogDate, type BlogPost } from "@/data/blogs";
 
-export default function TrendingBlogs() {
-  const trending = getTrendingBlogs(3);
+export default function TrendingBlogs({ blogs }: { blogs: BlogPost[] }) {
+  if (blogs.length === 0) return null;
 
   return (
     <aside className="lg:sticky lg:top-28 lg:self-start">
@@ -12,7 +12,7 @@ export default function TrendingBlogs() {
       </h3>
 
       <ol className="space-y-6">
-        {trending.map((blog, index) => (
+        {blogs.map((blog, index) => (
           <li key={blog.id}>
             <Link href={`/blogs/${blog.id}`} className="group flex gap-4">
               <span className="font-heading text-h2 font-bold leading-none text-line">

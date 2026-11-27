@@ -1,4 +1,3 @@
-
 import PageHero from "@/components/shared-page/PageHero";
 import PageLayout from "@/components/shared-page/PageLayout";
 import PageOverview from "@/components/shared-page/PageOverview";
@@ -9,10 +8,8 @@ import { rdSectionData } from "@/data/research-development/r&d";
 import ResearchAreasSection from "./sections/ResearchAreasSection";
 import WorkflowSection from "./sections/WorkflowSection";
 import SustainabilitySection from "./sections/SustainabilitySection";
-import InnovationShowcaseSection from "./sections/InnovationShowcaseSection";
+import ProjectShowcaseSection from "./sections/ProjectShowcaseSection";
 import IITGuwahatiSection from "./sections/IITGuwahatiSection";
-import Enquiry from "@/components/enquiry";
-import Footer from "@/components/footer";
 import Container from "../container";
 
 const sections: PageSectionItem[] = [
@@ -26,7 +23,6 @@ const sections: PageSectionItem[] = [
     label: "IIT Guwahati",
     content: <IITGuwahatiSection />,
   },
-  
 ];
 
 export default function ResearchDevelopment() {
@@ -56,12 +52,9 @@ export default function ResearchDevelopment() {
       <PageLayout sections={sections} />
       <WorkflowSection />
       <Container>
-        <InnovationShowcaseSection />
+        <ProjectShowcaseSection />
       </Container>
       <SustainabilitySection />
-
-      <Enquiry />
-      <Footer />
     </main>
   );
 }

@@ -1,13 +1,18 @@
-import type { Metadata } from "next";
-
 import Blogs from "@/components/blogs/blogs";
+import {
+  getBlogCategories,
+  getBlogs,
+  getTrendingBlogs,
+} from "@/lib/db/queries/blogs";
 
-export const metadata: Metadata = {
-  title: "Blogs | Chemdist Group",
-  description:
-    "Perspectives on chemical engineering, catalysis and industrial innovation from Chemdist Group.",
-};
+export const dynamic = "force-dynamic";
 
 export default function BlogsPage() {
-  return <Blogs />;
+  return (
+    <Blogs
+      blogs={getBlogs()}
+      categories={getBlogCategories()}
+      trending={getTrendingBlogs(3)}
+    />
+  );
 }

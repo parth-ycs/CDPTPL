@@ -1,14 +1,11 @@
 import Image from "next/image";
 
-// ⚠ Adjust this import to wherever your Navbar actually lives.
-// The old detail page got its navbar through <PageHero />; this page has no hero.
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
 import BlogHeader from "@/components/blogs/sections/BlogHeader";
 import BlogActions from "@/components/blogs/sections/BlogActions";
 import BlogMarkdown from "@/components/blogs/sections/BlogMarkdown";
-import BlogAuthorCard from "@/components/blogs/sections/BlogAuthorCard";
 import BlogComments from "@/components/blogs/sections/BlogComments";
 import RelatedBlogs from "@/components/blogs/sections/RelatedBlogs";
 
@@ -62,30 +59,16 @@ export default function Blog({ blog }: BlogProps) {
           {/* Markdown body */}
           <BlogMarkdown content={blog.content} />
 
-          {/* Tags */}
-          {blog.tags.length > 0 && (
-            <div className="mb-10 mt-12 flex flex-wrap gap-2">
-              {blog.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-pale px-4 py-2 text-small text-brand-deep"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-
           {/* Bottom action bar (popover opens upward) */}
-          <BlogActions
-            blogId={blog.id}
-            title={blog.title}
-            likes={blog.likes}
-            commentCount={commentCount}
-            menuDirection="up"
-          />
-
-          <BlogAuthorCard author={blog.author} />
+          <div className="mb-14 mt-12">
+            <BlogActions
+              blogId={blog.id}
+              title={blog.title}
+              likes={blog.likes}
+              commentCount={commentCount}
+              menuDirection="up"
+            />
+          </div>
 
           <BlogComments
             blogId={blog.id}

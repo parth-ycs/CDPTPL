@@ -9,16 +9,20 @@ import Footer from "@/components/footer";
 import BlogCard from "@/components/blogs/sections/BlogCard";
 import TrendingBlogs from "@/components/blogs/sections/TrendingBlogs";
 
-import { blogsPageData, getAllBlogs, getCategories } from "@/data/blogs";
+import { blogsPageData, type BlogPost } from "@/data/blogs";
 
-export default function Blogs() {
+interface BlogsProps {
+  blogs: BlogPost[];
+  categories: string[];
+  trending: BlogPost[];
+}
+
+export default function Blogs({ blogs, categories: dbCategories, trending }: BlogsProps) {
   const { hero, overview, section } = blogsPageData;
 
-  const blogs = useMemo(() => getAllBlogs(), []);
-
   const categories = useMemo(
-    () => [section.allCategoriesLabel, ...getCategories()],
-    [section.allCategoriesLabel],
+    () => [section.allCategoriesLabel, ...dbCategories],
+    [section.allCategoriesLabel, dbCategories],
   );
 
   const [activeCategory, setActiveCategory] = useState(
@@ -39,7 +43,7 @@ export default function Blogs() {
 
       const matchesQuery =
         term === "" ||
-        [blog.title, blog.excerpt, blog.category, ...blog.tags]
+        [blog.title, blog.excerpt, blog.category]
           .join(" ")
           .toLowerCase()
           .includes(term);
@@ -160,7 +164,7 @@ export default function Blogs() {
               </div>
 
               <div className="hidden lg:block">
-                <TrendingBlogs />
+                <TrendingBlogs blogs={trending} />
               </div>
             </div>
           ) : (
